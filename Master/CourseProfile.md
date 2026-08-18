@@ -13,12 +13,12 @@ bottom. Never invent a tenant URL, contact address, or site URL — read it from
 | `BASE_PATH` | `/AgenticCodingAgents` |
 | `REPO_URL` | `https://github.com/uipath-practice/AgenticCodingAgents` |
 | `DEFAULT_BRANCH` | `main` |
-| `TRAINING_PLATFORM_URL` | TODO_OR_NONE |
-| `TRAINING_TENANT` | TODO_OR_NONE |
+| `TRAINING_PLATFORM_URL` | `https://cloud.uipath.com/tpenlabs` |
+| `TRAINING_TENANT` | `AgenticWorkshop` |
 | `CONTACT_EMAIL` | mihai.iorga@uipath.com |
 | `LOCALES` | `en` (English only) |
 | `MKDOCS_CMD` | `python3 -m mkdocs` |
-| `PLATFORM_NAMES` | TODO_COMMA_SEPARATED_PRODUCT_NAMES |
+| `PLATFORM_NAMES` | Studio Web, Studio, Orchestrator, Maestro, Action Center, Integration Service, Data Fabric, Context Grounding, IXP, Agent Builder, Autopilot, AI Trust Layer, Storage Buckets |
 
 `BASE_PATH` and `SITE_URL` must agree with each other and with `site_url` in `mkdocs.yml`.
 `SITE_URL` is the single most consequential value in the repo: it produces the path prefix on
@@ -34,8 +34,10 @@ If the course has no shared training environment, set `TRAINING_PLATFORM_URL` an
 Run each grep; every hit must be either updated to this table's values or deliberately left:
 
 ```bash
-# 1. No previous course's URL, repo, or tenant survives anywhere
-grep -rn 'AgenticPracticeCourse\|uipath-practice\|tpenlabs\|AgenticPractice' . --exclude-dir=.git
+# 1. No previous course's URL, repo, or tenant survives anywhere.
+#    Update this pattern per course: it must list the PREVIOUS course's values, never this one's.
+#    (`tpenlabs` and `uipath-practice` are THIS course's correct values -- do not add them here.)
+grep -rn 'AgenticPracticeCourse\|AgenticPractice\b' . --exclude-dir=.git --exclude-dir=Archive
 
 # 2. No absolute machine paths (the mkdocs binary was hardcoded in the original)
 grep -rn '/Users/' . --exclude-dir=.git --exclude-dir=site
