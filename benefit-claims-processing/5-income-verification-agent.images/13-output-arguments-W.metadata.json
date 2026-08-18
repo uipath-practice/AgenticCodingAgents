@@ -1,0 +1,30 @@
+{
+  "version": "1.0",
+  "image_file": "13-output-arguments-W.png",
+  "image_path": "docs/benefit-claims-processing/5-income-verification-agent.images/13.png",
+  "lesson": "5-income-verification-agent",
+  "exercise": "benefit-claims-processing",
+  "extraction": {
+    "ocr_text": "Name                          Type                          Description\ndecision                      String                        Decision on whether the income validation is valid or invalid\nrationale                     String                        Brief explanation for the decision",
+    "description": "The screenshot shows a simple table defining output fields for an income verification agent or related UiPath agent configuration. It lists two string fields, `decision` and `rationale`, with descriptions explaining that the agent should return a validation decision and a brief explanation.",
+    "step_instructions": "Informational screenshot — no user action required. It shows the expected schema or argument definitions for the agent output: `decision` as a String and `rationale` as a String."
+  },
+  "layout": {
+    "mode": "split_30",
+    "ocr_length": 288,
+    "aspect_ratio": 11.97,
+    "image_size": "910x76",
+    "rationale": "Low text density (288 chars) or narrow layout"
+  },
+  "model": {
+    "name": "gpt-5.4",
+    "deployment": "gpt-5.5",
+    "api_version": "2025-04-01-preview"
+  },
+  "usage": {
+    "prompt_tokens": 1874,
+    "completion_tokens": 227,
+    "total_tokens": 2101
+  },
+  "generated_at": "2026-08-18T11:44:24.727608+00:00"
+}

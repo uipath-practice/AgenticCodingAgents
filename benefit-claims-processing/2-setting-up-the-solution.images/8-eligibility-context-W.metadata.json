@@ -1,0 +1,30 @@
+{
+  "version": "1.0",
+  "image_file": "8-eligibility-context-W.jpg",
+  "image_path": "docs/benefit-claims-processing/2-setting-up-the-solution.images/08.jpg",
+  "lesson": "2-setting-up-the-solution",
+  "exercise": "benefit-claims-processing",
+  "extraction": {
+    "ocr_text": "Explorer\n\nBenefit Claims Processing Template\n  Action App\n  Addition Tool\n  Benefit Claims Processing\n  DownloadFileFromStorageBucket\n\nApps\nAssets\nConnections\nContext\n  Eligibility\n  Income Verification\n  Residency Verification\nProcesses\n\nBenefit Claims ...    Main    uipathlabs@gm...    GenAI Connecti...    Eligibility\n\nDebug configuration  i\n\nEligibility\n\nName *\nEligibility\n\nDescription\nNot applicable or no value se[...]\n\nData source\nStorage Bucket    IS Co[...]\n\nStorage Bucket\nEligibility\n\nEligibility  ×\n\nSearch context grounding indexes\n\nPlatform resources\n  Benefit Claims\n    Eligibility\n    Income Verification\n    Residency Verification\n  Compliance Inspection\n    Index Workplace Safety and Compliance Regulati...\n  Shared\n    Index Workplace Safety and Compliance Regulati...",
+    "description": "The screenshot shows UiPath Studio Web/Agent Builder configuration for the Benefit Claims Processing solution, with the Eligibility context item selected in the Explorer under Context. The Debug configuration panel is open for the Eligibility resource, showing fields such as Name, Description, Data source, and Storage Bucket. A context grounding index/storage bucket selection dropdown is open, listing Platform resources and highlighting Eligibility under the Benefit Claims folder.",
+    "step_instructions": "Click on Eligibility under Platform resources > Benefit Claims in the open context grounding index dropdown. If needed, confirm that the Storage Bucket field is set to Eligibility for the selected Eligibility context resource."
+  },
+  "layout": {
+    "mode": "full_width",
+    "ocr_length": 791,
+    "aspect_ratio": 3.21,
+    "image_size": "1902x592",
+    "rationale": "High density (791 chars) + wide (3.21) or very high text"
+  },
+  "model": {
+    "name": "gpt-5.4",
+    "deployment": "gpt-5.5",
+    "api_version": "2025-04-01-preview"
+  },
+  "usage": {
+    "prompt_tokens": 3086,
+    "completion_tokens": 834,
+    "total_tokens": 3920
+  },
+  "generated_at": "2026-08-18T11:40:24.057024+00:00"
+}

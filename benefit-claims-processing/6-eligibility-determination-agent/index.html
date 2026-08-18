@@ -1,0 +1,1630 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Participant's handbook for the UiPath Agentic Automation Workshop — build an end-to-end agentic Benefit Claims process.">
+      
+      
+        <meta name="author" content="Mihai Iorga">
+      
+      
+        <link rel="canonical" href="https://uipath-practice.github.io/AgenticCodingAgents/benefit-claims-processing/6-eligibility-determination-agent/">
+      
+      
+        <link rel="prev" href="../5-income-verification-agent/">
+      
+      
+        <link rel="next" href="../7-configure-human-validation/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>6. Build the Eligibility Determination Agent - Agentic Automation Workshop</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-orange" data-md-color-accent="orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#build-the-eligibility-determination-agent" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Agentic Automation Workshop" class="md-header__button md-logo" aria-label="Agentic Automation Workshop" data-md-component="logo">
+      
+  <img src="../../assets/images/Partner Success Logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Agentic Automation Workshop
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              6. Build the Eligibility Determination Agent
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+  Benefit Claims Processing
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../next-steps/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Next Steps
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Agentic Automation Workshop" class="md-nav__button md-logo" aria-label="Agentic Automation Workshop" data-md-component="logo">
+      
+  <img src="../../assets/images/Partner Success Logo.png" alt="logo">
+
+    </a>
+    Agentic Automation Workshop
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Benefit Claims Processing
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Benefit Claims Processing
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1-create-bpmn-process/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Automating Business Processes using BPMN canvas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2-setting-up-the-solution/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Setting up the Solution
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3-configure-a-robot/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Add an RPA automation to your Maestro workflow
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4-residency-verification-agent/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Build the Residency Verification Agent
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../5-income-verification-agent/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Build the Income Verification Agent
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Build the Eligibility Determination Agent
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Build the Eligibility Determination Agent
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#goal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Goal
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#general-steps-for-eligibility-calculation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        General steps for Eligibility &amp; Calculation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lets-build-an-ai-agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Let's build an AI Agent!
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Steps
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Steps">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-add-the-agent-to-your-solution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Add the agent to your solution
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-choose-the-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Choose the model
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuring-the-inputoutput-schemas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuring the input/output schemas
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Configuring the input/output schemas">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#3-set-the-input-schema" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Set the input schema
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-set-the-output-schema" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Set the output schema
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#context-grounding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Context Grounding
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Context Grounding">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#5-add-the-context-to-the-agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Add the context to the agent
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tools
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Tools">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#6-add-the-three-arithmetic-tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Add the three arithmetic tools
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuring-agents-prompts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuring Agent's Prompts
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Configuring Agent&#39;s Prompts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#7-write-the-system-prompt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Write the System Prompt
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8-write-the-user-prompt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Write the User Prompt
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#9-test-the-agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Test the agent
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quality-control-and-evaluations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quality Control and Evaluations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Quality Control and Evaluations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#10-create-the-two-evaluators" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Create the two evaluators
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#11-import-the-evaluation-set" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. Import the evaluation set
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuring-the-agentic-task-in-maestro" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuring the Agentic Task in Maestro
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Configuring the Agentic Task in Maestro">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#12-point-the-task-at-your-agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. Point the task at your agent
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-map-the-inputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. Map the inputs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14-run-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14. Run it
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../7-configure-human-validation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Add an Action App for human validation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../8-configure-api-integration-benefit-approval/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. Update external systems using API — Benefit Approval Case
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../9-configure-api-integration-benefit-rejection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Update external systems using API — Benefit Rejection Case
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../next-steps/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Next Steps
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="build-the-eligibility-determination-agent">Build the Eligibility Determination Agent<a class="headerlink" href="#build-the-eligibility-determination-agent" title="Permanent link">&para;</a></h1>
+<div class="admonition tip">
+<p class="admonition-title">Here is our plan for this lesson:</p>
+<ol>
+<li>Build a <strong>Benefit Eligibility Determination</strong> AI Agent from scratch in <strong>Studio Web</strong><ul>
+<li>Agent will use the declared applicant's household size and monthly gross income</li>
+<li>Using benefit claims guidelines and rules, as part of context grounding, it will decide
+  whether the applicant qualifies, what amount they will receive, and a justification</li>
+</ul>
+</li>
+<li>Configure testing and build an evaluations dataset to ensure quality of the Agent (optional)</li>
+<li>Configure the Agent in the Maestro workflow</li>
+<li>Use the output of the Agent when presenting the Benefits Claim case to a human for review</li>
+</ol>
+</div>
+<h2 id="goal">Goal<a class="headerlink" href="#goal" title="Permanent link">&para;</a></h2>
+<p>Implement an agent which decides if the applicant is eligible for benefits and calculates the amount,
+according to the guidelines. LLMs are ideal for this job — because the guidelines can be in an
+unstructured format. LLMs can be instructed to treat such scenarios accordingly.</p>
+<h2 id="general-steps-for-eligibility-calculation">General steps for Eligibility &amp; Calculation<a class="headerlink" href="#general-steps-for-eligibility-calculation" title="Permanent link">&para;</a></h2>
+<p>This is a two-phase approach to determine benefits: first verifying household eligibility through
+income thresholds, then calculating the actual benefit amount based on net income and household size.</p>
+<ol>
+<li><strong>Income Eligibility Check</strong> — Compare the household's gross monthly income against threshold tables based on household size. For example, a single person must have gross income at or below $1,950/month ($23,400/year), while a family of four has a threshold of $4,050/month ($48,600/year). Each additional person adds $700/month to the threshold.</li>
+<li><strong>Net Income Calculation</strong> — Apply standard deductions to gross income: $198 for households of 1-3 people, $199 for 4 people, $234 for 5 people, and $268 for 6+ people (2025 rates). This yields the household's net monthly income.</li>
+<li><strong>Benefit Determination</strong> — Use the formula below. Maximum benefits range from $300/month for a single person to $1,785/month for 8-person households, with $225 added per additional person beyond 8.</li>
+</ol>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>SNAP Benefit = Maximum Benefit for Household Size - (Net Income × 0.15)
+</code></pre></div>
+<h2 id="lets-build-an-ai-agent">Let's build an AI Agent!<a class="headerlink" href="#lets-build-an-ai-agent" title="Permanent link">&para;</a></h2>
+<p>Let's use Studio to create our <strong>Eligibility Determination Agent</strong>!</p>
+<div class="img-cols img-cols-30">
+<div>
+<p>Here is the structure of the agent's inputs and outputs.
+  </p>
+</div>
+<div>
+<p><img alt="Diagram of the Eligibility Determination Agent's expected inputs and outputs" class="screenshot" src="../6-eligibility-determination-agent.images/1-agent-input-output-schema.png" />
+  </p>
+</div>
+</div>
+<h2 id="steps">Steps<a class="headerlink" href="#steps" title="Permanent link">&para;</a></h2>
+<h3 id="1-add-the-agent-to-your-solution">1. Add the agent to your solution<a class="headerlink" href="#1-add-the-agent-to-your-solution" title="Permanent link">&para;</a></h3>
+<div class="img-cols img-cols-50">
+<div>
+<p>First, <strong>add new agent</strong> to your solution.</p>
+<p>Remember that Solutions can have multiple components such as apps, automations, workflows.
+  </p>
+</div>
+<div>
+<p><img alt="Add project to solution menu with the Agent option highlighted" class="screenshot" src="../6-eligibility-determination-agent.images/2-add-agent-to-solution.jpg" />
+  </p>
+</div>
+</div>
+<p>Dismiss Autopilot screen when you see a prompt to generate a new agent. Feel free to play with
+autopilot later, but we will manually add prompts and settings, so click <strong>Start fresh</strong>.</p>
+<p>Set agent's name to something meaningful, for example <strong>Eligibility Determination Agent</strong>. Let's keep
+it well organized!</p>
+<p><img alt="Agent creation screen with the Autonomous card selected and the agent named Eligibility Determination Agent" class="screenshot" src="../6-eligibility-determination-agent.images/3-start-fresh-agent-type-W.png" width="900" /></p>
+<h3 id="2-choose-the-model">2. Choose the model<a class="headerlink" href="#2-choose-the-model" title="Permanent link">&para;</a></h3>
+<div class="img-cols img-cols-50">
+<div>
+<p>When it comes to LLMs there is no vendor lock for UiPath Agents, so you can experiment with different
+models and choose the one that best fits your use case.</p>
+<p>For now, we are going to choose <strong>GPT-5.4</strong> for our agent, but feel free to experiment with different
+models later. Let's choose the model from the agent settings (right side toolbar).
+  </p>
+</div>
+<div>
+<p><img alt="Model dropdown open in the Eligibility Determination Agent settings panel" class="screenshot" src="../6-eligibility-determination-agent.images/4-select-model.png" />
+  </p>
+</div>
+</div>
+<h2 id="configuring-the-inputoutput-schemas">Configuring the input/output schemas<a class="headerlink" href="#configuring-the-inputoutput-schemas" title="Permanent link">&para;</a></h2>
+<p>Next we are going to create the <strong>input and output arguments</strong> of the Agent. Let's understand what we
+are going to use the arguments for:</p>
+<p><strong>Agent arguments</strong> let your agent take in information about a business case and return a result, just
+as you might have activities or processes do. This can allow you to pass information from a trigger in
+Orchestrator or use the output of an agent to launch another automation.</p>
+<p>Let's go to <strong>Data Manager</strong> and create our arguments. Copy and paste the following schemas for the
+input/output arguments.</p>
+<h3 id="3-set-the-input-schema">3. Set the input schema<a class="headerlink" href="#3-set-the-input-schema" title="Permanent link">&para;</a></h3>
+<div class="img-cols img-cols-30">
+<div>
+<p><strong>Input schema</strong> — open the <strong>input</strong> schema editor.
+  </p>
+</div>
+<div>
+<p><img alt="Data manager Inputs section showing the existing input arguments" class="screenshot" src="../6-eligibility-determination-agent.images/5-data-manager-inputs.png" />
+  </p>
+</div>
+</div>
+<div class="img-cols img-cols-50">
+<div>
+<p><img alt="Inputs JSON editor with the schema entered" class="screenshot" src="../6-eligibility-determination-agent.images/6-input-schema-editor.png" />
+  </p>
+</div>
+<div>
+<p>Paste this into the <strong>input</strong> schema editor.
+  </p>
+</div>
+</div>
+<details class="note">
+<summary>Copy the input schema (JSON)</summary>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="p">{</span><span class="nt">"type"</span><span class="p">:</span><span class="s2">"object"</span><span class="p">,</span><span class="nt">"required"</span><span class="p">:[</span><span class="s2">"Monthly_Gross_Income"</span><span class="p">,</span><span class="s2">"Household_Size"</span><span class="p">],</span><span class="nt">"properties"</span><span class="p">:{</span><span class="nt">"Household_Size"</span><span class="p">:{</span><span class="nt">"type"</span><span class="p">:</span><span class="s2">"integer"</span><span class="p">,</span><span class="nt">"description"</span><span class="p">:</span><span class="s2">"The number of people living in the applicant's house"</span><span class="p">},</span><span class="nt">"Monthly_Gross_Income"</span><span class="p">:{</span><span class="nt">"type"</span><span class="p">:</span><span class="s2">"string"</span><span class="p">,</span><span class="nt">"description"</span><span class="p">:</span><span class="s2">"The amount of money the applicant's household makes in a month"</span><span class="p">}},</span><span class="nt">"title"</span><span class="p">:</span><span class="s2">"Inputs"</span><span class="p">}</span>
+</code></pre></div>
+</details>
+<h3 id="4-set-the-output-schema">4. Set the output schema<a class="headerlink" href="#4-set-the-output-schema" title="Permanent link">&para;</a></h3>
+<div class="img-cols img-cols-30">
+<div>
+<p><strong>Output schema</strong> — open the <strong>output</strong> schema editor.
+  </p>
+</div>
+<div>
+<p><img alt="Data manager Outputs section showing the agent output arguments" class="screenshot" src="../6-eligibility-determination-agent.images/7-data-manager-outputs.png" />
+  </p>
+</div>
+</div>
+<div class="img-cols img-cols-50">
+<div>
+<p><img alt="Outputs JSON editor with the schema entered" class="screenshot" src="../6-eligibility-determination-agent.images/8-output-schema-editor.png" />
+  </p>
+</div>
+<div>
+<p>Paste this into the <strong>output</strong> schema editor.
+  </p>
+</div>
+</div>
+<details class="note">
+<summary>Copy the output schema (JSON)</summary>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="p">{</span><span class="nt">"type"</span><span class="p">:</span><span class="s2">"object"</span><span class="p">,</span><span class="nt">"required"</span><span class="p">:[</span><span class="s2">"Justification"</span><span class="p">,</span><span class="s2">"Conclusion"</span><span class="p">],</span><span class="nt">"properties"</span><span class="p">:{</span><span class="nt">"Conclusion"</span><span class="p">:{</span><span class="nt">"type"</span><span class="p">:</span><span class="s2">"boolean"</span><span class="p">,</span><span class="nt">"description"</span><span class="p">:</span><span class="s2">"Result of criteria evaluation against provided context"</span><span class="p">},</span><span class="nt">"Justification"</span><span class="p">:{</span><span class="nt">"type"</span><span class="p">:</span><span class="s2">"string"</span><span class="p">,</span><span class="nt">"description"</span><span class="p">:</span><span class="s2">"An explanation for the conclusion, or of the inability to verify the criteria."</span><span class="p">},</span><span class="nt">"Calculation"</span><span class="p">:{</span><span class="nt">"type"</span><span class="p">:</span><span class="s2">"number"</span><span class="p">,</span><span class="nt">"description"</span><span class="p">:</span><span class="s2">"The amount of money the applicant is entitled to per month, if they are determined eligible for benefits."</span><span class="p">}},</span><span class="nt">"title"</span><span class="p">:</span><span class="s2">"Outputs"</span><span class="p">}</span>
+</code></pre></div>
+</details>
+<h2 id="context-grounding">Context Grounding<a class="headerlink" href="#context-grounding" title="Permanent link">&para;</a></h2>
+<p><a href="https://docs.uipath.com/automation-cloud/automation-cloud/latest/admin-guide/about-context-grounding">Context Grounding</a>
+is a component of the UiPath AI Trust Layer which allows you to bring in your data to generate more
+accurate, reliable GenAI predictions.</p>
+<p>In this case, we are going to use context grounding to provide the agent with the Benefit Eligibility
+criteria and calculation rules, to enable it to make the right decisions.</p>
+<p>The <strong>Eligibility Criteria</strong> and <strong>Benefit Calculation Rules</strong> documents are indexed inside the
+<strong>Eligibility</strong> context grounding index.</p>
+<div class="img-cols img-cols-50">
+<div>
+<p>Benefit Calculation Rules.
+  </p>
+</div>
+<div>
+<p><img alt="The SNAP benefit calculation rules document" class="screenshot" src="../6-eligibility-determination-agent.images/9-benefit-calculation-rules.png" />
+  </p>
+</div>
+</div>
+<div class="img-cols img-cols-50">
+<div>
+<p>Eligibility Criteria.
+  </p>
+</div>
+<div>
+<p><img alt="The benefit eligibility criteria document" class="screenshot" src="../6-eligibility-determination-agent.images/10-eligibility-criteria.png" />
+  </p>
+</div>
+</div>
+<p>We are going to use the index named <strong>Eligibility</strong> (which is already created). Let's configure our
+agent to use it.</p>
+<h3 id="5-add-the-context-to-the-agent">5. Add the context to the agent<a class="headerlink" href="#5-add-the-context-to-the-agent" title="Permanent link">&para;</a></h3>
+<div class="img-cols img-cols-30">
+<div>
+<p>Click on the <strong>Add Context</strong> button.
+  </p>
+</div>
+<div>
+<p><img alt="Context section with the plus button highlighted" class="screenshot" src="../6-eligibility-determination-agent.images/11-add-context.png" />
+  </p>
+</div>
+</div>
+<div class="img-cols img-cols-30">
+<div>
+<p>Select the <strong>Eligibility</strong> index from the current solution.
+  </p>
+</div>
+<div>
+<p><img alt="Context picker with the Eligibility index listed under &quot;In current solution&quot;" class="screenshot" src="../6-eligibility-determination-agent.images/12-select-eligibility-index.png" />
+  </p>
+</div>
+</div>
+<div class="img-cols img-cols-30">
+<div>
+<p>Select the <strong>Semantic</strong> search strategy.
+  </p>
+</div>
+<div>
+<p><img alt="Strategy dropdown set to Semantic" class="screenshot" src="../6-eligibility-determination-agent.images/13-select-semantic-strategy.png" />
+  </p>
+</div>
+</div>
+<h2 id="tools">Tools<a class="headerlink" href="#tools" title="Permanent link">&para;</a></h2>
+<p>Agent by itself is good at making decisions and analyzing data. But LLMs naturally can't go and
+interact with databases and applications... yet. We are going to use
+<a href="https://docs.uipath.com/agents/automation-cloud/latest/user-guide/agent-tools">tools</a> for that. Tools
+offer agents both access to critical context from data stored in business applications, and the ability
+to execute actions based on objectives outlined in the prompt. Tools are how the agent's reasoning and
+planning can turn into action.</p>
+<p>There are various kind of tools we can configure for our agents:</p>
+<ul>
+<li>RPA Workflows</li>
+<li>Integration Service Activities</li>
+<li>Other Agents</li>
+<li>Specialized tools (example: <strong>Analyze Files</strong>)</li>
+</ul>
+<p>Our agent needs to do arithmetic operations to determine the benefit amount for each applicant, so we
+are going to use three RPA workflows as tools: <strong>Addition Tool</strong>, <strong>Multiplication Tool</strong> and
+<strong>Subtraction Tool</strong>.</p>
+<h3 id="6-add-the-three-arithmetic-tools">6. Add the three arithmetic tools<a class="headerlink" href="#6-add-the-three-arithmetic-tools" title="Permanent link">&para;</a></h3>
+<p>Let's add the tools to our agent. Here is an example of how to add the <strong>Addition Tool</strong>. The process
+is similar for the other tools.</p>
+<div class="img-cols img-cols-30">
+<div>
+<p>Click the <strong>+</strong> button from the tools section.
+  </p>
+</div>
+<div>
+<p><img alt="Tools section with the add button highlighted" class="screenshot" src="../6-eligibility-determination-agent.images/14-add-tool.png" />
+  </p>
+</div>
+</div>
+<div class="img-cols img-cols-30">
+<div>
+<p>Search for the following tools and add them one by one:</p>
+<ul>
+<li><strong>Addition Tool</strong></li>
+<li><strong>Multiplication Tool</strong></li>
+<li><strong>Subtraction Tool</strong>
+  </li>
+</ul>
+</div>
+<div>
+<p><img alt="Tool picker with the Addition Tool result under RPA workflows" class="screenshot" src="../6-eligibility-determination-agent.images/15-select-addition-tool.png" />
+  </p>
+</div>
+</div>
+<div class="img-cols img-cols-30">
+<div>
+<p>Add the following <strong>descriptions</strong> to each one of the tools — this helps the agent understand when to
+use them:</p>
+<ul>
+<li><strong>Addition Tool</strong> — Use this tool when you need to calculate a sum of two numbers</li>
+<li><strong>Multiplication Tool</strong> — Use this tool when you need to multiply two numbers</li>
+<li><strong>Subtraction Tool</strong> — Use this tool to calculate a subtraction between two numbers
+  </li>
+</ul>
+</div>
+<div>
+<p><img alt="Tool configuration with the description entered" class="screenshot" src="../6-eligibility-determination-agent.images/16-tool-descriptions.png" />
+  </p>
+</div>
+</div>
+<h2 id="configuring-agents-prompts">Configuring Agent's Prompts<a class="headerlink" href="#configuring-agents-prompts" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>Precision in prompts, like in coding, leads to powerful and predictable results. If your prompt is
+messy, expect messy output. Treat it like code, and write every word with purpose!</p>
+<p>— <em>another advice from gpt-4o</em></p>
+</blockquote>
+<p><img alt="Illustration accompanying the prompt-writing advice" src="../6-eligibility-determination-agent.images/17-prompt-precision-illustration.png" width="260" /></p>
+<p>First, let's understand the difference between <strong>System prompt</strong> and <strong>User prompt</strong>.</p>
+<p>System Prompts provide consistent guidelines that define an agent's role and capabilities, while User
+Prompts direct its attention to specific tasks and input parameters. Understanding this distinction is
+essential for effectively designing and implementing AI agents that can perform complex tasks while
+maintaining appropriate operational boundaries.</p>
+<ul>
+<li><strong>System prompt</strong> — allows you to describe in natural language the agent's role, goal and constraints. You specify any rules for it to follow, and information about when it might want to use certain tools, escalations, or context – all of which we'll cover later in this guide.</li>
+<li><strong>User prompt</strong> — User prompts allow you to structure how the inputs/arguments are passed to the agent, and you can also show in the user prompt how we'll refer to certain inputs in the system prompt.</li>
+</ul>
+<h3 id="7-write-the-system-prompt">7. Write the System Prompt<a class="headerlink" href="#7-write-the-system-prompt" title="Permanent link">&para;</a></h3>
+<p>Let's start with the <strong>System Prompt</strong>. Copy the following and paste it into your <strong>System Prompt</strong>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>#Role
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>You are a decision agent whose role is to evaluate if an applicant meets the eligibility criteria for Supplemental Nutrition Assistance Program (SNAP) benefits. The eligibility criteria is specified in the "Eligibility" context.
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>#Goals
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>Assess whether the given applicant information qualifies them for SNAP benefits. Output a conclusion along with an explanation for the decision. For qualified applicants, calculate the monthly benefit amount.
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a># Instructions
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>1. Determine the net income. Use the ##SNAP Eligibility## context to do this.
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>2. Determine if the applicant qualifies for benefits, according to the thresholds from the context.
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>- Set the Boolean value of ##Conclusion## to True if they qualify, or False if they don't.
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>3. Set the string value of ##Justification## to your explanation of the eligibility recommendation.
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>If they qualify for benefits:
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a> a. Calculate the maximum benefit amount for the household size.
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a> b. Set the value of ##Calculation## to the final benefit amount.
+<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>If they don't qualify for benefits:
+<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a> a. Set the value of ##Calculation## to "0".
+<a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>##Calculation Rules
+<a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a>**DO NOT** make calculations directly, instead use the available tools (**Addition Tool**, **Subtraction Tool**, **Multiplication tool**) to make calculations.
+</code></pre></div>
+<h3 id="8-write-the-user-prompt">8. Write the User Prompt<a class="headerlink" href="#8-write-the-user-prompt" title="Permanent link">&para;</a></h3>
+<p><strong>User Prompt</strong> connects it all together. In our case, the user prompt looks like this — paste it into
+your <strong>User Prompt</strong>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>Decide whether this applicant qualifies for SNAP benefits:
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>Household Size: {{Household_Size}}
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>Monthly Gross Income: {{Monthly_Gross_Income}}
+</code></pre></div>
+<h3 id="9-test-the-agent">9. Test the agent<a class="headerlink" href="#9-test-the-agent" title="Permanent link">&para;</a></h3>
+<p>Time to test it by giving it some sample inputs. Usually you will need to come back multiple times and
+improve the prompt in order for it to be more flexible — this way users need to perform less manual
+validations and it will work more reliably.</p>
+<p>Let's test the following scenarios.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Qualifies — household of 4</label><label for="__tabbed_1_2">Does not qualify — household of 1</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>Household_Size: 4
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>Monthly_Gross_Income: 2500
+</code></pre></div>
+<p>According to the guidelines, the applicant qualifies for benefits, because the maximum allowed
+gross income for a household of 4 is $4,050.</p>
+<p>Output should be <strong>Conclusion: True</strong>, <strong>Calculation: 649.85</strong></p>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>Household_Size: 1
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>Monthly_Gross_Income: 2000
+</code></pre></div>
+<p>According to the guidelines, the applicant does not qualify for benefits, because the maximum
+allowed gross income for a household of 1 is $1,950, which is exceeded by the applicant's gross
+income.</p>
+<p>Output should be <strong>Conclusion: False</strong>, <strong>Calculation: 0</strong></p>
+</div>
+</div>
+</div>
+<h2 id="quality-control-and-evaluations">Quality Control and Evaluations<a class="headerlink" href="#quality-control-and-evaluations" title="Permanent link">&para;</a></h2>
+<p>How about giving our agent a thorough testing?</p>
+<ul>
+<li>Imagine that tomorrow a brand new model is released, or for some reason, for example cost, you would like to switch to an alternative LLM. How would you ensure that this change will not disrupt agent's result?</li>
+<li>What if during numerous improvements and fine tuning of prompt previous document samples do not work anymore?</li>
+</ul>
+<p>The solution is in automated testing, just like we do with Robots, or pretty much any other source
+code. Let's build Evaluations that help us with automatic validation of results for a set of predefined
+samples.</p>
+<p>An <a href="https://docs.uipath.com/agents/automation-cloud/latest/user-guide/agent-evaluations">evaluation</a> is
+a pair between an input and an assertion — or evaluator — made on the output. The evaluator is a
+defined condition or rule used to assess whether the agent's output meets the expected output or
+expected trajectory.</p>
+<p>There are three main categories of evaluators:</p>
+<p><strong>LLM-as-a-Judge:</strong></p>
+<ul>
+<li>Recommended as the default approach when targeting the root output.</li>
+<li>Provides flexible evaluation of complex outputs.</li>
+<li>Best used when evaluating reasoning, natural language responses, or complex structured outputs.</li>
+</ul>
+<p><strong>Deterministic</strong></p>
+<ul>
+<li>Recommended when expecting exact matches.</li>
+<li>Most effective when output requirements are strictly defined</li>
+<li>Works with complex objects, but is best used with:<ul>
+<li>Boolean responses (true/false)</li>
+<li>Specific numerical values</li>
+<li>Exact string matches</li>
+<li>Array of primitives</li>
+</ul>
+</li>
+</ul>
+<p><strong>Trajectory</strong></p>
+<ul>
+<li>Used to judge the agent's overall behavior based on its run history and expected behavior.</li>
+</ul>
+<p>Our Agent has the following output fields:</p>
+<ul>
+<li><strong>Conclusion</strong> — "true" or "false" — <strong>deterministic output</strong></li>
+<li><strong>Calculation</strong> — the benefit amount that the applicant qualifies for — <strong>deterministic output</strong></li>
+<li><strong>Justification</strong> — An explanation for the conclusion and calculation made by the agent — <strong>dynamic output</strong></li>
+</ul>
+<p>Let's assume we want to test the <strong>Conclusion</strong> and <strong>Calculation</strong> output fields. To do that, we will
+use a deterministic evaluator.</p>
+<h3 id="10-create-the-two-evaluators">10. Create the two evaluators<a class="headerlink" href="#10-create-the-two-evaluators" title="Permanent link">&para;</a></h3>
+<p>Go to <strong>Evaluators</strong> and click <strong>Create New</strong>.</p>
+<p><img alt="Evaluators page with the Create New button in the upper-right corner" class="screenshot" src="../6-eligibility-determination-agent.images/18-evaluators-create-new-W.png" width="900" /></p>
+<div class="img-cols img-cols-50">
+<div>
+<p>Select <strong>Exact match</strong> evaluator type.
+  </p>
+</div>
+<div>
+<p><img alt="Evaluator type picker with Exact match selected" class="screenshot" src="../6-eligibility-determination-agent.images/19-select-exact-match.png" />
+  </p>
+</div>
+</div>
+<div class="img-cols img-cols-50">
+<div>
+<p>Let's give our evaluator a name:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>Conclusion Evaluator
+</code></pre></div>
+<p>The target output field will be <strong>Conclusion</strong>.
+  </p>
+</div>
+<div>
+<p><img alt="Evaluator configuration with the name Conclusion Evaluator and Deterministic type" class="screenshot" src="../6-eligibility-determination-agent.images/20-conclusion-evaluator.png" />
+  </p>
+</div>
+</div>
+<div class="img-cols img-cols-50">
+<div>
+<p>Let's create one more evaluator, for the <strong>Calculation</strong> field:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>Calculation Evaluator
+</code></pre></div>
+<p>The target output field will be <strong>Calculation</strong>.
+  </p>
+</div>
+<div>
+<p><img alt="Evaluator configuration with the name Calculation Evaluator and Deterministic type" class="screenshot" src="../6-eligibility-determination-agent.images/21-calculation-evaluator.png" />
+  </p>
+</div>
+</div>
+<h3 id="11-import-the-evaluation-set">11. Import the evaluation set<a class="headerlink" href="#11-import-the-evaluation-set" title="Permanent link">&para;</a></h3>
+<p>Let's now import an evaluation set to test our agent.</p>
+<p><img alt="Evaluation sets page with the Create dropdown open showing the Import option" class="screenshot" src="../6-eligibility-determination-agent.images/22-import-evaluation-set-W.png" width="900" /></p>
+<details class="note">
+<summary>Copy this evaluation set (JSON)</summary>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="p">{</span><span class="nt">"fileName"</span><span class="p">:</span><span class="s2">"evaluation-set-1775476242050.json"</span><span class="p">,</span><span class="nt">"id"</span><span class="p">:</span><span class="s2">"2d54e8b6-869e-4418-a91a-b63726b44b44"</span><span class="p">,</span><span class="nt">"name"</span><span class="p">:</span><span class="s2">"Benefits Evaluation Set (copy)"</span><span class="p">,</span><span class="nt">"batchSize"</span><span class="p">:</span><span class="mi">10</span><span class="p">,</span><span class="nt">"evaluatorRefs"</span><span class="p">:[</span><span class="s2">"aa6d3e4d-c78a-4390-a504-14ffdaba4077"</span><span class="p">,</span><span class="s2">"d5b4fec5-0f00-42e2-8ea7-2a0d911aacf8"</span><span class="p">],</span><span class="nt">"evaluations"</span><span class="p">:[{</span><span class="nt">"id"</span><span class="p">:</span><span class="s2">"c22a8498-4168-4605-b0e2-b58d023e229b"</span><span class="p">,</span><span class="nt">"name"</span><span class="p">:</span><span class="s2">"Qualify_1"</span><span class="p">,</span><span class="nt">"inputs"</span><span class="p">:{</span><span class="nt">"Household_Size"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="nt">"Monthly_Gross_Income"</span><span class="p">:</span><span class="s2">"1200"</span><span class="p">},</span><span class="nt">"expectedOutput"</span><span class="p">:{</span><span class="nt">"Conclusion"</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="nt">"Justification"</span><span class="p">:</span><span class="s2">"-"</span><span class="p">,</span><span class="nt">"Calculation"</span><span class="p">:</span><span class="mf">149.7</span><span class="p">},</span><span class="nt">"simulationInstructions"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="nt">"expectedAgentBehavior"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="nt">"simulateInput"</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span><span class="nt">"inputGenerationInstructions"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="nt">"simulateTools"</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span><span class="nt">"toolsToSimulate"</span><span class="p">:[],</span><span class="nt">"evalSetId"</span><span class="p">:</span><span class="s2">"ee9e5a82-247e-43d2-a407-b50dcd2ac38d"</span><span class="p">,</span><span class="nt">"createdAt"</span><span class="p">:</span><span class="s2">"2026-04-06T11:50:42.050Z"</span><span class="p">,</span><span class="nt">"updatedAt"</span><span class="p">:</span><span class="s2">"2026-04-06T11:50:42.050Z"</span><span class="p">,</span><span class="nt">"source"</span><span class="p">:</span><span class="s2">"manual"</span><span class="p">},{</span><span class="nt">"id"</span><span class="p">:</span><span class="s2">"78c0a0a3-f7d9-4ff8-a858-8daded052879"</span><span class="p">,</span><span class="nt">"name"</span><span class="p">:</span><span class="s2">"Qualify_2"</span><span class="p">,</span><span class="nt">"inputs"</span><span class="p">:{</span><span class="nt">"Household_Size"</span><span class="p">:</span><span class="mi">4</span><span class="p">,</span><span class="nt">"Monthly_Gross_Income"</span><span class="p">:</span><span class="s2">"2500"</span><span class="p">},</span><span class="nt">"expectedOutput"</span><span class="p">:{</span><span class="nt">"Conclusion"</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="nt">"Justification"</span><span class="p">:</span><span class="s2">"-"</span><span class="p">,</span><span class="nt">"Calculation"</span><span class="p">:</span><span class="mf">649.85</span><span class="p">},</span><span class="nt">"simulationInstructions"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="nt">"expectedAgentBehavior"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="nt">"simulateInput"</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span><span class="nt">"inputGenerationInstructions"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="nt">"simulateTools"</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span><span class="nt">"toolsToSimulate"</span><span class="p">:[],</span><span class="nt">"evalSetId"</span><span class="p">:</span><span class="s2">"ee9e5a82-247e-43d2-a407-b50dcd2ac38d"</span><span class="p">,</span><span class="nt">"createdAt"</span><span class="p">:</span><span class="s2">"2026-04-06T11:50:42.050Z"</span><span class="p">,</span><span class="nt">"updatedAt"</span><span class="p">:</span><span class="s2">"2026-04-06T11:50:42.050Z"</span><span class="p">,</span><span class="nt">"source"</span><span class="p">:</span><span class="s2">"manual"</span><span class="p">},{</span><span class="nt">"id"</span><span class="p">:</span><span class="s2">"65566054-7730-40bb-93fd-71dba2a3a6d9"</span><span class="p">,</span><span class="nt">"name"</span><span class="p">:</span><span class="s2">"Qualify_3"</span><span class="p">,</span><span class="nt">"inputs"</span><span class="p">:{</span><span class="nt">"Household_Size"</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span><span class="nt">"Monthly_Gross_Income"</span><span class="p">:</span><span class="s2">"800"</span><span class="p">},</span><span class="nt">"expectedOutput"</span><span class="p">:{</span><span class="nt">"Conclusion"</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="nt">"Justification"</span><span class="p">:</span><span class="s2">"-"</span><span class="p">,</span><span class="nt">"Calculation"</span><span class="p">:</span><span class="mf">694.7</span><span class="p">},</span><span class="nt">"simulationInstructions"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="nt">"expectedAgentBehavior"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="nt">"simulateInput"</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span><span class="nt">"inputGenerationInstructions"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="nt">"simulateTools"</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span><span class="nt">"toolsToSimulate"</span><span class="p">:[],</span><span class="nt">"evalSetId"</span><span class="p">:</span><span class="s2">"ee9e5a82-247e-43d2-a407-b50dcd2ac38d"</span><span class="p">,</span><span class="nt">"createdAt"</span><span class="p">:</span><span class="s2">"2026-04-06T11:50:42.050Z"</span><span class="p">,</span><span class="nt">"updatedAt"</span><span class="p">:</span><span class="s2">"2026-04-06T11:50:42.050Z"</span><span class="p">,</span><span class="nt">"source"</span><span class="p">:</span><span class="s2">"manual"</span><span class="p">},{</span><span class="nt">"id"</span><span class="p">:</span><span class="s2">"d667febc-6e86-4c88-8b38-1fa139aeaf73"</span><span class="p">,</span><span class="nt">"name"</span><span class="p">:</span><span class="s2">"Qualify_5"</span><span class="p">,</span><span class="nt">"inputs"</span><span class="p">:{</span><span class="nt">"Household_Size"</span><span class="p">:</span><span class="mi">6</span><span class="p">,</span><span class="nt">"Monthly_Gross_Income"</span><span class="p">:</span><span class="s2">"4000"</span><span class="p">},</span><span class="nt">"expectedOutput"</span><span class="p">:{</span><span class="nt">"Conclusion"</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="nt">"Justification"</span><span class="p">:</span><span class="s2">"-"</span><span class="p">,</span><span class="nt">"Calculation"</span><span class="p">:</span><span class="mf">855.2</span><span class="p">},</span><span class="nt">"simulationInstructions"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="nt">"expectedAgentBehavior"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="nt">"simulateInput"</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span><span class="nt">"inputGenerationInstructions"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="nt">"simulateTools"</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span><span class="nt">"toolsToSimulate"</span><span class="p">:[],</span><span class="nt">"evalSetId"</span><span class="p">:</span><span class="s2">"ee9e5a82-247e-43d2-a407-b50dcd2ac38d"</span><span class="p">,</span><span class="nt">"createdAt"</span><span class="p">:</span><span class="s2">"2026-04-06T11:50:42.050Z"</span><span class="p">,</span><span class="nt">"updatedAt"</span><span class="p">:</span><span class="s2">"2026-04-06T11:50:42.050Z"</span><span class="p">,</span><span class="nt">"source"</span><span class="p">:</span><span class="s2">"manual"</span><span class="p">},{</span><span class="nt">"id"</span><span class="p">:</span><span class="s2">"65a7f339-a4bf-4edb-bc60-cfcbcd3fad98"</span><span class="p">,</span><span class="nt">"name"</span><span class="p">:</span><span class="s2">"Not_Qualify_1"</span><span class="p">,</span><span class="nt">"inputs"</span><span class="p">:{</span><span class="nt">"Household_Size"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="nt">"Monthly_Gross_Income"</span><span class="p">:</span><span class="s2">"2000"</span><span class="p">},</span><span class="nt">"expectedOutput"</span><span class="p">:{</span><span class="nt">"Conclusion"</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span><span class="nt">"Justification"</span><span class="p">:</span><span class="s2">"-"</span><span class="p">,</span><span class="nt">"Calculation"</span><span class="p">:</span><span class="mi">0</span><span class="p">},</span><span class="nt">"simulationInstructions"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="nt">"expectedAgentBehavior"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="nt">"simulateInput"</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span><span class="nt">"inputGenerationInstructions"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="nt">"simulateTools"</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span><span class="nt">"toolsToSimulate"</span><span class="p">:[],</span><span class="nt">"evalSetId"</span><span class="p">:</span><span class="s2">"ee9e5a82-247e-43d2-a407-b50dcd2ac38d"</span><span class="p">,</span><span class="nt">"createdAt"</span><span class="p">:</span><span class="s2">"2026-04-06T11:50:42.050Z"</span><span class="p">,</span><span class="nt">"updatedAt"</span><span class="p">:</span><span class="s2">"2026-04-06T11:50:42.050Z"</span><span class="p">,</span><span class="nt">"source"</span><span class="p">:</span><span class="s2">"manual"</span><span class="p">},{</span><span class="nt">"id"</span><span class="p">:</span><span class="s2">"481d251c-83b1-4368-9671-aceaab47450c"</span><span class="p">,</span><span class="nt">"name"</span><span class="p">:</span><span class="s2">"Not_Qualify_2"</span><span class="p">,</span><span class="nt">"inputs"</span><span class="p">:{</span><span class="nt">"Household_Size"</span><span class="p">:</span><span class="mi">4</span><span class="p">,</span><span class="nt">"Monthly_Gross_Income"</span><span class="p">:</span><span class="s2">"4100"</span><span class="p">},</span><span class="nt">"expectedOutput"</span><span class="p">:{</span><span class="nt">"Conclusion"</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span><span class="nt">"Justification"</span><span class="p">:</span><span class="s2">"-"</span><span class="p">,</span><span class="nt">"Calculation"</span><span class="p">:</span><span class="mi">0</span><span class="p">},</span><span class="nt">"simulationInstructions"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="nt">"expectedAgentBehavior"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="nt">"simulateInput"</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span><span class="nt">"inputGenerationInstructions"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="nt">"simulateTools"</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span><span class="nt">"toolsToSimulate"</span><span class="p">:[],</span><span class="nt">"evalSetId"</span><span class="p">:</span><span class="s2">"ee9e5a82-247e-43d2-a407-b50dcd2ac38d"</span><span class="p">,</span><span class="nt">"createdAt"</span><span class="p">:</span><span class="s2">"2026-04-06T11:50:42.050Z"</span><span class="p">,</span><span class="nt">"updatedAt"</span><span class="p">:</span><span class="s2">"2026-04-06T11:50:42.050Z"</span><span class="p">,</span><span class="nt">"source"</span><span class="p">:</span><span class="s2">"manual"</span><span class="p">},{</span><span class="nt">"id"</span><span class="p">:</span><span class="s2">"0681214b-efb9-4971-86d3-a17f6f24ee18"</span><span class="p">,</span><span class="nt">"name"</span><span class="p">:</span><span class="s2">"Not_Qualify_3"</span><span class="p">,</span><span class="nt">"inputs"</span><span class="p">:{</span><span class="nt">"Household_Size"</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span><span class="nt">"Monthly_Gross_Income"</span><span class="p">:</span><span class="s2">"5500"</span><span class="p">},</span><span class="nt">"expectedOutput"</span><span class="p">:{</span><span class="nt">"Conclusion"</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span><span class="nt">"Justification"</span><span class="p">:</span><span class="s2">"-"</span><span class="p">,</span><span class="nt">"Calculation"</span><span class="p">:</span><span class="mi">0</span><span class="p">},</span><span class="nt">"simulationInstructions"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="nt">"expectedAgentBehavior"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="nt">"simulateInput"</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span><span class="nt">"inputGenerationInstructions"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="nt">"simulateTools"</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span><span class="nt">"toolsToSimulate"</span><span class="p">:[],</span><span class="nt">"evalSetId"</span><span class="p">:</span><span class="s2">"ee9e5a82-247e-43d2-a407-b50dcd2ac38d"</span><span class="p">,</span><span class="nt">"createdAt"</span><span class="p">:</span><span class="s2">"2026-04-06T11:50:42.050Z"</span><span class="p">,</span><span class="nt">"updatedAt"</span><span class="p">:</span><span class="s2">"2026-04-06T11:50:42.050Z"</span><span class="p">,</span><span class="nt">"source"</span><span class="p">:</span><span class="s2">"manual"</span><span class="p">},{</span><span class="nt">"id"</span><span class="p">:</span><span class="s2">"b14b78c6-9b13-4414-9859-d2f483b69f6d"</span><span class="p">,</span><span class="nt">"name"</span><span class="p">:</span><span class="s2">"Not_Qualify_4"</span><span class="p">,</span><span class="nt">"inputs"</span><span class="p">:{</span><span class="nt">"Household_Size"</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span><span class="nt">"Monthly_Gross_Income"</span><span class="p">:</span><span class="s2">"2700"</span><span class="p">},</span><span class="nt">"expectedOutput"</span><span class="p">:{</span><span class="nt">"Conclusion"</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span><span class="nt">"Justification"</span><span class="p">:</span><span class="s2">"-"</span><span class="p">,</span><span class="nt">"Calculation"</span><span class="p">:</span><span class="mi">0</span><span class="p">},</span><span class="nt">"simulationInstructions"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="nt">"expectedAgentBehavior"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="nt">"simulateInput"</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span><span class="nt">"inputGenerationInstructions"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="nt">"simulateTools"</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span><span class="nt">"toolsToSimulate"</span><span class="p">:[],</span><span class="nt">"evalSetId"</span><span class="p">:</span><span class="s2">"ee9e5a82-247e-43d2-a407-b50dcd2ac38d"</span><span class="p">,</span><span class="nt">"createdAt"</span><span class="p">:</span><span class="s2">"2026-04-06T11:50:42.050Z"</span><span class="p">,</span><span class="nt">"updatedAt"</span><span class="p">:</span><span class="s2">"2026-04-06T11:50:42.050Z"</span><span class="p">,</span><span class="nt">"source"</span><span class="p">:</span><span class="s2">"manual"</span><span class="p">},{</span><span class="nt">"id"</span><span class="p">:</span><span class="s2">"90cd2c2b-9e66-4e41-89fa-206521b7f1de"</span><span class="p">,</span><span class="nt">"name"</span><span class="p">:</span><span class="s2">"Not_Qualify_5"</span><span class="p">,</span><span class="nt">"inputs"</span><span class="p">:{</span><span class="nt">"Household_Size"</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span><span class="nt">"Monthly_Gross_Income"</span><span class="p">:</span><span class="s2">"3500"</span><span class="p">},</span><span class="nt">"expectedOutput"</span><span class="p">:{</span><span class="nt">"Conclusion"</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span><span class="nt">"Justification"</span><span class="p">:</span><span class="s2">"-"</span><span class="p">,</span><span class="nt">"Calculation"</span><span class="p">:</span><span class="mi">0</span><span class="p">},</span><span class="nt">"simulationInstructions"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="nt">"expectedAgentBehavior"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="nt">"simulateInput"</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span><span class="nt">"inputGenerationInstructions"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="nt">"simulateTools"</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span><span class="nt">"toolsToSimulate"</span><span class="p">:[],</span><span class="nt">"evalSetId"</span><span class="p">:</span><span class="s2">"ee9e5a82-247e-43d2-a407-b50dcd2ac38d"</span><span class="p">,</span><span class="nt">"createdAt"</span><span class="p">:</span><span class="s2">"2026-04-06T11:50:42.050Z"</span><span class="p">,</span><span class="nt">"updatedAt"</span><span class="p">:</span><span class="s2">"2026-04-06T11:50:42.050Z"</span><span class="p">,</span><span class="nt">"source"</span><span class="p">:</span><span class="s2">"manual"</span><span class="p">}],</span><span class="nt">"modelSettings"</span><span class="p">:[],</span><span class="nt">"createdAt"</span><span class="p">:</span><span class="s2">"2026-04-06T11:50:42.050Z"</span><span class="p">,</span><span class="nt">"updatedAt"</span><span class="p">:</span><span class="s2">"2026-04-06T17:45:34.085Z"</span><span class="p">,</span><span class="nt">"agentMemoryEnabled"</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span><span class="nt">"agentMemorySettings"</span><span class="p">:[],</span><span class="nt">"lineByLineEvaluation"</span><span class="p">:</span><span class="kc">false</span><span class="p">}</span>
+</code></pre></div>
+</details>
+<div class="img-cols img-cols-50">
+<div>
+<p>Paste it into the import window. After that click the <strong>Import</strong> button.
+  </p>
+</div>
+<div>
+<p><img alt="Import window with the evaluation set JSON pasted in" class="screenshot" src="../6-eligibility-determination-agent.images/23-import-window.png" />
+  </p>
+</div>
+</div>
+<div class="img-cols img-cols-50">
+<div>
+<p>Open the evaluation set and select the <strong>Conclusion Evaluator</strong> and <strong>Calculation Evaluator</strong> that we
+configured earlier.
+  </p>
+</div>
+<div>
+<p><img alt="Applied Evaluators selector with both evaluators selected" class="screenshot" src="../6-eligibility-determination-agent.images/24-select-evaluators.png" />
+  </p>
+</div>
+</div>
+<div class="img-cols img-cols-30">
+<div>
+<p>Evaluate the set and discuss the results with the trainer.
+  </p>
+</div>
+<div>
+<p><img alt="Evaluate set button highlighted" class="screenshot" src="../6-eligibility-determination-agent.images/25-evaluate-set.png" />
+  </p>
+</div>
+</div>
+<h2 id="configuring-the-agentic-task-in-maestro">Configuring the Agentic Task in Maestro<a class="headerlink" href="#configuring-the-agentic-task-in-maestro" title="Permanent link">&para;</a></h2>
+<p>Let's get back to Studio and continue editing our Agentic Process.</p>
+<h3 id="12-point-the-task-at-your-agent">12. Point the task at your agent<a class="headerlink" href="#12-point-the-task-at-your-agent" title="Permanent link">&para;</a></h3>
+<div class="img-cols img-cols-50">
+<div>
+<p>Configure the <strong>Eligibility Determination</strong> task to use our freshly prepared AI Agent! This is done in
+the same way as the Robotic task: pick <strong>Start and wait for agent</strong>, then search for the agent in your
+solution.
+  </p>
+</div>
+<div>
+<p><img alt="Eligibility Determination step selected with the agent picker open" class="screenshot" src="../6-eligibility-determination-agent.images/26-select-agent-in-task.png" />
+  </p>
+</div>
+</div>
+<h3 id="13-map-the-inputs">13. Map the inputs<a class="headerlink" href="#13-map-the-inputs" title="Permanent link">&para;</a></h3>
+<div class="img-cols img-cols-30">
+<div>
+<p>Now we need to pick outputs from the <strong>Process Benefits Application</strong> RPA Task, and add them as inputs
+to the Agent — here is how you do it in your Agentic task's <strong>Settings</strong>.
+  </p>
+</div>
+<div>
+<p><img alt="Eligibility Determination agent activity selected with its input mappings" class="screenshot" src="../6-eligibility-determination-agent.images/27-map-agent-inputs.png" />
+  </p>
+</div>
+</div>
+<p>In the end:</p>
+<ul>
+<li>Robot's <strong>HouseHoldSize</strong> should map into Agent's <strong>Household_Size</strong></li>
+<li>Robot's <strong>MonthlyIncome</strong> should map into Agent's <strong>Monthly_Gross_Income</strong></li>
+</ul>
+<h3 id="14-run-it">14. Run it<a class="headerlink" href="#14-run-it" title="Permanent link">&para;</a></h3>
+<p>Process is ready for testing — click on the <strong>Debug</strong> button! This time we can check the output of the
+<strong>Eligibility Determination Agent</strong>.</p>
+<p><img alt="Completed execution showing the Eligibility Determination Agent's output" class="screenshot" src="../6-eligibility-determination-agent.images/28-execution-result-W.png" width="900" /></p>
+<p><strong>Time to move to the next one!</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../5-income-verification-agent/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 5. Build the Income Verification Agent">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                5. Build the Income Verification Agent
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../7-configure-human-validation/" class="md-footer__link md-footer__link--next" aria-label="Next: 7. Add an Action App for human validation">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                7. Add an Action App for human validation
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.footer", "toc.integrate", "search.highlight", "search.suggest", "content.code.copy", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../javascripts/extra.js"></script>
+      
+    
+  </body>
+</html>

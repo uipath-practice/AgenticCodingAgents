@@ -1,0 +1,30 @@
+{
+  "version": "1.0",
+  "image_file": "10-residency-verification-context-W.jpg",
+  "image_path": "docs/benefit-claims-processing/2-setting-up-the-solution.images/10.jpg",
+  "lesson": "2-setting-up-the-solution",
+  "exercise": "benefit-claims-processing",
+  "extraction": {
+    "ocr_text": "Explorer                                           +   🔍\n\nBenefit Claims Processing Template\n  ›  Action App\n  ›  Addition Tool\n  ›  Benefit Claims Processing                         •\n  ›  DownloadFileFromStorageBucket\n\n  ›  Apps\n     Assets\n  ›  Connections\n  ˅  Context\n       Eligibility\n       Income Verification\n       Residency Verification\n  ›  Processes\n\nTop tabs:\nBenefit Claims ...     Main     Income Verifica...     Residency Verif...\n\nDebug configuration   i\n\nResidency Verification\n\nName *\nResidency Verification\n\nDescription\nNot applicable or no value se...\n\nData source\n○ Storage Bucket   ○ IS Co...\n\nStorage Bucket\nResidency\n\nDropdown / picker:\nResidency Verification  X\n\nSearch context grounding indexes\n\nPlatform resources\n  Benefit Claims\n    Eligibility\n    Income Verification\n    Residency Verification\n  Compliance Inspection\n    Index Workplace Safety and Compliance Regulati...\n  Shared\n    Index Workplace Safety and Compliance Regulati...",
+    "description": "The screenshot shows UiPath Studio Web / Agent Builder with the Benefit Claims Processing solution open. In the Explorer panel, the Context section is expanded and the Residency Verification context grounding index is selected. The Debug configuration panel for Residency Verification is visible, and a context grounding index dropdown is open showing available platform resources, with Residency Verification highlighted.",
+    "step_instructions": "Click on Residency Verification in the open context grounding indexes dropdown under Platform resources > Benefit Claims. If not already selected in the Explorer, click Context > Residency Verification first, then confirm the Residency Verification index is selected in the Debug configuration."
+  },
+  "layout": {
+    "mode": "full_width",
+    "ocr_length": 968,
+    "aspect_ratio": 3.21,
+    "image_size": "1922x598",
+    "rationale": "High density (968 chars) + wide (3.21) or very high text"
+  },
+  "model": {
+    "name": "gpt-5.4",
+    "deployment": "gpt-5.5",
+    "api_version": "2025-04-01-preview"
+  },
+  "usage": {
+    "prompt_tokens": 3108,
+    "completion_tokens": 613,
+    "total_tokens": 3721
+  },
+  "generated_at": "2026-08-18T11:40:26.751769+00:00"
+}

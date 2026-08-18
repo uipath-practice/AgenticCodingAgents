@@ -1,0 +1,1464 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Participant's handbook for the UiPath Agentic Automation Workshop — build an end-to-end agentic Benefit Claims process.">
+      
+      
+        <meta name="author" content="Mihai Iorga">
+      
+      
+        <link rel="canonical" href="https://uipath-practice.github.io/AgenticCodingAgents/benefit-claims-processing/5-income-verification-agent/">
+      
+      
+        <link rel="prev" href="../4-residency-verification-agent/">
+      
+      
+        <link rel="next" href="../6-eligibility-determination-agent/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>5. Build the Income Verification Agent - Agentic Automation Workshop</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-orange" data-md-color-accent="orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#build-the-income-verification-agent" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Agentic Automation Workshop" class="md-header__button md-logo" aria-label="Agentic Automation Workshop" data-md-component="logo">
+      
+  <img src="../../assets/images/Partner Success Logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Agentic Automation Workshop
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              5. Build the Income Verification Agent
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+  Benefit Claims Processing
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../next-steps/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Next Steps
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Agentic Automation Workshop" class="md-nav__button md-logo" aria-label="Agentic Automation Workshop" data-md-component="logo">
+      
+  <img src="../../assets/images/Partner Success Logo.png" alt="logo">
+
+    </a>
+    Agentic Automation Workshop
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Benefit Claims Processing
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Benefit Claims Processing
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1-create-bpmn-process/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Automating Business Processes using BPMN canvas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2-setting-up-the-solution/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Setting up the Solution
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3-configure-a-robot/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Add an RPA automation to your Maestro workflow
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4-residency-verification-agent/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Build the Residency Verification Agent
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Build the Income Verification Agent
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Build the Income Verification Agent
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#goal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Goal
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#triggering-an-rpa-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Triggering an RPA workflow
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Steps
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Steps">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-point-the-task-at-the-rpa-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Point the task at the RPA workflow
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lets-build-an-ai-agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Let's build an AI Agent!
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Let&#39;s build an AI Agent!">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2-add-the-agent-to-your-solution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Add the agent to your solution
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-choose-the-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Choose the model
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuring-the-inputoutput-schemas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuring the input/output schemas
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Configuring the input/output schemas">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#4-create-the-arguments" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Create the arguments
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tools
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Tools">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#5-add-the-analyze-files-tool" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Add the Analyze Files tool
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-add-the-retrieve-income-information-tool" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Add the Retrieve Income Information tool
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuring-agents-prompts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuring Agent's Prompts
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Configuring Agent&#39;s Prompts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#7-write-the-system-prompt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Write the System Prompt
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8-write-the-user-prompt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Write the User Prompt
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#9-test-the-agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Test the agent
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuring-the-agentic-task-in-maestro" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuring the Agentic Task in Maestro
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Configuring the Agentic Task in Maestro">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#10-point-the-task-at-your-agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Point the task at your agent
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#11-map-the-input" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. Map the input
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-run-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. Run it
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../6-eligibility-determination-agent/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Build the Eligibility Determination Agent
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../7-configure-human-validation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Add an Action App for human validation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../8-configure-api-integration-benefit-approval/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. Update external systems using API — Benefit Approval Case
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../9-configure-api-integration-benefit-rejection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Update external systems using API — Benefit Rejection Case
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../next-steps/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Next Steps
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="build-the-income-verification-agent">Build the Income Verification Agent<a class="headerlink" href="#build-the-income-verification-agent" title="Permanent link">&para;</a></h1>
+<div class="admonition tip">
+<p class="admonition-title">Here is our plan for this lesson:</p>
+<ol>
+<li>Configure an RPA workflow to download the necessary documents</li>
+<li>Build the <strong>Income Verification</strong> AI Agent from scratch in <strong>Studio Web</strong><ul>
+<li>Agent will use the applicant's paystub document to extract the applicant's Name, Social Security Number (SSN) and the monthly income</li>
+<li>Based on that, the agent will use a tool to extract income information from internal records (a <a href="https://docs.uipath.com/data-service/automation-cloud/latest/user-guide/introduction">Data Fabric entity</a>)</li>
+<li>The agent will compare the paystub income against the existing records</li>
+</ul>
+</li>
+<li>Configure testing and build an evaluations dataset to ensure quality of the Agent (optional)</li>
+<li>Configure the Agent in the Maestro workflow</li>
+<li>Use the output of the Agent when presenting the Benefits Claim case to a human for review</li>
+</ol>
+</div>
+<h2 id="goal">Goal<a class="headerlink" href="#goal" title="Permanent link">&para;</a></h2>
+<p>Compare the benefits applicant's monthly income against our existing records. The agent decides:</p>
+<ul>
+<li>If the paystub income matches the existing records income, the decision is <strong>valid</strong></li>
+<li>If there is any discrepancy, the decision is <strong>invalid</strong></li>
+<li>If the paystub or existing records data is missing, the decision is <strong>invalid</strong></li>
+</ul>
+<p>LLMs are ideal for this job — because the formatting of the two input paystubs can be different but
+still contain the necessary information. LLMs can be instructed to treat such scenarios accordingly.</p>
+<h2 id="triggering-an-rpa-workflow">Triggering an RPA workflow<a class="headerlink" href="#triggering-an-rpa-workflow" title="Permanent link">&para;</a></h2>
+<p>In our scenario, the agent receives as an input a paystub document containing the benefits
+applicant's details and monthly income. This document is stored inside an
+<a href="https://docs.uipath.com/orchestrator/automation-cloud/latest/user-guide/about-storage-buckets">Orchestrator Storage Bucket</a>.</p>
+<p>We need to download this document and pass it as a variable to our agent. To do that, we will use an
+RPA workflow.</p>
+<p>Our RPA workflow is already part of the solution and is called <strong>DownloadFileFromStorageBucket</strong>. Get
+familiar with it by taking a look inside. It will receive a storage bucket filepath as input and will
+output the file as a variable.</p>
+<p><img alt="DownloadFileFromStorageBucket workflow open in the Studio Web designer" class="screenshot" src="../5-income-verification-agent.images/1-download-file-workflow-W.png" width="900" /></p>
+<div class="img-cols img-cols-30">
+<div>
+<p><strong>DownloadFileFromStorageBucket</strong> inputs and outputs.
+  </p>
+</div>
+<div>
+<p><img alt="Diagram of the workflow's expected input and output" class="screenshot" src="../5-income-verification-agent.images/2-workflow-inputs-outputs.png" />
+  </p>
+</div>
+</div>
+<h2 id="steps">Steps<a class="headerlink" href="#steps" title="Permanent link">&para;</a></h2>
+<h3 id="1-point-the-task-at-the-rpa-workflow">1. Point the task at the RPA workflow<a class="headerlink" href="#1-point-the-task-at-the-rpa-workflow" title="Permanent link">&para;</a></h3>
+<div class="img-cols img-cols-50">
+<div>
+<p>Let's go back to the Agentic Process diagram and update our task:</p>
+<ul>
+<li>Open the properties panel of the <strong>DownloadFileFromStorageBucket</strong> task by clicking on it</li>
+<li>Pick <strong>Start and wait for RPA workflow</strong> as the task's Action type
+  </li>
+</ul>
+</div>
+<div>
+<p><img alt="Implementation panel with the Action dropdown set to &quot;Start and wait for RPA workflow&quot;" class="screenshot" src="../5-income-verification-agent.images/3-select-action-type.png" />
+  </p>
+</div>
+</div>
+<div class="img-cols img-cols-30">
+<div>
+<p>Select the <strong>DownloadFileFromStorageBucket</strong> tool.
+  </p>
+</div>
+<div>
+<p><img alt="Automation dropdown with DownloadFileFromStorageBucket highlighted" class="screenshot" src="../5-income-verification-agent.images/4-select-download-workflow.png" />
+  </p>
+</div>
+</div>
+<div class="img-cols img-cols-30">
+<div>
+<p>Pass the <strong>in_ExamplePaystub</strong> argument as input for the FilePath.
+  </p>
+</div>
+<div>
+<p><img alt="FilePath input mapped to the in_ExamplePaystub argument" class="screenshot" src="../5-income-verification-agent.images/5-map-filepath-input.png" />
+  </p>
+</div>
+</div>
+<h2 id="lets-build-an-ai-agent">Let's build an AI Agent!<a class="headerlink" href="#lets-build-an-ai-agent" title="Permanent link">&para;</a></h2>
+<p>Let's use Studio to create our <strong>Income Verification Agent</strong>!</p>
+<div class="img-cols img-cols-30">
+<div>
+<p>Here is the structure of the agent's inputs and outputs.
+  </p>
+</div>
+<div>
+<p><img alt="Diagram of the Income Verification Agent's expected inputs and outputs" class="screenshot" src="../5-income-verification-agent.images/6-agent-input-output-schema.png" />
+  </p>
+</div>
+</div>
+<h3 id="2-add-the-agent-to-your-solution">2. Add the agent to your solution<a class="headerlink" href="#2-add-the-agent-to-your-solution" title="Permanent link">&para;</a></h3>
+<div class="img-cols img-cols-50">
+<div>
+<p>First, <strong>add new agent</strong> to your solution.</p>
+<p>Remember that Solutions can have multiple components such as apps, automations, workflows.
+  </p>
+</div>
+<div>
+<p><img alt="Add project to solution menu with the Agent option highlighted" class="screenshot" src="../5-income-verification-agent.images/7-add-agent-to-solution.jpg" />
+  </p>
+</div>
+</div>
+<p>Dismiss Autopilot screen when you see a prompt to generate a new agent. Feel free to play with
+autopilot later, but we will manually add prompts and settings, so click <strong>Start fresh</strong>. Select the
+<strong>Autonomous</strong> agent option.</p>
+<p>Set agent's name to something meaningful, for example <strong>Income Verification Agent</strong>. Let's keep it
+well organized!</p>
+<p><img alt="Agent creation screen with the Autonomous tile selected and the agent named Income Verification Agent" class="screenshot" src="../5-income-verification-agent.images/8-start-fresh-agent-type-W.png" width="900" /></p>
+<h3 id="3-choose-the-model">3. Choose the model<a class="headerlink" href="#3-choose-the-model" title="Permanent link">&para;</a></h3>
+<div class="img-cols img-cols-50">
+<div>
+<p>When it comes to LLMs there is no vendor lock for UiPath Agents, so you can experiment with different
+models and choose the one that best fits your use case.</p>
+<p>For now, we are going to choose <strong>GPT 5</strong> for our agent, but feel free to experiment with different
+models later. Let's choose the model from the agent settings (right side toolbar).
+  </p>
+</div>
+<div>
+<p><img alt="Agent settings with the model selector open for the Income Verification Agent" class="screenshot" src="../5-income-verification-agent.images/9-select-model.png" />
+  </p>
+</div>
+</div>
+<h2 id="configuring-the-inputoutput-schemas">Configuring the input/output schemas<a class="headerlink" href="#configuring-the-inputoutput-schemas" title="Permanent link">&para;</a></h2>
+<p>Next we are going to create the <strong>input and output arguments</strong> of the Agent. Let's understand what we
+are going to use the arguments for:</p>
+<p><strong>Agent arguments</strong> let your agent take in information about a business case and return a result, just
+as you might have activities or processes do. This can allow you to pass information from a trigger in
+Orchestrator or use the output of an agent to launch another automation.</p>
+<h3 id="4-create-the-arguments">4. Create the arguments<a class="headerlink" href="#4-create-the-arguments" title="Permanent link">&para;</a></h3>
+<div class="img-cols img-cols-30">
+<div>
+<p>Let's go to <strong>Data Manager</strong> and create our arguments.
+  </p>
+</div>
+<div>
+<p><img alt="Data manager with the Paystub input expanded and File selected as its type" class="screenshot" src="../5-income-verification-agent.images/10-data-manager-inputs.png" />
+  </p>
+</div>
+</div>
+<p><strong>Input arguments:</strong></p>
+<p><img alt="Input argument definition showing the Paystub file entry" class="screenshot" src="../5-income-verification-agent.images/11-input-arguments-W.png" width="900" /></p>
+<div class="img-cols img-cols-50">
+<div>
+<p><strong>Output arguments:</strong>
+  </p>
+</div>
+<div>
+<p><img alt="Data manager Outputs section with the decision output configured" class="screenshot" src="../5-income-verification-agent.images/12-data-manager-outputs.png" />
+  </p>
+</div>
+</div>
+<p><img alt="Output argument definitions showing decision and rationale" class="screenshot" src="../5-income-verification-agent.images/13-output-arguments-W.png" width="900" /></p>
+<h2 id="tools">Tools<a class="headerlink" href="#tools" title="Permanent link">&para;</a></h2>
+<p>Agent by itself is good at making decisions and analyzing data. But LLMs naturally can't go and
+interact with databases and applications... yet. We are going to use
+<a href="https://docs.uipath.com/agents/automation-cloud/latest/user-guide/agent-tools">tools</a> for that. Tools
+offer agents both access to critical context from data stored in business applications, and the
+ability to execute actions based on objectives outlined in the prompt. Tools are how the agent's
+reasoning and planning can turn into action.</p>
+<p>There are various kind of tools we can configure for our agents:</p>
+<ul>
+<li>RPA Workflows</li>
+<li>Integration Service Activities</li>
+<li>Other Agents</li>
+<li>Specialized tools (example: <strong>Analyze Files</strong>)</li>
+</ul>
+<p>Our agent needs to analyze a Paystub File and also search for corresponding records in a Data Fabric
+Entity, so we are going to use the following tools:</p>
+<ul>
+<li>The <strong>Analyze Files</strong> tool to extract the relevant information from the paystub</li>
+<li><strong>Retrieve Income Information</strong> tool — an RPA workflow, which receives the applicant's SSN as an input and searches for income records in a Data Fabric entity.</li>
+</ul>
+<h3 id="5-add-the-analyze-files-tool">5. Add the Analyze Files tool<a class="headerlink" href="#5-add-the-analyze-files-tool" title="Permanent link">&para;</a></h3>
+<p>Let's add the two tools to our agent, starting with the <strong>Analyze Files</strong> tool.</p>
+<div class="img-cols img-cols-30">
+<div>
+<p>Click the <strong>+</strong> button in the tools section.
+  </p>
+</div>
+<div>
+<p><img alt="Tools section of the agent with the add button highlighted" class="screenshot" src="../5-income-verification-agent.images/14-add-tool.png" />
+  </p>
+</div>
+</div>
+<div class="img-cols img-cols-50">
+<div>
+<p>Search for the <strong>Analyze Files</strong> tool and select it.
+  </p>
+</div>
+<div>
+<p><img alt="Tool picker showing the Analyze Files built-in tool result" class="screenshot" src="../5-income-verification-agent.images/15-select-analyze-files.png" />
+  </p>
+</div>
+</div>
+<h3 id="6-add-the-retrieve-income-information-tool">6. Add the Retrieve Income Information tool<a class="headerlink" href="#6-add-the-retrieve-income-information-tool" title="Permanent link">&para;</a></h3>
+<div class="img-cols img-cols-30">
+<div>
+<p>Next, let's add the <strong>Retrieve Income Information</strong> RPA tool.
+  </p>
+</div>
+<div>
+<p><img alt="Tool picker with the Retrieve Income Information workflow highlighted under RPA workflows" class="screenshot" src="../5-income-verification-agent.images/16-add-retrieve-income-tool.png" />
+  </p>
+</div>
+</div>
+<div class="img-cols img-cols-50">
+<div>
+<p>Pass the following values to the <strong>Retrieve Income Information</strong> tool arguments:</p>
+<ul>
+<li>In the <strong>SSN</strong> field prompt write:</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>The applicant social security number
+</code></pre></div>
+<ul>
+<li>In the <strong>Description</strong> field write:</li>
+</ul>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Use this tool to retrieve the income information of the applicant from the records
+</code></pre></div>
+  </p>
+</div>
+<div>
+<p><img alt="Tool configuration with the SSN field prompt and Description filled in" class="screenshot" src="../5-income-verification-agent.images/17-configure-tool-arguments.png" />
+  </p>
+</div>
+</div>
+<p>This helps the agent understand what value to pass to the input arguments and when to use the tool.</p>
+<h2 id="configuring-agents-prompts">Configuring Agent's Prompts<a class="headerlink" href="#configuring-agents-prompts" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>Precision in prompts, like in coding, leads to powerful and predictable results. If your prompt is
+messy, expect messy output. Treat it like code, and write every word with purpose!</p>
+<p>— <em>another advice from gpt-4o</em></p>
+</blockquote>
+<p><img alt="Illustration accompanying the prompt-writing advice" src="../5-income-verification-agent.images/18-prompt-precision-illustration.png" width="260" /></p>
+<p>First, let's understand the difference between <strong>System prompt</strong> and <strong>User prompt</strong>.</p>
+<p>System Prompts provide consistent guidelines that define an agent's role and capabilities, while User
+Prompts direct its attention to specific tasks and input parameters. Understanding this distinction is
+essential for effectively designing and implementing AI agents that can perform complex tasks while
+maintaining appropriate operational boundaries.</p>
+<ul>
+<li><strong>System prompt</strong> — allows you to describe in natural language the agent's role, goal and constraints. You specify any rules for it to follow, and information about when it might want to use certain tools, escalations, or context – all of which we'll cover later in this guide.</li>
+<li><strong>User prompt</strong> — User prompts allow you to structure how the inputs/arguments are passed to the agent, and you can also show in the user prompt how we'll refer to certain inputs in the system prompt.</li>
+</ul>
+<h3 id="7-write-the-system-prompt">7. Write the System Prompt<a class="headerlink" href="#7-write-the-system-prompt" title="Permanent link">&para;</a></h3>
+<p>Let's start with the <strong>System Prompt</strong>. Copy the following and paste it into your <strong>System Prompt</strong>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>You are an AI assistant designed to validate reported monthly income against external wage data for benefits eligibility. Your task is to compare information from the context and the inputs. Follow these steps:
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>1. Capture the applicant's monthly income, name and social security number from the input Paystub file.
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>- Social security number is found under the field names "Employee ID" inside the paystub file.
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>2. Use the ##Retrieve Income Information## tool to extract the applicant's income information from the existing records.
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>3. Compare the Paystub income against the extracted income.
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>- if the paystub income matches exactly with the extracted income, set ##decision## to "valid"
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>- if there is any discrepancy, set ##decision## to "invalid".
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>4. If the paystub or existing records data is missing, do not throw an error. Instead, set ##decision## to "invalid".
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>5. In the ##rationale## field, provide a brief explanation around the decision you've taken.
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>Maintain confidentiality and handle sensitive information with care.
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>##Example Scenarios
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>1. Valid case:
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>Input: Reported monthly income: $3000, Extracted income: $3000
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>Output:
+<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>{
+<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>"decision": "valid",
+<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>"rationale": "All sources match the reported income."
+<a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a>}
+<a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a>2. Invalid case:
+<a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a>Input: Reported monthly income: $3000, Extracted income: $3500
+<a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a>Output:
+<a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a>{
+<a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a>"decision": "invalid",
+<a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a>"rationale": "Existing records shows higher income than reported. Verification required."
+<a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a>}
+<a id="__codelineno-2-26" name="__codelineno-2-26" href="#__codelineno-2-26"></a>3. Missing/empty/zero data case:
+<a id="__codelineno-2-27" name="__codelineno-2-27" href="#__codelineno-2-27"></a>Input: Reported monthly income: $3000, Extracted income: 0
+<a id="__codelineno-2-28" name="__codelineno-2-28" href="#__codelineno-2-28"></a>Output:
+<a id="__codelineno-2-29" name="__codelineno-2-29" href="#__codelineno-2-29"></a>{
+<a id="__codelineno-2-30" name="__codelineno-2-30" href="#__codelineno-2-30"></a>"decision": "invalid",
+<a id="__codelineno-2-31" name="__codelineno-2-31" href="#__codelineno-2-31"></a>"rationale": "No income records found. Manual review required."
+<a id="__codelineno-2-32" name="__codelineno-2-32" href="#__codelineno-2-32"></a>}
+</code></pre></div>
+<h3 id="8-write-the-user-prompt">8. Write the User Prompt<a class="headerlink" href="#8-write-the-user-prompt" title="Permanent link">&para;</a></h3>
+<p><strong>User Prompt</strong> connects it all together. In our case, the user prompt looks like this — paste it into
+your <strong>User Prompt</strong>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>Please validate the income for an applicant with the following information:
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>Paystub: {{Paystub}}
+</code></pre></div>
+<h3 id="9-test-the-agent">9. Test the agent<a class="headerlink" href="#9-test-the-agent" title="Permanent link">&para;</a></h3>
+<p>Time to test it by giving it some sample inputs. Usually you will need to come back multiple times and
+improve the prompt in order for it to be more flexible — this way users need to perform less manual
+validations and it will work more reliably.</p>
+<div class="admonition note">
+<p class="admonition-title">Test files</p>
+<p>You can find the files for testing in the shared resources.</p>
+<ul>
+<li>Link: <a href="https://view.highspot.com/viewer/01988c165ebd35be0b21e64eaaa149e5">view.highspot.com/viewer/01988c165ebd35be0b21e64eaaa149e5</a></li>
+<li>Passcode: <code>Shs1*nb2gj3!</code></li>
+</ul>
+</div>
+<p>Let's test the following scenarios.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Valid — income matches</label><label for="__tabbed_1_2">Invalid — income differs</label><label for="__tabbed_1_3">Invalid — SSN not in records</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p>The SSN is found in the Data Fabric Entity and the monthly income matches.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>Paystub_income matching
+</code></pre></div>
+<p>Output should be <strong>decision: valid</strong></p>
+</div>
+<div class="tabbed-block">
+<p>The SSN is found in the Data Fabric entity but the income from our records differs from the one in
+the paystub.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>Paystub_income not matching
+</code></pre></div>
+<p>Output should be <strong>decision: invalid</strong></p>
+</div>
+<div class="tabbed-block">
+<p>What if the SSN does not exist in our records?</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>Paystub_ssn not in records
+</code></pre></div>
+<p>Output should be <strong>decision: invalid</strong> — because the SSN is not found in the Data Fabric entity</p>
+</div>
+</div>
+</div>
+<h2 id="configuring-the-agentic-task-in-maestro">Configuring the Agentic Task in Maestro<a class="headerlink" href="#configuring-the-agentic-task-in-maestro" title="Permanent link">&para;</a></h2>
+<p>Let's get back to Studio and continue editing our Agentic Process.</p>
+<h3 id="10-point-the-task-at-your-agent">10. Point the task at your agent<a class="headerlink" href="#10-point-the-task-at-your-agent" title="Permanent link">&para;</a></h3>
+<div class="img-cols img-cols-50">
+<div>
+<p>Configure the <strong>Income Verification Agent</strong> task to use our freshly prepared AI Agent! This is done in
+the same way as the Robotic task: pick <strong>Start and wait for agent</strong>, then search for the agent in your
+solution.
+  </p>
+</div>
+<div>
+<p><img alt="Agent dropdown with Income Verification Agent listed under Defined resources" class="screenshot" src="../5-income-verification-agent.images/19-select-agent-in-task.png" />
+  </p>
+</div>
+</div>
+<h3 id="11-map-the-input">11. Map the input<a class="headerlink" href="#11-map-the-input" title="Permanent link">&para;</a></h3>
+<div class="img-cols img-cols-30">
+<div>
+<p>Now we need to pass the <strong>StorageBucketFile</strong> output of the previous RPA workflow as input to our
+agent.
+  </p>
+</div>
+<div>
+<p><img alt="Dropdown mapping StorageBucketFile to the agent's Paystub input" class="screenshot" src="../5-income-verification-agent.images/20-map-storage-bucket-file.png" />
+  </p>
+</div>
+</div>
+<h3 id="12-run-it">12. Run it<a class="headerlink" href="#12-run-it" title="Permanent link">&para;</a></h3>
+<div class="img-cols img-cols-50">
+<div>
+<p>Process is ready for testing — click on the <strong>Debug</strong> button! Pass the following file paths to the
+input arguments:</p>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>in_ExamplePaystub: Sample pay stub.png
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>in_Application:    Sample application.pdf
+</code></pre></div>
+  </p>
+</div>
+<div>
+<p><img alt="Debug panel with the input arguments filled in" class="screenshot" src="../5-income-verification-agent.images/21-debug-input-arguments.png" />
+  </p>
+</div>
+</div>
+<p><img alt="Completed execution showing the Income Verification Agent's output variables" class="screenshot" src="../5-income-verification-agent.images/22-execution-result-W.png" width="900" /></p>
+<p><strong>Time to move to the next one!</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../4-residency-verification-agent/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 4. Build the Residency Verification Agent">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                4. Build the Residency Verification Agent
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../6-eligibility-determination-agent/" class="md-footer__link md-footer__link--next" aria-label="Next: 6. Build the Eligibility Determination Agent">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                6. Build the Eligibility Determination Agent
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.footer", "toc.integrate", "search.highlight", "search.suggest", "content.code.copy", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../javascripts/extra.js"></script>
+      
+    
+  </body>
+</html>
