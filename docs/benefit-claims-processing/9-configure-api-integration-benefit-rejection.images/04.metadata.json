@@ -1,0 +1,30 @@
+{
+  "version": "1.0",
+  "image_file": "04.png",
+  "image_path": "docs/benefit-claims-processing/9-configure-api-integration-benefit-rejection.images/04.png",
+  "lesson": "9-configure-api-integration-benefit-rejection",
+  "exercise": "benefit-claims-processing",
+  "extraction": {
+    "ocr_text": "Implementation\n\nAction\nExecute connector activity\n\nConnector *\nGmail\n\nGmail connection *\nuipathlabs@gmail.com ×\n\nActivity *\nSend Email\n\nRefresh Schema\n\nConnect\n\nSend Rejection\nEmail",
+    "description": "The screenshot shows UiPath Studio Web with a workflow activity selected on the canvas named \"Send Rejection Email.\" The right-side configuration panel is open to the Implementation section, where the action is set to execute a connector activity using the Gmail connector. The Gmail connection is selected as uipathlabs@gmail.com and the activity is configured as Send Email.",
+    "step_instructions": "Click on the Action dropdown and ensure \"Execute connector activity\" is selected. In the Connector field, select \"Gmail\". In the Gmail connection field, select \"uipathlabs@gmail.com\". In the Activity dropdown, select \"Send Email\"."
+  },
+  "layout": {
+    "mode": "split_30",
+    "ocr_length": 181,
+    "aspect_ratio": 1.74,
+    "image_size": "765x440",
+    "rationale": "Low text density (181 chars) or narrow layout"
+  },
+  "model": {
+    "name": "gpt-5.4",
+    "deployment": "gpt-5.5",
+    "api_version": "2025-04-01-preview"
+  },
+  "usage": {
+    "prompt_tokens": 2125,
+    "completion_tokens": 307,
+    "total_tokens": 2432
+  },
+  "generated_at": "2026-08-18T11:47:34.353798+00:00"
+}

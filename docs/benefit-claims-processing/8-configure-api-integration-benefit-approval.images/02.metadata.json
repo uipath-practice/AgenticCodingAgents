@@ -1,0 +1,30 @@
+{
+  "version": "1.0",
+  "image_file": "02.png",
+  "image_path": "docs/benefit-claims-processing/8-configure-api-integration-benefit-approval.images/02.png",
+  "lesson": "8-configure-api-integration-benefit-approval",
+  "exercise": "benefit-claims-processing",
+  "extraction": {
+    "ocr_text": "Properties    XML\n\nSend task                                      ?\n\nGeneral\nName\nGenerate Approval Email\n\nDescription\n\nImplementation\nAction\nExecute connector activity        ˅\n\nConnector *\nUiPath GenAI Activities           ˅\n\nUiPath GenAI Activities connection *\nGenAI Connection  ×\n\nActivity *\nGenerate Email                    ˅\n\nRefresh Schema\n\n[Canvas]\n[...]vities to create a\n[...]pplication\n[...]mail\n\nGenerate\nRejection Email\n\nConnect\n\nGenerate\nApproval Email\n\nSe[...]",
+    "description": "The screenshot shows a UiPath workflow/BPMN-style designer with the Properties panel open for a selected Send task. The selected canvas element is “Generate Approval Email,” and its implementation is configured to execute a connector activity using the UiPath GenAI Activities connector, the “GenAI Connection,” and the “Generate Email” activity. Red highlight boxes emphasize the key configuration fields in the Properties panel.",
+    "step_instructions": "Click on the “Generate Approval Email” send task on the canvas. In the Action dropdown, select “Execute connector activity.” In the Connector field, select “UiPath GenAI Activities.” In the UiPath GenAI Activities connection field, select “GenAI Connection.” In the Activity dropdown, select “Generate Email.”"
+  },
+  "layout": {
+    "mode": "split_50",
+    "ocr_length": 477,
+    "aspect_ratio": 0.91,
+    "image_size": "691x757",
+    "rationale": "Medium text density (477 chars)"
+  },
+  "model": {
+    "name": "gpt-5.4",
+    "deployment": "gpt-5.5",
+    "api_version": "2025-04-01-preview"
+  },
+  "usage": {
+    "prompt_tokens": 2355,
+    "completion_tokens": 536,
+    "total_tokens": 2891
+  },
+  "generated_at": "2026-08-18T11:46:57.178563+00:00"
+}

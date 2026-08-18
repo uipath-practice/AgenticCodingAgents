@@ -1,0 +1,30 @@
+{
+  "version": "1.0",
+  "image_file": "02.png",
+  "image_path": "docs/benefit-claims-processing/9-configure-api-integration-benefit-rejection.images/02.png",
+  "lesson": "9-configure-api-integration-benefit-rejection",
+  "exercise": "benefit-claims-processing",
+  "extraction": {
+    "ocr_text": "Properties    XML\n\nSend task                                      ?\n\n⌄  General\nName\nGenerate Rejection Email\n\nDescription\n\n⌄  Implementation\nAction\nExecute connector activity                       ˅\n\nConnector *\nUiPath GenAI Activities                          ˅\n\nUiPath GenAI Activities connection *\nGenAI Connection  ×\n\nActivity *\nGenerate Email                                   ˅\n\nRefresh Schema\n\n[canvas]\nConnect\n\nGenerate\nRejection Email",
+    "description": "The screenshot shows a UiPath BPMN/process designer with a Send task selected on the canvas. The Properties panel is open on the right, and the task is named “Generate Rejection Email.” In the Implementation section, the task is configured to execute a connector activity using the UiPath GenAI Activities connector, the “GenAI Connection,” and the “Generate Email” activity.",
+    "step_instructions": "Click on the Action dropdown and select “Execute connector activity.”\nClick on the Connector dropdown and select “UiPath GenAI Activities.”\nIn the UiPath GenAI Activities connection field, select “GenAI Connection.”\nClick on the Activity dropdown and select “Generate Email.”\nClick “Refresh Schema” to load the activity schema for the selected connector activity."
+  },
+  "layout": {
+    "mode": "split_50",
+    "ocr_length": 444,
+    "aspect_ratio": 1.02,
+    "image_size": "785x766",
+    "rationale": "Medium text density (444 chars)"
+  },
+  "model": {
+    "name": "gpt-5.4",
+    "deployment": "gpt-5.5",
+    "api_version": "2025-04-01-preview"
+  },
+  "usage": {
+    "prompt_tokens": 2442,
+    "completion_tokens": 880,
+    "total_tokens": 3322
+  },
+  "generated_at": "2026-08-18T11:47:32.771183+00:00"
+}
