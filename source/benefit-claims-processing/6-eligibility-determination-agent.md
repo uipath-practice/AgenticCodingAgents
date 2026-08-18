@@ -1,6 +1,7 @@
 <!-- Harvested from https://sites.google.com/uipath.com/agentic-automation/benefit-claims-processing/eligibility-determination-agent
      Images: staging/images/6-eligibility-determination-agent/ (28 found)
-     <<IMG:n>> marks where image n appeared in the original page. -->
+     <<IMG:n>> marks where image n appeared in the original page.
+     Fenced blocks come from Sites embed gadgets (copy-to-clipboard payloads). -->
 
 # Build an Agent and add it to workflow
 
@@ -76,6 +77,10 @@ Open the **input** schema editor
 
 <<IMG:6>>
 
+```json
+{"type":"object","required":["Monthly_Gross_Income","Household_Size"],"properties":{"Household_Size":{"type":"integer","description":"The number of people living in the applicant's house"},"Monthly_Gross_Income":{"type":"string","description":"The amount of money the applicant's household makes in a month"}},"title":"Inputs"}
+```
+
 **Output schema:**
 
 <<IMG:7>>
@@ -83,6 +88,10 @@ Open the **input** schema editor
 Open the **output** schema editor
 
 <<IMG:8>>
+
+```json
+{"type":"object","required":["Justification","Conclusion"],"properties":{"Conclusion":{"type":"boolean","description":"Result of criteria evaluation against provided context"},"Justification":{"type":"string","description":"An explanation for the conclusion, or of the inability to verify the criteria."},"Calculation":{"type":"number","description":"The amount of money the applicant is entitled to per month, if they are determined eligible for benefits."}},"title":"Outputs"}
+```
 
 ## Context Grounding
 
@@ -207,6 +216,25 @@ a. Set the value of **##Calculation##** to "0".
 
 **DO NOT** make calculations directly, instead use the available tools (**Addition Tool**, **Subtraction Tool**, **Multiplication tool**) to make calculations.
 
+```text
+#Role
+You are a decision agent whose role is to evaluate if an applicant meets the eligibility criteria for Supplemental Nutrition Assistance Program (SNAP) benefits. The eligibility criteria is specified in the "Eligibility" context.
+#Goals
+Assess whether the given applicant information qualifies them for SNAP benefits. Output a conclusion along with an explanation for the decision. For qualified applicants, calculate the monthly benefit amount.
+# Instructions
+1. Determine the net income. Use the ##SNAP Eligibility## context to do this.
+2. Determine if the applicant qualifies for benefits, according to the thresholds from the context.
+- Set the Boolean value of ##Conclusion## to True if they qualify, or False if they don't.
+3. Set the string value of ##Justification## to your explanation of the eligibility recommendation.
+If they qualify for benefits:
+ a. Calculate the maximum benefit amount for the household size.
+ b. Set the value of ##Calculation## to the final benefit amount.
+If they don't qualify for benefits:
+ a. Set the value of ##Calculation## to "0".
+##Calculation Rules
+**DO NOT** make calculations directly, instead use the available tools (**Addition Tool**, **Subtraction Tool**, **Multiplication tool**) to make calculations.
+```
+
 and paste it to your **System Prompt.**
 
 **User Prompt** connects it all together. In our case, the user prompt looks like this:
@@ -216,6 +244,12 @@ Decide whether this applicant qualifies for SNAP benefits:
 Household Size: **{{Household_Size}}**
 
 Monthly Gross Income: **{{Monthly_Gross_Income}}**
+
+```text
+Decide whether this applicant qualifies for SNAP benefits:
+Household Size: {{Household_Size}}
+Monthly Gross Income: {{Monthly_Gross_Income}}
+```
 
 and paste it to your **User Prompt.**
 
@@ -317,6 +351,10 @@ Let's now import an evaluation set to test our agent.
 <<IMG:22>>
 
 <<IMG:23>>
+
+```json
+{"fileName":"evaluation-set-1775476242050.json","id":"2d54e8b6-869e-4418-a91a-b63726b44b44","name":"Benefits Evaluation Set (copy)","batchSize":10,"evaluatorRefs":["aa6d3e4d-c78a-4390-a504-14ffdaba4077","d5b4fec5-0f00-42e2-8ea7-2a0d911aacf8"],"evaluations":[{"id":"c22a8498-4168-4605-b0e2-b58d023e229b","name":"Qualify_1","inputs":{"Household_Size":1,"Monthly_Gross_Income":"1200"},"expectedOutput":{"Conclusion":true,"Justification":"-","Calculation":149.7},"simulationInstructions":"","expectedAgentBehavior":"","simulateInput":false,"inputGenerationInstructions":"","simulateTools":false,"toolsToSimulate":[],"evalSetId":"ee9e5a82-247e-43d2-a407-b50dcd2ac38d","createdAt":"2026-04-06T11:50:42.050Z","updatedAt":"2026-04-06T11:50:42.050Z","source":"manual"},{"id":"78c0a0a3-f7d9-4ff8-a858-8daded052879","name":"Qualify_2","inputs":{"Household_Size":4,"Monthly_Gross_Income":"2500"},"expectedOutput":{"Conclusion":true,"Justification":"-","Calculation":649.85},"simulationInstructions":"","expectedAgentBehavior":"","simulateInput":false,"inputGenerationInstructions":"","simulateTools":false,"toolsToSimulate":[],"evalSetId":"ee9e5a82-247e-43d2-a407-b50dcd2ac38d","createdAt":"2026-04-06T11:50:42.050Z","updatedAt":"2026-04-06T11:50:42.050Z","source":"manual"},{"id":"65566054-7730-40bb-93fd-71dba2a3a6d9","name":"Qualify_3","inputs":{"Household_Size":3,"Monthly_Gross_Income":"800"},"expectedOutput":{"Conclusion":true,"Justification":"-","Calculation":694.7},"simulationInstructions":"","expectedAgentBehavior":"","simulateInput":false,"inputGenerationInstructions":"","simulateTools":false,"toolsToSimulate":[],"evalSetId":"ee9e5a82-247e-43d2-a407-b50dcd2ac38d","createdAt":"2026-04-06T11:50:42.050Z","updatedAt":"2026-04-06T11:50:42.050Z","source":"manual"},{"id":"d667febc-6e86-4c88-8b38-1fa139aeaf73","name":"Qualify_5","inputs":{"Household_Size":6,"Monthly_Gross_Income":"4000"},"expectedOutput":{"Conclusion":true,"Justification":"-","Calculation":855.2},"simulationInstructions":"","expectedAgentBehavior":"","simulateInput":false,"inputGenerationInstructions":"","simulateTools":false,"toolsToSimulate":[],"evalSetId":"ee9e5a82-247e-43d2-a407-b50dcd2ac38d","createdAt":"2026-04-06T11:50:42.050Z","updatedAt":"2026-04-06T11:50:42.050Z","source":"manual"},{"id":"65a7f339-a4bf-4edb-bc60-cfcbcd3fad98","name":"Not_Qualify_1","inputs":{"Household_Size":1,"Monthly_Gross_Income":"2000"},"expectedOutput":{"Conclusion":false,"Justification":"-","Calculation":0},"simulationInstructions":"","expectedAgentBehavior":"","simulateInput":false,"inputGenerationInstructions":"","simulateTools":false,"toolsToSimulate":[],"evalSetId":"ee9e5a82-247e-43d2-a407-b50dcd2ac38d","createdAt":"2026-04-06T11:50:42.050Z","updatedAt":"2026-04-06T11:50:42.050Z","source":"manual"},{"id":"481d251c-83b1-4368-9671-aceaab47450c","name":"Not_Qualify_2","inputs":{"Household_Size":4,"Monthly_Gross_Income":"4100"},"expectedOutput":{"Conclusion":false,"Justification":"-","Calculation":0},"simulationInstructions":"","expectedAgentBehavior":"","simulateInput":false,"inputGenerationInstructions":"","simulateTools":false,"toolsToSimulate":[],"evalSetId":"ee9e5a82-247e-43d2-a407-b50dcd2ac38d","createdAt":"2026-04-06T11:50:42.050Z","updatedAt":"2026-04-06T11:50:42.050Z","source":"manual"},{"id":"0681214b-efb9-4971-86d3-a17f6f24ee18","name":"Not_Qualify_3","inputs":{"Household_Size":5,"Monthly_Gross_Income":"5500"},"expectedOutput":{"Conclusion":false,"Justification":"-","Calculation":0},"simulationInstructions":"","expectedAgentBehavior":"","simulateInput":false,"inputGenerationInstructions":"","simulateTools":false,"toolsToSimulate":[],"evalSetId":"ee9e5a82-247e-43d2-a407-b50dcd2ac38d","createdAt":"2026-04-06T11:50:42.050Z","updatedAt":"2026-04-06T11:50:42.050Z","source":"manual"},{"id":"b14b78c6-9b13-4414-9859-d2f483b69f6d","name":"Not_Qualify_4","inputs":{"Household_Size":2,"Monthly_Gross_Income":"2700"},"expectedOutput":{"Conclusion":false,"Justification":"-","Calculation":0},"simulationInstructions":"","expectedAgentBehavior":"","simulateInput":false,"inputGenerationInstructions":"","simulateTools":false,"toolsToSimulate":[],"evalSetId":"ee9e5a82-247e-43d2-a407-b50dcd2ac38d","createdAt":"2026-04-06T11:50:42.050Z","updatedAt":"2026-04-06T11:50:42.050Z","source":"manual"},{"id":"90cd2c2b-9e66-4e41-89fa-206521b7f1de","name":"Not_Qualify_5","inputs":{"Household_Size":3,"Monthly_Gross_Income":"3500"},"expectedOutput":{"Conclusion":false,"Justification":"-","Calculation":0},"simulationInstructions":"","expectedAgentBehavior":"","simulateInput":false,"inputGenerationInstructions":"","simulateTools":false,"toolsToSimulate":[],"evalSetId":"ee9e5a82-247e-43d2-a407-b50dcd2ac38d","createdAt":"2026-04-06T11:50:42.050Z","updatedAt":"2026-04-06T11:50:42.050Z","source":"manual"}],"modelSettings":[],"createdAt":"2026-04-06T11:50:42.050Z","updatedAt":"2026-04-06T17:45:34.085Z","agentMemoryEnabled":false,"agentMemorySettings":[],"lineByLineEvaluation":false}
+```
 
 and paste it to the import window**.** After that click the **Import** button
 

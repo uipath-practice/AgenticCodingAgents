@@ -1,6 +1,7 @@
 <!-- Harvested from https://sites.google.com/uipath.com/agentic-automation/benefit-claims-processing/residency-verification-agent
      Images: staging/images/4-residency-verification-agent/ (24 found)
-     <<IMG:n>> marks where image n appeared in the original page. -->
+     <<IMG:n>> marks where image n appeared in the original page.
+     Fenced blocks come from Sites embed gadgets (copy-to-clipboard payloads). -->
 
 # Build an Agent and add it to the workflow
 
@@ -131,6 +132,20 @@ Let's start with the **System Prompt.**
 
 Always maintain a professional and impartial tone in your evaluations. Your assessments should be based solely on the address comparisons, without referencing external databases or services.
 
+```text
+You are a residency verification assistant designed to verify that an applicant's provided address matches the address in our known records. Your primary goal is to determine if the application can proceed or if additional proof of residency is required.
+##Instructions##
+1. Search for the applicant's address in the Residency Verification index. Applicant's SSN should match the input SSN.
+- If the address fully matches (Address, City, State, ZIP), set ##ResidencyValidationDecision## value as "Valid"
+- If one or more address fields do not match (Address, City, State, ZIP), set ##ResidencyValidationDecision## value as "Invalid"
+- If multiple addresses are found for the same SSN, try to match each one of them with the declared address and return "Valid" if one of them is a match. **DO NOT** mix and match address fields from one record to another. All fields should match from one record.
+- If the applicant's address can't be found based on the SSN, set ##ResidencyValidationDecision## value as "Invalid"
+- In the ##rationale## output field provide an explanation for your decision
+##Matching rules##
+- Ignore trailing spaces and any other formatting differences. The Address, City, State, Zip should still be considered a match if they point to the same location but formatting is different.
+Always maintain a professional and impartial tone in your evaluations. Your assessments should be based solely on the address comparisons, without referencing external databases or services.
+```
+
 and paste it to your **System Prompt.**
 
 **User Prompt** connects it all together. In our case, the user prompt looks like this:
@@ -140,6 +155,12 @@ Please evaluate the residency verification for the following applicant:
 Applicant Address: **{{declared_applicant_address}}**
 
 SSN: **{{SSN}}**
+
+```text
+Please evaluate the residency verification for the following applicant:
+Applicant Address: {{declared_applicant_address}}
+SSN: {{SSN}}
+```
 
 and paste it to your **User Prompt.**
 
@@ -239,6 +260,10 @@ Let's now import an evaluation set to test our agent.
 Click on **Evaluation Sets** and then on the **Import** button
 
 <<IMG:18>>
+
+```json
+{"fileName":"evaluation-set-1774447972390.json","id":"a8246f97-e10e-4e50-9f7e-a7cac5d449c4","name":"Sample Eval Set","batchSize":10,"evaluatorRefs":["c4fb87ea-3cec-4435-b69c-64f090e7f1c8"],"evaluations":[{"id":"668b7745-4205-4d06-9ab6-f5379f40b20b","name":"Valid 1","inputs":{"declared_applicant_address":"Pittsburgh DE 44702, 1507 Cedar St","SSN":"877-30-7924"},"expectedOutput":{"ResidencyValidationDecision":"Valid","rationale":".."},"simulationInstructions":"","expectedAgentBehavior":"","simulateInput":false,"inputGenerationInstructions":"","simulateTools":false,"toolsToSimulate":[],"evalSetId":"a8246f97-e10e-4e50-9f7e-a7cac5d449c4","createdAt":"2026-03-25T14:15:27.208Z","updatedAt":"2026-03-25T14:15:27.208Z","source":"manual"},{"id":"05ca532e-e889-4123-996d-41240b20ad05","name":"Valid 2","inputs":{"declared_applicant_address":"7837 Oak St | 68619 Harrisburg DE","SSN":"633-81-2446"},"expectedOutput":{"ResidencyValidationDecision":"Valid","rationale":".."},"simulationInstructions":"","expectedAgentBehavior":"","simulateInput":false,"inputGenerationInstructions":"","simulateTools":false,"toolsToSimulate":[],"evalSetId":"a8246f97-e10e-4e50-9f7e-a7cac5d449c4","createdAt":"2026-03-25T14:15:51.099Z","updatedAt":"2026-03-25T14:15:51.099Z","source":"manual"},{"id":"3661ee2a-a61e-4b80-adfd-9dd45c57bb6b","name":"Valid 3","inputs":{"declared_applicant_address":"OH, Allentown 90377 - 8973 Walnut St","SSN":"529-38-8359"},"expectedOutput":{"ResidencyValidationDecision":"Valid","rationale":".."},"simulationInstructions":"","expectedAgentBehavior":"","simulateInput":false,"inputGenerationInstructions":"","simulateTools":false,"toolsToSimulate":[],"evalSetId":"a8246f97-e10e-4e50-9f7e-a7cac5d449c4","createdAt":"2026-03-25T14:16:13.619Z","updatedAt":"2026-03-25T14:16:13.619Z","source":"manual"},{"id":"6ff0eca0-8b8f-429a-8633-13f26fa14d92","name":"Valid 4","inputs":{"declared_applicant_address":"York 94296 DE, 131 Pine Rd","SSN":"902-37-0293"},"expectedOutput":{"ResidencyValidationDecision":"Valid","rationale":".."},"simulationInstructions":"","expectedAgentBehavior":"","simulateInput":false,"inputGenerationInstructions":"","simulateTools":false,"toolsToSimulate":[],"evalSetId":"a8246f97-e10e-4e50-9f7e-a7cac5d449c4","createdAt":"2026-03-25T14:17:12.679Z","updatedAt":"2026-03-25T14:17:12.679Z","source":"manual"},{"id":"6c8f0140-9ba0-46a3-bf9e-b3df9e41ab9a","name":"Valid 5","inputs":{"declared_applicant_address":"PA 11866 Harrisburg, Walnut St 9089","SSN":"617-87-1434"},"expectedOutput":{"ResidencyValidationDecision":"Valid","rationale":".."},"simulationInstructions":"","expectedAgentBehavior":"","simulateInput":false,"inputGenerationInstructions":"","simulateTools":false,"toolsToSimulate":[],"evalSetId":"a8246f97-e10e-4e50-9f7e-a7cac5d449c4","createdAt":"2026-03-25T14:17:30.751Z","updatedAt":"2026-03-25T14:17:30.751Z","source":"manual"},{"id":"78b092c2-8340-4310-8acd-2f56f30c14ac","name":"Invalid 1","inputs":{"declared_applicant_address":"Erie DE 29215, 478 Random St","SSN":"877-30-7924"},"expectedOutput":{"ResidencyValidationDecision":"Invalid","rationale":".."},"simulationInstructions":"","expectedAgentBehavior":"","simulateInput":false,"inputGenerationInstructions":"","simulateTools":false,"toolsToSimulate":[],"evalSetId":"a8246f97-e10e-4e50-9f7e-a7cac5d449c4","createdAt":"2026-03-25T14:18:33.112Z","updatedAt":"2026-03-25T14:18:33.112Z","source":"manual"},{"id":"9dc5146f-41f6-46c7-9472-7fa17a647e77","name":"Invalid 2","inputs":{"declared_applicant_address":"WV 56604 Erie - Oak St 3814","SSN":"529-38-8359"},"expectedOutput":{"ResidencyValidationDecision":"Invalid","rationale":".."},"simulationInstructions":"","expectedAgentBehavior":"","simulateInput":false,"inputGenerationInstructions":"","simulateTools":false,"toolsToSimulate":[],"evalSetId":"a8246f97-e10e-4e50-9f7e-a7cac5d449c4","createdAt":"2026-03-25T14:19:54.002Z","updatedAt":"2026-03-25T14:32:14.186Z","source":"manual"},{"id":"05805e06-b628-4010-8928-32277aad9a35","name":"Invalid 3","inputs":{"declared_applicant_address":"35782 WV Harrisburg, Test Ave 3712","SSN":"633-81-2446"},"expectedOutput":{"ResidencyValidationDecision":"Invalid","rationale":".."},"simulationInstructions":"","expectedAgentBehavior":"","simulateInput":false,"inputGenerationInstructions":"","simulateTools":false,"toolsToSimulate":[],"evalSetId":"a8246f97-e10e-4e50-9f7e-a7cac5d449c4","createdAt":"2026-03-25T14:20:16.156Z","updatedAt":"2026-03-25T14:32:31.796Z","source":"manual"},{"id":"52d6f080-7f69-4680-a0f1-3c242e4a0d20","name":"Invalid 4","inputs":{"declared_applicant_address":"Scranton NY 66875 St. Mark's St 6465","SSN":"902-37-0293"},"expectedOutput":{"ResidencyValidationDecision":"Invalid","rationale":".."},"simulationInstructions":"","expectedAgentBehavior":"","simulateInput":false,"inputGenerationInstructions":"","simulateTools":false,"toolsToSimulate":[],"evalSetId":"a8246f97-e10e-4e50-9f7e-a7cac5d449c4","createdAt":"2026-03-25T14:20:42.623Z","updatedAt":"2026-03-25T14:33:05.261Z","source":"manual"},{"id":"0ea8aa7f-f4c2-404a-891a-d6d91a2a6863","name":"Invalid 5","inputs":{"declared_applicant_address":"DE 43995, Harrisburg, 4899 Canal St","SSN":"617-87-1434"},"expectedOutput":{"ResidencyValidationDecision":"Invalid","rationale":".."},"simulationInstructions":"","expectedAgentBehavior":"","simulateInput":false,"inputGenerationInstructions":"","simulateTools":false,"toolsToSimulate":[],"evalSetId":"a8246f97-e10e-4e50-9f7e-a7cac5d449c4","createdAt":"2026-03-25T14:21:01.791Z","updatedAt":"2026-03-25T14:33:20.797Z","source":"manual"}],"modelSettings":[],"createdAt":"2026-03-25T14:12:52.390Z","updatedAt":"2026-03-25T14:33:20.797Z","agentMemoryEnabled":false,"agentMemorySettings":[],"lineByLineEvaluation":false}
+```
 
 and paste it to the import window**.** After that click the **Import** button
 

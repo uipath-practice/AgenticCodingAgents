@@ -3,6 +3,7 @@
 Image URLs on sites.google.com are short-lived (they 403 within minutes), so each
 page's images are downloaded immediately after that page's HTML is fetched.
 """
+import html as htmllib
 import re, subprocess, sys, json
 from pathlib import Path
 import bs4
@@ -98,6 +99,23 @@ def inline(el):
     return re.sub(r"\s+", " ", s).strip()
 
 
+def embed_code(el) -> str:
+    """Extract the payload of a Google Sites embed gadget.
+
+    Sites stores "copy to clipboard" blocks -- prompts, JSON payloads -- in a
+    `data-code` attribute rendered client-side into an iframe, so they are absent
+    from the walked DOM text. The attribute is double HTML-escaped.
+    """
+    raw = htmllib.unescape(htmllib.unescape(el.get("data-code") or ""))
+    txt = bs4.BeautifulSoup(raw, "html.parser").get_text("\n", strip=True)
+    # The gadget appends its own copy-button label as the last line, and the
+    # wording varies per block ("Copy to clipboard", "Copy this evaluation set").
+    lines = txt.splitlines()
+    while lines and re.match(r"^\s*Copy\b.*$", lines[-1]):
+        lines.pop()
+    return "\n".join(lines).strip()
+
+
 class Harvester:
     def __init__(self, page_url):
         self.page_url = page_url
@@ -114,6 +132,16 @@ class Harvester:
                 continue
             name = child.name
             cls = " ".join(child.get("class") or [])
+
+            if child.has_attr("data-code"):
+                code = embed_code(child)
+                if code:
+                    lang = "json" if code.lstrip().startswith(("{", "[")) else "text"
+                    self.emit(); self.emit(f"```{lang}")
+                    for line in code.splitlines():
+                        self.lines.append(line)
+                    self.emit("```"); self.emit()
+                continue
 
             if name == "img" and "CENy8b" in cls:
                 n = len(self.images) + 1
