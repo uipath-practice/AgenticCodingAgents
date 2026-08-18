@@ -8,7 +8,7 @@ import json
 import time
 from pathlib import Path
 
-from openai import AzureOpenAI, OpenAI, RateLimitError, APIError
+from openai import AzureOpenAI, BadRequestError, OpenAI, RateLimitError, APIError
 from PIL import Image
 
 from .config import CHAT_MODEL
@@ -84,6 +84,12 @@ def build_prompt(
     )
 
 
+# Newer models (e.g. gpt-5.x) reject a non-default `temperature` outright. We
+# cannot know from the deployment name alone, so the first call probes it and the
+# result is cached here for the rest of the run.
+_SUPPORTS_TEMPERATURE = True
+
+
 def extract_from_image(
     client: OpenAI | AzureOpenAI,
     image_path: Path,
@@ -129,13 +135,26 @@ def extract_from_image(
     last_error = None
     for attempt in range(max_retries):
         try:
-            response = client.chat.completions.create(
-                model=CHAT_MODEL,
-                messages=messages,
-                temperature=0.2,
-                max_completion_tokens=4000,
-                response_format={"type": "json_object"},
-            )
+            global _SUPPORTS_TEMPERATURE
+            kwargs = {
+                "model": CHAT_MODEL,
+                "messages": messages,
+                "max_completion_tokens": 4000,
+                "response_format": {"type": "json_object"},
+            }
+            if _SUPPORTS_TEMPERATURE:
+                kwargs["temperature"] = 0.2
+
+            try:
+                response = client.chat.completions.create(**kwargs)
+            except BadRequestError as e:
+                if _SUPPORTS_TEMPERATURE and "temperature" in str(e):
+                    print("  Model rejects temperature=0.2; retrying at the default.")
+                    _SUPPORTS_TEMPERATURE = False
+                    kwargs.pop("temperature", None)
+                    response = client.chat.completions.create(**kwargs)
+                else:
+                    raise
 
             content = response.choices[0].message.content
             extraction = json.loads(content)
