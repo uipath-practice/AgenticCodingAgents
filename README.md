@@ -1,4 +1,4 @@
-# Agentic Coding Agents — Site Guide
+# Agentic Automation Workshop — Site Guide
 
 How the site works, how to edit it, and what to ask Claude Code to do.
 

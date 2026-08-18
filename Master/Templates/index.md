@@ -14,4 +14,4 @@
 | [**Connect to Finance System**](4-connect-finance.md) | Push approved reports to the finance system via Integration Service |
 
 !!! tip "Training Environment"
-    Log in at **[cloud.uipath.com/tpenlabs](https://cloud.uipath.com/tpenlabs)** and remember using tenant **AgenticPractice** for this exercise.
+    Log in at **[cloud.uipath.com/tpenlabs](https://cloud.uipath.com/tpenlabs)** and remember using tenant **AgenticWorkshop** for this exercise.

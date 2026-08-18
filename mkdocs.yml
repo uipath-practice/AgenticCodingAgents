@@ -1,6 +1,6 @@
-site_name: Agentic Coding Agents
+site_name: Agentic Automation Workshop
 site_url: https://uipath-practice.github.io/AgenticCodingAgents/
-site_description: TODO_ONE_LINE_DESCRIPTION
+site_description: Participant's handbook for the UiPath Agentic Automation Workshop — build an end-to-end agentic Benefit Claims process.
 site_author: Mihai Iorga
 
 theme:

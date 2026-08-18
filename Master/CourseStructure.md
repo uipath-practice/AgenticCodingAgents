@@ -58,7 +58,7 @@ Two to three sentences about the business process and what platform features are
 | [**Lesson Three Title**](3-verb-noun.md) | Brief description |
 
 !!! tip "Training Environment"
-    Log in at **[cloud.uipath.com/tpenlabs](https://cloud.uipath.com/tpenlabs)** and remember using tenant **AgenticPractice** for this exercise.
+    Log in at **[cloud.uipath.com/tpenlabs](https://cloud.uipath.com/tpenlabs)** and remember using tenant **AgenticWorkshop** for this exercise.
 ````
 
 ### Real example (Invoice Matching with IXP)
@@ -81,7 +81,7 @@ Two to three sentences about the business process and what platform features are
 | [**Configure API Integration**](5-configure-api.md) | Send rejection emails and store approved invoices for payment processing |
 
 !!! tip "Training Environment"
-    Log in at **[cloud.uipath.com/tpenlabs](https://cloud.uipath.com/tpenlabs)** and remember using tenant **AgenticPractice** for this exercise.
+    Log in at **[cloud.uipath.com/tpenlabs](https://cloud.uipath.com/tpenlabs)** and remember using tenant **AgenticWorkshop** for this exercise.
 ````
 
 ---
@@ -216,7 +216,7 @@ In this simulated scenario, the company processes hundreds of invoices per day. 
 
 ### 1. Create the Agentic Process
 
-In [**Studio Web**](https://cloud.uipath.com/tpenlabs/studio_/projects), make sure you are building in the right Tenant (**AgenticPractice**), click **Create New** and select **Agentic Process**.
+In [**Studio Web**](https://cloud.uipath.com/tpenlabs/studio_/projects), make sure you are building in the right Tenant (**AgenticWorkshop**), click **Create New** and select **Agentic Process**.
 
 ![New Agentic Process in Studio Web](configure-robot.images/1-new-agentic-process.png){ .screenshot }
 ````

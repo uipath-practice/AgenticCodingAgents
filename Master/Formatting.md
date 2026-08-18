@@ -352,7 +352,7 @@ Use this exact text in exercise overview pages:
 
 ```markdown
 !!! tip "Training Environment"
-    Log in at **[cloud.uipath.com/tpenlabs](https://cloud.uipath.com/tpenlabs)** and remember using tenant **AgenticPractice** for this exercise.
+    Log in at **[cloud.uipath.com/tpenlabs](https://cloud.uipath.com/tpenlabs)** and remember using tenant **AgenticWorkshop** for this exercise.
 ```
 
 ### Admonitions inside content

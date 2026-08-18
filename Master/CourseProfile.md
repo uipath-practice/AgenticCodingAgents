@@ -6,8 +6,8 @@ bottom. Never invent a tenant URL, contact address, or site URL — read it from
 
 | Key | Value |
 |---|---|
-| `COURSE_TITLE` | Agentic Coding Agents |
-| `COURSE_DESCRIPTION` | TODO_ONE_LINE_DESCRIPTION |
+| `COURSE_TITLE` | Agentic Automation Workshop |
+| `COURSE_DESCRIPTION` | Participant's handbook for the UiPath Agentic Automation Workshop — build an end-to-end agentic Benefit Claims process. |
 | `SITE_AUTHOR` | Mihai Iorga |
 | `SITE_URL` | `https://uipath-practice.github.io/AgenticCodingAgents/` |
 | `BASE_PATH` | `/AgenticCodingAgents` |
