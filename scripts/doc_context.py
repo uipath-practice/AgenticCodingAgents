@@ -77,7 +77,20 @@ def _chunk_text(text: str, source: str) -> list[dict]:
     chunk_chars = CHUNK_SIZE * CHARS_PER_TOKEN
     overlap_chars = CHUNK_OVERLAP * CHARS_PER_TOKEN
     chunks: list[dict] = []
-    paragraphs = text.split("\n\n")
+
+    # A single paragraph can exceed the embedding model's hard input limit (8192
+    # tokens) all on its own -- HTML-to-text often yields one unbroken blob. Break
+    # oversized paragraphs up front so paragraph-aware accumulation below can
+    # never emit a chunk larger than chunk_chars.
+    paragraphs: list[str] = []
+    for para in text.split("\n\n"):
+        if len(para) <= chunk_chars:
+            paragraphs.append(para)
+        else:
+            paragraphs.extend(
+                para[i: i + chunk_chars] for i in range(0, len(para), chunk_chars)
+            )
+
     current = ""
 
     for para in paragraphs:

@@ -148,8 +148,12 @@ def extract_from_image(
             try:
                 response = client.chat.completions.create(**kwargs)
             except BadRequestError as e:
-                if _SUPPORTS_TEMPERATURE and "temperature" in str(e):
-                    print("  Model rejects temperature=0.2; retrying at the default.")
+                # Decide from THIS request's kwargs, not the shared flag: with
+                # concurrency>1 several calls are in flight when the first one
+                # clears the flag, and gating on it would leave them unretried.
+                if "temperature" in kwargs and "temperature" in str(e):
+                    if _SUPPORTS_TEMPERATURE:
+                        print("  Model rejects temperature=0.2; retrying at the default.")
                     _SUPPORTS_TEMPERATURE = False
                     kwargs.pop("temperature", None)
                     response = client.chat.completions.create(**kwargs)
