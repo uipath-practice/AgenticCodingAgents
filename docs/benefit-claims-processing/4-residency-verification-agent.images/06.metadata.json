@@ -1,0 +1,30 @@
+{
+  "version": "1.0",
+  "image_file": "06.png",
+  "image_path": "docs/benefit-claims-processing/4-residency-verification-agent.images/06.png",
+  "lesson": "4-residency-verification-agent",
+  "exercise": "benefit-claims-processing",
+  "extraction": {
+    "ocr_text": "Name                         Type        Description\ndeclared_applicant_address   String      Applicant's full declared address (street, city, state, ZIP)\nSSN                          String      Applicant's social security number (SSN)",
+    "description": "The screenshot shows a simple table, likely from a UiPath Agents or Studio Web configuration/reference section, listing input or argument metadata. It contains columns for Name, Type, and Description, with two String fields: declared_applicant_address and SSN.",
+    "step_instructions": "Informational screenshot — no user action required. It shows the field names, data types, and descriptions to use for applicant residency or identity-related information."
+  },
+  "layout": {
+    "mode": "split_30",
+    "ocr_length": 236,
+    "aspect_ratio": 10.59,
+    "image_size": "1027x97",
+    "rationale": "Low text density (236 chars) or narrow layout"
+  },
+  "model": {
+    "name": "gpt-5.4",
+    "deployment": "gpt-5.5",
+    "api_version": "2025-04-01-preview"
+  },
+  "usage": {
+    "prompt_tokens": 1930,
+    "completion_tokens": 191,
+    "total_tokens": 2121
+  },
+  "generated_at": "2026-08-18T11:43:03.551531+00:00"
+}

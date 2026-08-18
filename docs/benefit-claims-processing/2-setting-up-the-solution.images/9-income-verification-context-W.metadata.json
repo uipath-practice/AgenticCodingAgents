@@ -1,0 +1,30 @@
+{
+  "version": "1.0",
+  "image_file": "9-income-verification-context-W.jpg",
+  "image_path": "docs/benefit-claims-processing/2-setting-up-the-solution.images/09.jpg",
+  "lesson": "2-setting-up-the-solution",
+  "exercise": "benefit-claims-processing",
+  "extraction": {
+    "ocr_text": "Explorer\n+\n🔍\n\nBenefit Claims Processing Template\n  Action App\n  Addition Tool\n  Benefit Claims Processing\n  DownloadFileFromStorageBucket\n\nApps\nAssets\nConnections\nContext\n  Eligibility\n  Income Verification\n  Residency Verification\nProcesses\n\nBenefit Claims ...    Main    Income Verific...\n\n▶  Debug configuration  ℹ\n\nIncome Verification\n\nName *\nIncome Verification\n\nDescription\nNot applicable or no value se...\n\nData source\n○ Storage Bucket   ○ IS Co[...]\n\nStorage Bucket\nIncome\n\nIncome Verification ×\n\nSearch context grounding indexes\n\n- Platform resources\n  Benefit Claims\n    Eligibility\n    Income Verification\n    Residency Verification\n  Compliance Inspection\n    Index Workplace Safety and Compliance Regulati...\n  Shared\n    Index Workplace Safety and Compliance Regulati...",
+    "description": "The screenshot shows UiPath Studio Web with the Solution Explorer on the left and a Context resource configuration page open for “Income Verification.” The Context section is expanded, and “Income Verification” is selected. On the right, a context grounding index picker dropdown is open, showing platform resources and highlighting the “Income Verification” index under the “Benefit Claims” folder.",
+    "step_instructions": "Click on “Income Verification” under the “Benefit Claims” folder in the context grounding indexes dropdown to select it for the Income Verification context resource."
+  },
+  "layout": {
+    "mode": "full_width",
+    "ocr_length": 784,
+    "aspect_ratio": 3.21,
+    "image_size": "1909x594",
+    "rationale": "High density (784 chars) + wide (3.21) or very high text"
+  },
+  "model": {
+    "name": "gpt-5.4",
+    "deployment": "gpt-5.5",
+    "api_version": "2025-04-01-preview"
+  },
+  "usage": {
+    "prompt_tokens": 3086,
+    "completion_tokens": 717,
+    "total_tokens": 3803
+  },
+  "generated_at": "2026-08-18T11:40:25.377960+00:00"
+}

@@ -1,0 +1,30 @@
+{
+  "version": "1.0",
+  "image_file": "08.png",
+  "image_path": "docs/benefit-claims-processing/4-residency-verification-agent.images/08.png",
+  "lesson": "4-residency-verification-agent",
+  "exercise": "benefit-claims-processing",
+  "extraction": {
+    "ocr_text": "Name                         Type        Description\nResidencyValidationDecision  String      Final decision on the residency verification\nrationale                    String      Explanation of why the decision was made,\n                                        including any mismatches between addresses",
+    "description": "The screenshot shows a simple table defining two fields for a residency verification decision output. It lists the field names, their data type as String, and descriptions explaining what each value should contain.",
+    "step_instructions": "Informational screenshot — no user action required. It shows the expected output fields: ResidencyValidationDecision and rationale, both of type String."
+  },
+  "layout": {
+    "mode": "split_50",
+    "ocr_length": 304,
+    "aspect_ratio": 7.87,
+    "image_size": "1031x131",
+    "rationale": "Medium text density (304 chars)"
+  },
+  "model": {
+    "name": "gpt-5.4",
+    "deployment": "gpt-5.5",
+    "api_version": "2025-04-01-preview"
+  },
+  "usage": {
+    "prompt_tokens": 1970,
+    "completion_tokens": 336,
+    "total_tokens": 2306
+  },
+  "generated_at": "2026-08-18T11:43:09.409584+00:00"
+}
