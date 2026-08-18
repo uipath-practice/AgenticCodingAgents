@@ -13,8 +13,6 @@ In this exercise you'll implement a **Benefit Claims** use case from the governm
 structured procedure citizens use to request financial or service-based assistance, such as
 pensions, social assistance, or unemployment benefits.
 
-<!-- Rows become links as each lesson is authored. An unbuilt link fails `mkdocs build --strict`. -->
-
 | Step | Focus |
 | ---: | :--- |
 | [**Create BPMN process**](1-create-bpmn-process.md) | Model the end-to-end process on the BPMN canvas |
@@ -24,8 +22,8 @@ pensions, social assistance, or unemployment benefits.
 | [**Income Verification Agent**](5-income-verification-agent.md) | Build an agent that checks the declared income against known records |
 | [**Eligibility Determination Agent**](6-eligibility-determination-agent.md) | Build an agent that decides eligibility using internal guidelines |
 | [**Configure human validation**](7-configure-human-validation.md) | Present the agents' conclusions for a case worker to approve or deny |
-| **Configure API integration — Benefit Approval** *(coming next)* | Notify the applicant when the claim is approved |
-| **Configure API integration — Benefit Rejection** *(coming next)* | Notify the applicant when the claim is rejected |
+| [**Configure API integration — Benefit Approval**](8-configure-api-integration-benefit-approval.md) | Notify the applicant when the claim is approved |
+| [**Configure API integration — Benefit Rejection**](9-configure-api-integration-benefit-rejection.md) | Notify the applicant when the claim is rejected |
 
 !!! tip "Training Environment"
     Log in at **[cloud.uipath.com/tpenlabs](https://cloud.uipath.com/tpenlabs)** and remember using tenant **AgenticWorkshop** for this exercise.
