@@ -20,7 +20,7 @@ pensions, social assistance, or unemployment benefits.
 | [**Create BPMN process**](1-create-bpmn-process.md) | Model the end-to-end process on the BPMN canvas |
 | [**Setting up the Solution**](2-setting-up-the-solution.md) | Create the agentic automation solution that implements the process |
 | [**Configure a Robot**](3-configure-a-robot.md) | Add an RPA automation that uses IXP to read the application PDF |
-| **Residency Verification Agent** *(coming next)* | Build an agent that checks the declared residency against known records |
+| [**Residency Verification Agent**](4-residency-verification-agent.md) | Build an agent that checks the declared residency against known records |
 | **Income Verification Agent** *(coming next)* | Build an agent that checks the declared income against known records |
 | **Eligibility Determination Agent** *(coming next)* | Build an agent that decides eligibility using internal guidelines |
 | **Configure human validation** *(coming next)* | Present the agents' conclusions for a case worker to approve or deny |
