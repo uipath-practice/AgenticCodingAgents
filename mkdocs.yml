@@ -1,0 +1,77 @@
+site_name: Agentic Coding Agents
+site_url: https://uipath-practice.github.io/AgenticCodingAgents/
+site_description: TODO_ONE_LINE_DESCRIPTION
+site_author: Mihai Iorga
+
+theme:
+  name: material
+  logo: assets/images/Partner Success Logo.png
+  favicon: assets/images/favicon.png
+  font:
+    text: Inter
+  palette:
+    scheme: default
+    primary: deep orange
+    accent: orange
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - navigation.footer
+    - toc.integrate
+    - search.highlight
+    - search.suggest
+    - content.code.copy
+    - content.tabs.link
+
+hooks:
+  - hooks/split_cols.py
+
+plugins:
+  - search
+  # Localization — see Master/Localization.md. English is the master language,
+  # built at the site root. Other languages build under /<locale>/ and fall
+  # back to English for any page without a translation.
+  - i18n:
+      docs_structure: suffix
+      fallback_to_default: true
+      reconfigure_material: true
+      reconfigure_search: true
+      languages:
+        - locale: en
+          name: English
+          build: true
+          default: true
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - attr_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+
+nav:
+  - Home: index.md
+  # Exercise sections are inserted here by /publish-exercise.
+  # `- Next Steps: next-steps.md` MUST remain the last entry: publish-exercise
+  # inserts each new exercise block immediately before it, and
+  # scripts/translation_status.py scrapes this block to tell published from draft.
+  - Next Steps: next-steps.md
+
+extra_css:
+  - stylesheets/extra.css
+
+extra_javascript:
+  - javascripts/extra.js
+
+extra:
+  generator: false

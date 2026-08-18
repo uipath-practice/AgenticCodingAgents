@@ -1,0 +1,3 @@
+mkdocs-material>=9.5
+# Localization plugin — configured for English only; see Master/Localization.md
+mkdocs-static-i18n>=1.2
