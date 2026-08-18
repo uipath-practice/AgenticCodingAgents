@@ -170,10 +170,10 @@ def resolve_context(
     if embedding_client:
         query_text = f"{lesson_title} {section_heading} {alt_text}"
         try:
-            from .config import AZURE_EMBEDDING_DEPLOYMENT
+            from .config import EMBEDDING_MODEL
 
             resp = embedding_client.embeddings.create(
-                model=AZURE_EMBEDDING_DEPLOYMENT,
+                model=EMBEDDING_MODEL,
                 input=query_text,
             )
             query_embedding = resp.data[0].embedding

@@ -8,10 +8,10 @@ import json
 import time
 from pathlib import Path
 
-from openai import AzureOpenAI, RateLimitError, APIError
+from openai import AzureOpenAI, OpenAI, RateLimitError, APIError
 from PIL import Image
 
-from .config import AZURE_DEPLOYMENT
+from .config import CHAT_MODEL
 
 SYSTEM_PROMPT_TEMPLATE = """You are an expert at analyzing screenshots from a UiPath automation workshop tutorial.
 Your task is to extract structured metadata from each screenshot.
@@ -85,7 +85,7 @@ def build_prompt(
 
 
 def extract_from_image(
-    client: AzureOpenAI,
+    client: OpenAI | AzureOpenAI,
     image_path: Path,
     system_prompt: str,
     max_retries: int = 3,
@@ -130,7 +130,7 @@ def extract_from_image(
     for attempt in range(max_retries):
         try:
             response = client.chat.completions.create(
-                model=AZURE_DEPLOYMENT,
+                model=CHAT_MODEL,
                 messages=messages,
                 temperature=0.2,
                 max_completion_tokens=4000,

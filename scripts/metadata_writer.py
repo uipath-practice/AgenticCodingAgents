@@ -7,7 +7,7 @@ from pathlib import Path
 
 from PIL import Image
 
-from .config import AZURE_API_VERSION, AZURE_DEPLOYMENT, METADATA_SUFFIX
+from .config import AZURE_API_VERSION, CHAT_MODEL, METADATA_SUFFIX
 
 
 def classify_layout_mode(image_path: Path, ocr_text: str) -> dict:
@@ -96,7 +96,7 @@ def build_metadata(
         "layout": layout_info,
         "model": {
             "name": "gpt-5.4",
-            "deployment": AZURE_DEPLOYMENT,
+            "deployment": CHAT_MODEL,
             "api_version": AZURE_API_VERSION,
         },
         "usage": {

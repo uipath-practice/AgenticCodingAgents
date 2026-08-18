@@ -12,7 +12,7 @@ import requests
 from bs4 import BeautifulSoup
 
 from .config import (
-    AZURE_EMBEDDING_DEPLOYMENT,
+    EMBEDDING_MODEL,
     CONTEXT_DIR,
     DOCS_ROOT,
     VECTOR_STORE_PATH,
@@ -157,7 +157,7 @@ def _embed_chunks(chunks: list[dict]) -> list[dict]:
         print(f"  Embedding chunks {i + 1}-{min(i + batch_size, total)} of {total}...")
 
         response = client.embeddings.create(
-            model=AZURE_EMBEDDING_DEPLOYMENT,
+            model=EMBEDDING_MODEL,
             input=texts,
         )
 

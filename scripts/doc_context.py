@@ -17,7 +17,7 @@ import numpy as np
 import requests
 from bs4 import BeautifulSoup
 
-from .config import AZURE_EMBEDDING_DEPLOYMENT, get_openai_client
+from .config import EMBEDDING_MODEL, get_openai_client
 
 DOC_FILENAME = "documentation.txt"
 CACHE_FILENAME = "documentation.cache.json"
@@ -112,7 +112,7 @@ def _embed_chunks(chunks: list[dict]) -> list[dict]:
         end = min(i + batch_size, total)
         print(f"    Embedding doc chunks {i + 1}–{end} of {total}...")
         response = client.embeddings.create(
-            model=AZURE_EMBEDDING_DEPLOYMENT,
+            model=EMBEDDING_MODEL,
             input=texts,
         )
         for j, item in enumerate(response.data):
