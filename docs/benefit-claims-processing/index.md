@@ -22,7 +22,7 @@ pensions, social assistance, or unemployment benefits.
 | [**Configure a Robot**](3-configure-a-robot.md) | Add an RPA automation that uses IXP to read the application PDF |
 | [**Residency Verification Agent**](4-residency-verification-agent.md) | Build an agent that checks the declared residency against known records |
 | [**Income Verification Agent**](5-income-verification-agent.md) | Build an agent that checks the declared income against known records |
-| **Eligibility Determination Agent** *(coming next)* | Build an agent that decides eligibility using internal guidelines |
+| [**Eligibility Determination Agent**](6-eligibility-determination-agent.md) | Build an agent that decides eligibility using internal guidelines |
 | **Configure human validation** *(coming next)* | Present the agents' conclusions for a case worker to approve or deny |
 | **Configure API integration — Benefit Approval** *(coming next)* | Notify the applicant when the claim is approved |
 | **Configure API integration — Benefit Rejection** *(coming next)* | Notify the applicant when the claim is rejected |
