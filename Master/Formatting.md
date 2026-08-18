@@ -364,6 +364,30 @@ Use `???` instead of `!!!` for content that is optional to read:
     Collapsible content here — learner clicks to expand.
 ```
 
+`???` starts collapsed; `???+` starts expanded.
+
+#### Large copy-only payloads must be collapsed
+
+Wrap any bulk machine-readable payload the learner only copies — evaluation sets,
+JSON schemas, exported definitions — in a **collapsed** `??? note`, with the fence
+indented 4 spaces inside it:
+
+```markdown
+??? note "Copy this evaluation set (JSON)"
+
+    ```json
+    {"fileName":"evaluation-set-…","evaluations":[…]}
+    ```
+```
+
+These payloads are often thousands of characters on a single line and push the rest
+of the lesson off the screen. Collapsing keeps the steps readable while the copy
+button stays one click away.
+
+**Do not collapse content the learner must read to follow the lesson** — system and
+user prompts stay visible, even when long. The test is whether they need to
+understand it or merely paste it.
+
 ### Standard training environment callout
 
 Use this exact text in exercise overview pages:
