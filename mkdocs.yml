@@ -65,6 +65,17 @@ nav:
   # `- Next Steps: next-steps.md` MUST remain the last entry: publish-exercise
   # inserts each new exercise block immediately before it, and
   # scripts/translation_status.py scrapes this block to tell published from draft.
+  - Benefit Claims Processing:
+    - Overview: benefit-claims-processing/index.md
+    - 1. Automating Business Processes using BPMN canvas: benefit-claims-processing/1-create-bpmn-process.md
+    - 2. Setting up the Solution: benefit-claims-processing/2-setting-up-the-solution.md
+    - 3. Add an RPA automation to your Maestro workflow: benefit-claims-processing/3-configure-a-robot.md
+    - 4. Build the Residency Verification Agent: benefit-claims-processing/4-residency-verification-agent.md
+    - 5. Build the Income Verification Agent: benefit-claims-processing/5-income-verification-agent.md
+    - 6. Build the Eligibility Determination Agent: benefit-claims-processing/6-eligibility-determination-agent.md
+    - 7. Add an Action App for human validation: benefit-claims-processing/7-configure-human-validation.md
+    - 8. Update external systems using API — Benefit Approval Case: benefit-claims-processing/8-configure-api-integration-benefit-approval.md
+    - 9. Update external systems using API — Benefit Rejection Case: benefit-claims-processing/9-configure-api-integration-benefit-rejection.md
   - Next Steps: next-steps.md
 
 extra_css:

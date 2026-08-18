@@ -30,6 +30,8 @@ That's nine steps, each building on the last. By the end you'll have one process
 robots, agents, and a human — which is what agentic orchestration actually looks like in
 production.
 
+[Start the exercise →](benefit-claims-processing/index.md)
+
 ## Workshop Materials
 
 The documents you'll need during the exercise are here:

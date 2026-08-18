@@ -1,4 +1,4 @@
-# Build an Agent and add it to the workflow
+# Build the Income Verification Agent
 
 !!! tip "Here is our plan for this lesson:"
 
