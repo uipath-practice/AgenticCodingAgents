@@ -58,7 +58,9 @@ This is the kind of workflow you should expect at the end:
 
 ![BPMN diagram of the Benefit Claims process, running from application received through the fraud research agents, eligibility determination and case worker review, to the approval or rejection email branches](1-create-bpmn-process.images/1-benefit-claims-bpmn-diagram-W.jpg){ .screenshot width="900" }
 
+[[[
+![Illustration of an AI agent presenting a checklist to a group of people](1-create-bpmn-process.images/2-agentic-automation-illustration.png)
+|30|
 During subsequent lessons we will use this diagram with other components of the UiPath platform to
 build an end-to-end agentic automation process.
-
-![Illustration of an AI agent presenting a checklist to a group of people](1-create-bpmn-process.images/2-agentic-automation-illustration.png){ width="420" }
+]]]

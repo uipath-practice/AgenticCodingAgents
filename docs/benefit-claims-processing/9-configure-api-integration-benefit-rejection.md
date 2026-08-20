@@ -45,13 +45,10 @@ specifically the
 [Generate Email](https://docs.uipath.com/activities/other/latest/integration-service/uipath-airdk-airdk-generate-email)
 activity.
 
-[[[
-- Action will be **Execute Connector Activity**
-- Pick the UiPath GenAI Activities connector and configure the **GenAI Connection**
-- Select the **Generate Email** activity
-|50|
-![Properties panel with the action set to Execute Connector Activity](9-configure-api-integration-benefit-rejection.images/2-select-connector-activity.png){ .screenshot }
-]]]
+- Action will be **Connector → Execute Connector Activity**
+- Pick the **Generate Email** GenAI activity
+
+![Activity picker searching for "generate email" with the Generate Email UiPath GenAI Activities result highlighted, and the Action set to Execute connector activity](9-configure-api-integration-benefit-rejection.images/2-select-connector-activity-W.png){ .screenshot width="900" }
 
 [[[
 ![Generate Email activity properties panel](9-configure-api-integration-benefit-rejection.images/3-generate-email-properties.png){ .screenshot }
@@ -77,32 +74,18 @@ Email content — enter this as a **JS Expression**:
 "Generate an email notifying the recipient that their application for benefits has been denied, for the following reason: "+vars.denialReason
 ```
 
-!!! note "Model name in the dropdown"
-    The **Model** dropdown lists the full model id — in the screenshots it appears as
-    `gpt-5.1-2025-11-13 (OpenAI)`.
-
 ### 2. Configure the Send Rejection Email task
 
 Once we have the generated email, we can send it to the applicant using the Gmail connector. Let's
 configure the **Send Rejection Email** task.
 
-[[[
-- Action will be **Execute Connector Activity**
-- Pick the **Gmail Connector** and select the `uipathlabs@gmail.com` connection
-- Pick the **Send Email** activity
-|30|
-![Email send task selected on the canvas with its properties panel](9-configure-api-integration-benefit-rejection.images/4-select-gmail-activity.png){ .screenshot }
-]]]
+- Action will be **Connector → Execute Connector Activity**
+- Pick the **Gmail - Send Email** activity
 
-[[[
-The Gmail activity with its connection configured.
-|30|
-![Gmail email activity with the uipathlabs@gmail.com connection selected](9-configure-api-integration-benefit-rejection.images/5-gmail-connection.png){ .screenshot }
-]]]
+![Activity picker searching for "send email" with the Gmail Send Email result highlighted, and the Action set to Execute connector activity](9-configure-api-integration-benefit-rejection.images/4-select-gmail-activity-W.png){ .screenshot width="900" }
 
 ### 3. Configure the activity properties
 
-[[[
 - **To** — we are going to use the **in_EmailAddress** argument from the start event
 - **Subject**:
 
@@ -110,10 +93,11 @@ The Gmail activity with its connection configured.
 Benefits Application Rejected
 ```
 
+![Gmail email activity with the uipathlabs@gmail.com connection selected](9-configure-api-integration-benefit-rejection.images/5-gmail-connection.png){ .screenshot }
+
 - **Body** — the **emailContent** output variable from the **Generate Rejection Email** task
-|50|
+
 ![Activity configuration panel with the To and Subject fields filled in](9-configure-api-integration-benefit-rejection.images/6-configure-email-properties.png){ .screenshot }
-]]]
 
 [[[
 Pick the **emailContent** variable for the Body field.

@@ -51,11 +51,11 @@ Remember that Solutions can have multiple components such as apps, automations, 
 ![Add project to solution menu with the Agent option highlighted](6-eligibility-determination-agent.images/2-add-agent-to-solution.jpg){ .screenshot }
 ]]]
 
-Dismiss Autopilot screen when you see a prompt to generate a new agent. Feel free to play with
-autopilot later, but we will manually add prompts and settings, so click **Start fresh**.
-
 Set agent's name to something meaningful, for example **Eligibility Determination Agent**. Let's keep
 it well organized!
+
+Dismiss Autopilot screen when you see a prompt to generate a new agent. Feel free to play with
+autopilot later, but we will manually add prompts and settings, so click **Start fresh**.
 
 ![Agent creation screen with the Autonomous card selected and the agent named Eligibility Determination Agent](6-eligibility-determination-agent.images/3-start-fresh-agent-type-W.png){ .screenshot width="900" }
 
@@ -159,15 +159,21 @@ Click on the **Add Context** button.
 ]]]
 
 [[[
+Select the **Context Grounding Indexes** option.
+|30|
+![New context dialog with Context Grounding Indexes highlighted above Data Fabric Entities](6-eligibility-determination-agent.images/12-select-context-type.png){ .screenshot }
+]]]
+
+[[[
 Select the **Eligibility** index from the current solution.
 |30|
-![Context picker with the Eligibility index listed under "In current solution"](6-eligibility-determination-agent.images/12-select-eligibility-index.png){ .screenshot }
+![Context picker with the Eligibility index listed under "In current solution"](6-eligibility-determination-agent.images/13-select-eligibility-index.png){ .screenshot }
 ]]]
 
 [[[
 Select the **Semantic** search strategy.
 |30|
-![Strategy dropdown set to Semantic](6-eligibility-determination-agent.images/13-select-semantic-strategy.png){ .screenshot }
+![Strategy dropdown set to Semantic](6-eligibility-determination-agent.images/14-select-semantic-strategy.png){ .screenshot }
 ]]]
 
 ## Tools
@@ -198,7 +204,7 @@ is similar for the other tools.
 [[[
 Click the **+** button from the tools section.
 |30|
-![Tools section with the add button highlighted](6-eligibility-determination-agent.images/14-add-tool.png){ .screenshot }
+![Tools section with the add button highlighted](6-eligibility-determination-agent.images/15-add-tool.png){ .screenshot }
 ]]]
 
 [[[
@@ -208,7 +214,7 @@ Search for the following tools and add them one by one:
 - **Multiplication Tool**
 - **Subtraction Tool**
 |30|
-![Tool picker with the Addition Tool result under RPA workflows](6-eligibility-determination-agent.images/15-select-addition-tool.png){ .screenshot }
+![Tool picker with the Addition Tool result under RPA workflows](6-eligibility-determination-agent.images/16-select-addition-tool.png){ .screenshot }
 ]]]
 
 [[[
@@ -219,17 +225,19 @@ use them:
 - **Multiplication Tool** — Use this tool when you need to multiply two numbers
 - **Subtraction Tool** — Use this tool to calculate a subtraction between two numbers
 |30|
-![Tool configuration with the description entered](6-eligibility-determination-agent.images/16-tool-descriptions.png){ .screenshot }
+![Tool configuration with the description entered](6-eligibility-determination-agent.images/17-tool-descriptions.png){ .screenshot }
 ]]]
 
 ## Configuring Agent's Prompts
 
+[[[
+![Illustration accompanying the prompt-writing advice](6-eligibility-determination-agent.images/18-prompt-precision-illustration.png)
+|30|
 > Precision in prompts, like in coding, leads to powerful and predictable results. If your prompt is
 > messy, expect messy output. Treat it like code, and write every word with purpose!
 >
 > — *another advice from gpt-4o*
-
-![Illustration accompanying the prompt-writing advice](6-eligibility-determination-agent.images/17-prompt-precision-illustration.png){ width="260" }
+]]]
 
 First, let's understand the difference between **System prompt** and **User prompt**.
 
@@ -248,8 +256,10 @@ Let's start with the **System Prompt**. Copy the following and paste it into you
 ```text
 #Role
 You are a decision agent whose role is to evaluate if an applicant meets the eligibility criteria for Supplemental Nutrition Assistance Program (SNAP) benefits. The eligibility criteria is specified in the "Eligibility" context.
+
 #Goals
 Assess whether the given applicant information qualifies them for SNAP benefits. Output a conclusion along with an explanation for the decision. For qualified applicants, calculate the monthly benefit amount.
+
 # Instructions
 1. Determine the net income. Use the ##SNAP Eligibility## context to do this.
 2. Determine if the applicant qualifies for benefits, according to the thresholds from the context.
@@ -260,6 +270,7 @@ If they qualify for benefits:
  b. Set the value of ##Calculation## to the final benefit amount.
 If they don't qualify for benefits:
  a. Set the value of ##Calculation## to "0".
+
 ##Calculation Rules
 **DO NOT** make calculations directly, instead use the available tools (**Addition Tool**, **Subtraction Tool**, **Multiplication tool**) to make calculations.
 ```
@@ -271,8 +282,8 @@ your **User Prompt**:
 
 ```text
 Decide whether this applicant qualifies for SNAP benefits:
-Household Size: {{Household_Size}}
-Monthly Gross Income: {{Monthly_Gross_Income}}
+Household Size: {{input.Household_Size}}
+Monthly Gross Income: {{input.Monthly_Gross_Income}}
 ```
 
 ### 9. Test the agent
@@ -285,10 +296,9 @@ Let's test the following scenarios.
 
 === "Qualifies — household of 4"
 
-    ```text
-    Household_Size: 4
-    Monthly_Gross_Income: 2500
-    ```
+    **Household_Size:** `4`
+
+    **Monthly_Gross_Income:** `2500`
 
     According to the guidelines, the applicant qualifies for benefits, because the maximum allowed
     gross income for a household of 4 is $4,050.
@@ -297,10 +307,9 @@ Let's test the following scenarios.
 
 === "Does not qualify — household of 1"
 
-    ```text
-    Household_Size: 1
-    Monthly_Gross_Income: 2000
-    ```
+    **Household_Size:** `1`
+
+    **Monthly_Gross_Income:** `2000`
 
     According to the guidelines, the applicant does not qualify for benefits, because the maximum
     allowed gross income for a household of 1 is $1,950, which is exceeded by the applicant's gross
@@ -359,12 +368,12 @@ use a deterministic evaluator.
 
 Go to **Evaluators** and click **Create New**.
 
-![Evaluators page with the Create New button in the upper-right corner](6-eligibility-determination-agent.images/18-evaluators-create-new-W.png){ .screenshot width="900" }
+![Evaluators page with the Create New button in the upper-right corner](6-eligibility-determination-agent.images/19-evaluators-create-new-W.png){ .screenshot width="900" }
 
 [[[
 Select **Exact match** evaluator type.
 |50|
-![Evaluator type picker with Exact match selected](6-eligibility-determination-agent.images/19-select-exact-match.png){ .screenshot }
+![Evaluator type picker with Exact match selected](6-eligibility-determination-agent.images/20-select-exact-match.png){ .screenshot }
 ]]]
 
 [[[
@@ -376,7 +385,7 @@ Conclusion Evaluator
 
 The target output field will be **Conclusion**.
 |50|
-![Evaluator configuration with the name Conclusion Evaluator and Deterministic type](6-eligibility-determination-agent.images/20-conclusion-evaluator.png){ .screenshot }
+![Evaluator configuration with the name Conclusion Evaluator and Deterministic type](6-eligibility-determination-agent.images/21-conclusion-evaluator.png){ .screenshot }
 ]]]
 
 [[[
@@ -388,14 +397,14 @@ Calculation Evaluator
 
 The target output field will be **Calculation**.
 |50|
-![Evaluator configuration with the name Calculation Evaluator and Deterministic type](6-eligibility-determination-agent.images/21-calculation-evaluator.png){ .screenshot }
+![Evaluator configuration with the name Calculation Evaluator and Deterministic type](6-eligibility-determination-agent.images/22-calculation-evaluator.png){ .screenshot }
 ]]]
 
 ### 11. Import the evaluation set
 
 Let's now import an evaluation set to test our agent.
 
-![Evaluation sets page with the Create dropdown open showing the Import option](6-eligibility-determination-agent.images/22-import-evaluation-set-W.png){ .screenshot width="900" }
+![Evaluation sets page with the Create dropdown open showing the Import option](6-eligibility-determination-agent.images/23-import-evaluation-set-W.png){ .screenshot width="900" }
 
 ??? note "Copy this evaluation set (JSON)"
 
@@ -406,20 +415,20 @@ Let's now import an evaluation set to test our agent.
 [[[
 Paste it into the import window. After that click the **Import** button.
 |50|
-![Import window with the evaluation set JSON pasted in](6-eligibility-determination-agent.images/23-import-window.png){ .screenshot }
+![Import window with the evaluation set JSON pasted in](6-eligibility-determination-agent.images/24-import-window.png){ .screenshot }
 ]]]
 
 [[[
 Open the evaluation set and select the **Conclusion Evaluator** and **Calculation Evaluator** that we
 configured earlier.
 |50|
-![Applied Evaluators selector with both evaluators selected](6-eligibility-determination-agent.images/24-select-evaluators.png){ .screenshot }
+![Applied Evaluators selector with both evaluators selected](6-eligibility-determination-agent.images/25-select-evaluators.png){ .screenshot }
 ]]]
 
 [[[
 Evaluate the set and discuss the results with the trainer.
 |30|
-![Evaluate set button highlighted](6-eligibility-determination-agent.images/25-evaluate-set.png){ .screenshot }
+![Evaluate set button highlighted](6-eligibility-determination-agent.images/26-evaluate-set.png){ .screenshot }
 ]]]
 
 ## Configuring the Agentic Task in Maestro
@@ -430,10 +439,10 @@ Let's get back to Studio and continue editing our Agentic Process.
 
 [[[
 Configure the **Eligibility Determination** task to use our freshly prepared AI Agent! This is done in
-the same way as the Robotic task: pick **Start and wait for agent**, then search for the agent in your
+the same way as the Robotic task: pick **Agent → Start and wait for agent**, then search for the agent in your
 solution.
 |50|
-![Eligibility Determination step selected with the agent picker open](6-eligibility-determination-agent.images/26-select-agent-in-task.png){ .screenshot }
+![Eligibility Determination step selected with the agent picker open](6-eligibility-determination-agent.images/27-select-agent-in-task.png){ .screenshot }
 ]]]
 
 ### 13. Map the inputs
@@ -442,7 +451,7 @@ solution.
 Now we need to pick outputs from the **Process Benefits Application** RPA Task, and add them as inputs
 to the Agent — here is how you do it in your Agentic task's **Settings**.
 |30|
-![Eligibility Determination agent activity selected with its input mappings](6-eligibility-determination-agent.images/27-map-agent-inputs.png){ .screenshot }
+![Eligibility Determination agent activity selected with its input mappings](6-eligibility-determination-agent.images/28-map-agent-inputs.png){ .screenshot }
 ]]]
 
 In the end:
@@ -455,6 +464,6 @@ In the end:
 Process is ready for testing — click on the **Debug** button! This time we can check the output of the
 **Eligibility Determination Agent**.
 
-![Completed execution showing the Eligibility Determination Agent's output](6-eligibility-determination-agent.images/28-execution-result-W.png){ .screenshot width="900" }
+![Completed execution showing the Eligibility Determination Agent's output](6-eligibility-determination-agent.images/29-execution-result-W.png){ .screenshot width="900" }
 
 **Time to move to the next one!**

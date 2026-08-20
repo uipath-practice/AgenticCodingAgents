@@ -37,11 +37,11 @@ Remember that Solutions can have multiple components such as apps, automations, 
 ![Add project to solution menu with the Agent option highlighted](4-residency-verification-agent.images/2-add-agent-to-solution.jpg){ .screenshot }
 ]]]
 
-Dismiss Autopilot screen when you see a prompt to generate a new agent. Feel free to play with
-autopilot later, but we will manually add prompts and settings, so click **Start fresh**.
-
 Set agent's name to something meaningful, for example **Residency Verification Agent**. Let's keep it
 well organized!
+
+Dismiss Autopilot screen when you see a prompt to generate a new agent. Feel free to play with
+autopilot later, but we will manually add prompts and settings, so click **Start fresh**.
 
 ![Agent creation screen with the Autonomous agent type selected and the name set to Residency Verification Agent](4-residency-verification-agent.images/3-start-fresh-agent-type-W.png){ .screenshot width="900" }
 
@@ -74,7 +74,10 @@ Let's go to **Data Manager** and create our arguments.
 
 **Input arguments:**
 
-![Input argument definitions showing field names, data types and descriptions](4-residency-verification-agent.images/6-input-arguments-W.png){ .screenshot width="900" }
+| Name | Type | Description |
+| :--- | :--- | :--- |
+| `declared_applicant_address` | String | Applicant's full declared address (street, city, state, ZIP) |
+| `SSN` | String | Applicant's social security number (SSN) |
 
 [[[
 **Output arguments:**
@@ -82,7 +85,10 @@ Let's go to **Data Manager** and create our arguments.
 ![Data manager panel with the Outputs section expanded](4-residency-verification-agent.images/7-data-manager-outputs.jpg){ .screenshot }
 ]]]
 
-![Output argument definitions showing ResidencyValidationDecision and rationale](4-residency-verification-agent.images/8-output-arguments-W.png){ .screenshot width="900" }
+| Name | Type | Description |
+| :--- | :--- | :--- |
+| `ResidencyValidationDecision` | String | Final decision on the residency verification |
+| `rationale` | String | Explanation of why the decision was made, including any mismatches between addresses |
 
 ## Context Grounding
 
@@ -117,25 +123,33 @@ Click on the **Add Context** button.
 ]]]
 
 [[[
+Select the **Context Grounding Indexes** option.
+|30|
+![New context dialog with Context Grounding Indexes highlighted above Data Fabric Entities](4-residency-verification-agent.images/11-select-context-type.png){ .screenshot }
+]]]
+
+[[[
 Select the **Residency Verification** index.
 |50|
-![Context picker with Residency Verification listed under "In current solution"](4-residency-verification-agent.images/11-select-residency-index.png){ .screenshot }
+![Context picker with Residency Verification listed under "In current solution"](4-residency-verification-agent.images/12-select-residency-index.png){ .screenshot }
 ]]]
 
 [[[
 Select the **Semantic** search strategy.
 |30|
-![Strategy dropdown with the Semantic option highlighted](4-residency-verification-agent.images/12-select-semantic-strategy.png){ .screenshot }
+![Strategy dropdown with the Semantic option highlighted](4-residency-verification-agent.images/13-select-semantic-strategy.png){ .screenshot }
 ]]]
 
 ## Configuring Agent's Prompts
 
+[[[
+![Illustration accompanying the prompt-writing advice](4-residency-verification-agent.images/14-prompt-precision-illustration.png)
+|30|
 > Precision in prompts, like in coding, leads to powerful and predictable results. If your prompt is
 > messy, expect messy output. Treat it like code, and write every word with purpose!
 >
 > — *another advice from gpt-4o*
-
-![Illustration accompanying the prompt-writing advice](4-residency-verification-agent.images/13-prompt-precision-illustration.png){ width="260" }
+]]]
 
 First, let's understand the difference between **System prompt** and **User prompt**.
 
@@ -153,6 +167,7 @@ Let's start with the **System Prompt**. Copy the following and paste it into you
 
 ```text
 You are a residency verification assistant designed to verify that an applicant's provided address matches the address in our known records. Your primary goal is to determine if the application can proceed or if additional proof of residency is required.
+
 ##Instructions##
 1. Search for the applicant's address in the Residency Verification index. Applicant's SSN should match the input SSN.
 - If the address fully matches (Address, City, State, ZIP), set ##ResidencyValidationDecision## value as "Valid"
@@ -160,6 +175,7 @@ You are a residency verification assistant designed to verify that an applicant'
 - If multiple addresses are found for the same SSN, try to match each one of them with the declared address and return "Valid" if one of them is a match. **DO NOT** mix and match address fields from one record to another. All fields should match from one record.
 - If the applicant's address can't be found based on the SSN, set ##ResidencyValidationDecision## value as "Invalid"
 - In the ##rationale## output field provide an explanation for your decision
+
 ##Matching rules##
 - Ignore trailing spaces and any other formatting differences. The Address, City, State, Zip should still be considered a match if they point to the same location but formatting is different.
 Always maintain a professional and impartial tone in your evaluations. Your assessments should be based solely on the address comparisons, without referencing external databases or services.
@@ -172,8 +188,8 @@ your **User Prompt**:
 
 ```text
 Please evaluate the residency verification for the following applicant:
-Applicant Address: {{declared_applicant_address}}
-SSN: {{SSN}}
+Applicant Address: {{input.declared_applicant_address}}
+SSN: {{input.SSN}}
 ```
 
 ### 7. Test the agent
@@ -188,10 +204,9 @@ Let's test the following scenarios.
 
     The SSN and address pair exist in the records.
 
-    ```text
-    SSN: 617-87-1434
-    Declared applicant address: 2381 Pine Rd, Lancaster, OH, 37661
-    ```
+    **SSN:** `617-87-1434`
+
+    **Declared applicant address:** `2381 Pine Rd, Lancaster, OH, 37661`
 
     Output should be **ResidencyValidationDecision: Valid**
 
@@ -199,10 +214,9 @@ Let's test the following scenarios.
 
     The SSN and address pair does not exist in the records.
 
-    ```text
-    SSN: 342-23-8721
-    Declared applicant address: 2312 Victory Ave, Columbus, OH, 72512
-    ```
+    **SSN:** `342-23-8721`
+
+    **Declared applicant address:** `2312 Victory Ave, Columbus, OH, 72512`
 
     Output should be **ResidencyValidationDecision: Invalid**
 
@@ -210,10 +224,9 @@ Let's test the following scenarios.
 
     What if the SSN exists in our records, but points to a different address?
 
-    ```text
-    SSN: 617-87-1434
-    Declared applicant address: 2381 Random St, Lancaster, OH, 37661
-    ```
+    **SSN:** `617-87-1434`
+
+    **Declared applicant address:** `2381 Random St, Lancaster, OH, 37661`
 
     Output should be **ResidencyValidationDecision: Invalid**
 
@@ -267,12 +280,12 @@ deterministic evaluator.
 
 Go to **Evaluators** and click **Create New**.
 
-![Evaluators page with the Create New button in the top-right corner](4-residency-verification-agent.images/14-evaluators-create-new-W.png){ .screenshot width="900" }
+![Evaluators page with the Create New button in the top-right corner](4-residency-verification-agent.images/15-evaluators-create-new-W.png){ .screenshot width="900" }
 
 [[[
 Select **Exact match** evaluator type.
 |50|
-![Evaluator type picker with the Exact match option selected](4-residency-verification-agent.images/15-select-exact-match.png){ .screenshot }
+![Evaluator type picker with the Exact match option selected](4-residency-verification-agent.images/16-select-exact-match.png){ .screenshot }
 ]]]
 
 [[[
@@ -288,7 +301,7 @@ The field we want to evaluate is:
 ResidencyValidationDecision
 ```
 |50|
-![Evaluator configuration with the name entered and Deterministic type selected](4-residency-verification-agent.images/16-name-evaluator.png){ .screenshot }
+![Evaluator configuration with the name entered and Deterministic type selected](4-residency-verification-agent.images/17-name-evaluator.png){ .screenshot }
 ]]]
 
 ### 9. Import the evaluation set
@@ -297,7 +310,13 @@ Let's now import an evaluation set to test our agent.
 
 Click on **Evaluation Sets** and then on the **Import** button.
 
-![Evaluation sets page with the Create dropdown open showing the Import option](4-residency-verification-agent.images/17-import-evaluation-set-W.png){ .screenshot width="900" }
+![Evaluation sets page with the Create dropdown open showing the Import option](4-residency-verification-agent.images/18-import-evaluation-set-W.png){ .screenshot width="900" }
+
+[[[
+Select the **Paste JSON array** option.
+|50|
+![Import datasets dialog with the Paste JSON array option highlighted next to Upload file](4-residency-verification-agent.images/19-paste-json-array.png){ .screenshot }
+]]]
 
 ??? note "Copy this evaluation set (JSON)"
 
@@ -308,23 +327,23 @@ Click on **Evaluation Sets** and then on the **Import** button.
 [[[
 Paste it into the import window. After that click the **Import** button.
 |50|
-![Import window with the evaluation set JSON pasted in](4-residency-verification-agent.images/18-import-window.png){ .screenshot }
+![Import window with the evaluation set JSON pasted in](4-residency-verification-agent.images/20-import-window.png){ .screenshot }
 ]]]
 
 Navigate to the evaluation set and open it.
 
-![Explorer with the Residency Verification Agent selected and the evaluation set listed](4-residency-verification-agent.images/19-open-evaluation-set-W.png){ .screenshot width="900" }
+![Explorer with the Residency Verification Agent selected and the evaluation set listed](4-residency-verification-agent.images/21-open-evaluation-set-W.png){ .screenshot width="900" }
 
 [[[
 Open the evaluation set and select the **Residency Validation Evaluator** that we configured earlier.
 |50|
-![Evaluation set with the Residency Validation Evaluator checkbox selected](4-residency-verification-agent.images/20-select-evaluator.png){ .screenshot }
+![Evaluation set with the Residency Validation Evaluator checkbox selected](4-residency-verification-agent.images/22-select-evaluator.png){ .screenshot }
 ]]]
 
 [[[
 Evaluate the set and discuss the results with the trainer.
 |30|
-![Evaluate set button highlighted](4-residency-verification-agent.images/21-evaluate-set.png){ .screenshot }
+![Evaluate set button highlighted](4-residency-verification-agent.images/23-evaluate-set.png){ .screenshot }
 ]]]
 
 ## Configuring the Agentic Task in Maestro
@@ -335,10 +354,10 @@ Let's get back to Studio and continue editing our Agentic Process.
 
 [[[
 Configure the **Residency Verification Agent** task to use our freshly prepared AI Agent! This is
-done in the same way as the Robotic task: pick **Start and wait for agent**, then search for the
+done in the same way as the Robotic task: pick **Agent → Start and wait for agent**, then search for the
 agent in your solution.
 |30|
-![Agent dropdown with Residency Verification Agent listed under Defined resources](4-residency-verification-agent.images/22-select-agent-in-task.png){ .screenshot }
+![Agent dropdown with Residency Verification Agent listed under Defined resources](4-residency-verification-agent.images/24-select-agent-in-task.png){ .screenshot }
 ]]]
 
 ### 11. Map the inputs
@@ -347,7 +366,7 @@ agent in your solution.
 Now we need to pick outputs from the previous RPA Task (Process Benefits Application), and add them as
 inputs to the Agent — here is how you do it in your Agentic task's **Settings**.
 |30|
-![Agent node selected on the canvas with the input mapping fields](4-residency-verification-agent.images/23-map-agent-inputs.png){ .screenshot }
+![Agent node selected on the canvas with the input mapping fields](4-residency-verification-agent.images/25-map-agent-inputs.png){ .screenshot }
 ]]]
 
 In the end:
@@ -363,6 +382,6 @@ Process is ready for testing — click on the **Debug** button! This time we can
 !!! warning "Remember the input argument"
     Pass the value `Sample application.pdf` for the `in_Application` argument in the debug panel.
 
-![Completed execution showing the Residency Verification Agent's output](4-residency-verification-agent.images/24-execution-result-W.png){ .screenshot width="900" }
+![Completed execution showing the Residency Verification Agent's output](4-residency-verification-agent.images/26-execution-result-W.png){ .screenshot width="900" }
 
 **Time to move to the next one!**

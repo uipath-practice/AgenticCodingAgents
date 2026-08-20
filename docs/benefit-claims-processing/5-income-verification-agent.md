@@ -51,7 +51,7 @@ output the file as a variable.
 Let's go back to the Agentic Process diagram and update our task:
 
 - Open the properties panel of the **DownloadFileFromStorageBucket** task by clicking on it
-- Pick **Start and wait for RPA workflow** as the task's Action type
+- Pick **Workflows → Start and wait for RPA workflow** as the task's Action type
 |50|
 ![Implementation panel with the Action dropdown set to "Start and wait for RPA workflow"](5-income-verification-agent.images/3-select-action-type.png){ .screenshot }
 ]]]
@@ -88,12 +88,12 @@ Remember that Solutions can have multiple components such as apps, automations, 
 ![Add project to solution menu with the Agent option highlighted](5-income-verification-agent.images/7-add-agent-to-solution.jpg){ .screenshot }
 ]]]
 
+Set agent's name to something meaningful, for example **Income Verification Agent**. Let's keep it
+well organized!
+
 Dismiss Autopilot screen when you see a prompt to generate a new agent. Feel free to play with
 autopilot later, but we will manually add prompts and settings, so click **Start fresh**. Select the
 **Autonomous** agent option.
-
-Set agent's name to something meaningful, for example **Income Verification Agent**. Let's keep it
-well organized!
 
 ![Agent creation screen with the Autonomous tile selected and the agent named Income Verification Agent](5-income-verification-agent.images/8-start-fresh-agent-type-W.png){ .screenshot width="900" }
 
@@ -103,8 +103,8 @@ well organized!
 When it comes to LLMs there is no vendor lock for UiPath Agents, so you can experiment with different
 models and choose the one that best fits your use case.
 
-For now, we are going to choose **GPT 5** for our agent, but feel free to experiment with different
-models later. Let's choose the model from the agent settings (right side toolbar).
+For now, we are going to choose `gpt-5.1` for our agent, but feel free to experiment with
+different models later. Let's choose the model from the agent settings (right side toolbar).
 |50|
 ![Agent settings with the model selector open for the Income Verification Agent](5-income-verification-agent.images/9-select-model.png){ .screenshot }
 ]]]
@@ -128,7 +128,9 @@ Let's go to **Data Manager** and create our arguments.
 
 **Input arguments:**
 
-![Input argument definition showing the Paystub file entry](5-income-verification-agent.images/11-input-arguments-W.png){ .screenshot width="900" }
+| Name | Type | Description |
+| :--- | :--- | :--- |
+| `Paystub` | File | Applicant's paystub document |
 
 [[[
 **Output arguments:**
@@ -136,7 +138,10 @@ Let's go to **Data Manager** and create our arguments.
 ![Data manager Outputs section with the decision output configured](5-income-verification-agent.images/12-data-manager-outputs.png){ .screenshot }
 ]]]
 
-![Output argument definitions showing decision and rationale](5-income-verification-agent.images/13-output-arguments-W.png){ .screenshot width="900" }
+| Name | Type | Description |
+| :--- | :--- | :--- |
+| `decision` | String | Decision on whether the income validation is valid or invalid |
+| `rationale` | String | Brief explanation for the decision |
 
 ## Tools
 
@@ -206,12 +211,14 @@ This helps the agent understand what value to pass to the input arguments and wh
 
 ## Configuring Agent's Prompts
 
+[[[
+![Illustration accompanying the prompt-writing advice](5-income-verification-agent.images/18-prompt-precision-illustration.png)
+|30|
 > Precision in prompts, like in coding, leads to powerful and predictable results. If your prompt is
 > messy, expect messy output. Treat it like code, and write every word with purpose!
 >
 > — *another advice from gpt-4o*
-
-![Illustration accompanying the prompt-writing advice](5-income-verification-agent.images/18-prompt-precision-illustration.png){ width="260" }
+]]]
 
 First, let's understand the difference between **System prompt** and **User prompt**.
 
@@ -229,15 +236,21 @@ Let's start with the **System Prompt**. Copy the following and paste it into you
 
 ```text
 You are an AI assistant designed to validate reported monthly income against external wage data for benefits eligibility. Your task is to compare information from the context and the inputs. Follow these steps:
+
 1. Capture the applicant's monthly income, name and social security number from the input Paystub file.
 - Social security number is found under the field names "Employee ID" inside the paystub file.
+
 2. Use the ##Retrieve Income Information## tool to extract the applicant's income information from the existing records.
+
 3. Compare the Paystub income against the extracted income.
 - if the paystub income matches exactly with the extracted income, set ##decision## to "valid"
 - if there is any discrepancy, set ##decision## to "invalid".
+
 4. If the paystub or existing records data is missing, do not throw an error. Instead, set ##decision## to "invalid".
+
 5. In the ##rationale## field, provide a brief explanation around the decision you've taken.
 Maintain confidentiality and handle sensitive information with care.
+
 ##Example Scenarios
 1. Valid case:
 Input: Reported monthly income: $3000, Extracted income: $3000
@@ -269,7 +282,7 @@ your **User Prompt**:
 
 ```text
 Please validate the income for an applicant with the following information:
-Paystub: {{Paystub}}
+Paystub: {{input.Paystub}}
 ```
 
 ### 9. Test the agent
@@ -325,7 +338,7 @@ Let's get back to Studio and continue editing our Agentic Process.
 
 [[[
 Configure the **Income Verification Agent** task to use our freshly prepared AI Agent! This is done in
-the same way as the Robotic task: pick **Start and wait for agent**, then search for the agent in your
+the same way as the Robotic task: pick **Agent → Start and wait for agent**, then search for the agent in your
 solution.
 |50|
 ![Agent dropdown with Income Verification Agent listed under Defined resources](5-income-verification-agent.images/19-select-agent-in-task.png){ .screenshot }
@@ -344,11 +357,18 @@ agent.
 
 [[[
 Process is ready for testing — click on the **Debug** button! Pass the following file paths to the
-input arguments:
+input arguments.
+
+`in_ExamplePaystub`:
 
 ```text
-in_ExamplePaystub: Sample pay stub.png
-in_Application:    Sample application.pdf
+Sample pay stub.png
+```
+
+`in_Application`:
+
+```text
+Sample application.pdf
 ```
 |50|
 ![Debug panel with the input arguments filled in](5-income-verification-agent.images/21-debug-input-arguments.png){ .screenshot }

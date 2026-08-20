@@ -92,7 +92,7 @@ Once you have validated that the process runs as expected, let's go back to the 
 diagram and update our task:
 
 - Open the properties panel by clicking on the task
-- Pick **Start and wait for RPA workflow** as the task's Action type.
+- Pick **Workflows → Start and wait for RPA workflow** as the task's Action type.
 
 ![Studio Web BPMN designer with the Benefit Claims Processing diagram open and the task properties panel showing](3-configure-a-robot.images/5-bpmn-task-properties-W.jpg){ .screenshot width="900" }
 
