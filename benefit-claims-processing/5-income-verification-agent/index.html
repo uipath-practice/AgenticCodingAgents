@@ -1046,7 +1046,7 @@ output the file as a variable.</p>
 <p>Let's go back to the Agentic Process diagram and update our task:</p>
 <ul>
 <li>Open the properties panel of the <strong>DownloadFileFromStorageBucket</strong> task by clicking on it</li>
-<li>Pick <strong>Start and wait for RPA workflow</strong> as the task's Action type
+<li>Pick <strong>Workflows → Start and wait for RPA workflow</strong> as the task's Action type
   </li>
 </ul>
 </div>
@@ -1099,19 +1099,19 @@ output the file as a variable.</p>
   </p>
 </div>
 </div>
+<p>Set agent's name to something meaningful, for example <strong>Income Verification Agent</strong>. Let's keep it
+well organized!</p>
 <p>Dismiss Autopilot screen when you see a prompt to generate a new agent. Feel free to play with
 autopilot later, but we will manually add prompts and settings, so click <strong>Start fresh</strong>. Select the
 <strong>Autonomous</strong> agent option.</p>
-<p>Set agent's name to something meaningful, for example <strong>Income Verification Agent</strong>. Let's keep it
-well organized!</p>
 <p><img alt="Agent creation screen with the Autonomous tile selected and the agent named Income Verification Agent" class="screenshot" src="../5-income-verification-agent.images/8-start-fresh-agent-type-W.png" width="900" /></p>
 <h3 id="3-choose-the-model">3. Choose the model<a class="headerlink" href="#3-choose-the-model" title="Permanent link">&para;</a></h3>
 <div class="img-cols img-cols-50">
 <div>
 <p>When it comes to LLMs there is no vendor lock for UiPath Agents, so you can experiment with different
 models and choose the one that best fits your use case.</p>
-<p>For now, we are going to choose <strong>GPT 5</strong> for our agent, but feel free to experiment with different
-models later. Let's choose the model from the agent settings (right side toolbar).
+<p>For now, we are going to choose <code>gpt-5.1</code> for our agent, but feel free to experiment with
+different models later. Let's choose the model from the agent settings (right side toolbar).
   </p>
 </div>
 <div>
@@ -1137,7 +1137,22 @@ Orchestrator or use the output of an agent to launch another automation.</p>
 </div>
 </div>
 <p><strong>Input arguments:</strong></p>
-<p><img alt="Input argument definition showing the Paystub file entry" class="screenshot" src="../5-income-verification-agent.images/11-input-arguments-W.png" width="900" /></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Name</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>Paystub</code></td>
+<td style="text-align: left;">File</td>
+<td style="text-align: left;">Applicant's paystub document</td>
+</tr>
+</tbody>
+</table>
 <div class="img-cols img-cols-50">
 <div>
 <p><strong>Output arguments:</strong>
@@ -1148,7 +1163,27 @@ Orchestrator or use the output of an agent to launch another automation.</p>
   </p>
 </div>
 </div>
-<p><img alt="Output argument definitions showing decision and rationale" class="screenshot" src="../5-income-verification-agent.images/13-output-arguments-W.png" width="900" /></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Name</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>decision</code></td>
+<td style="text-align: left;">String</td>
+<td style="text-align: left;">Decision on whether the income validation is valid or invalid</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>rationale</code></td>
+<td style="text-align: left;">String</td>
+<td style="text-align: left;">Brief explanation for the decision</td>
+</tr>
+</tbody>
+</table>
 <h2 id="tools">Tools<a class="headerlink" href="#tools" title="Permanent link">&para;</a></h2>
 <p>Agent by itself is good at making decisions and analyzing data. But LLMs naturally can't go and
 interact with databases and applications... yet. We are going to use
@@ -1224,12 +1259,20 @@ Entity, so we are going to use the following tools:</p>
 </div>
 <p>This helps the agent understand what value to pass to the input arguments and when to use the tool.</p>
 <h2 id="configuring-agents-prompts">Configuring Agent's Prompts<a class="headerlink" href="#configuring-agents-prompts" title="Permanent link">&para;</a></h2>
+<div class="img-cols img-cols-30">
+<div>
+<p><img alt="Illustration accompanying the prompt-writing advice" src="../5-income-verification-agent.images/18-prompt-precision-illustration.png" />
+  </p>
+</div>
+<div>
 <blockquote>
 <p>Precision in prompts, like in coding, leads to powerful and predictable results. If your prompt is
 messy, expect messy output. Treat it like code, and write every word with purpose!</p>
-<p>— <em>another advice from gpt-4o</em></p>
+<p>— <em>another advice from gpt-4o</em>
+  </p>
 </blockquote>
-<p><img alt="Illustration accompanying the prompt-writing advice" src="../5-income-verification-agent.images/18-prompt-precision-illustration.png" width="260" /></p>
+</div>
+</div>
 <p>First, let's understand the difference between <strong>System prompt</strong> and <strong>User prompt</strong>.</p>
 <p>System Prompts provide consistent guidelines that define an agent's role and capabilities, while User
 Prompts direct its attention to specific tasks and input parameters. Understanding this distinction is
@@ -1242,43 +1285,49 @@ maintaining appropriate operational boundaries.</p>
 <h3 id="7-write-the-system-prompt">7. Write the System Prompt<a class="headerlink" href="#7-write-the-system-prompt" title="Permanent link">&para;</a></h3>
 <p>Let's start with the <strong>System Prompt</strong>. Copy the following and paste it into your <strong>System Prompt</strong>:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>You are an AI assistant designed to validate reported monthly income against external wage data for benefits eligibility. Your task is to compare information from the context and the inputs. Follow these steps:
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>1. Capture the applicant's monthly income, name and social security number from the input Paystub file.
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>- Social security number is found under the field names "Employee ID" inside the paystub file.
-<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>2. Use the ##Retrieve Income Information## tool to extract the applicant's income information from the existing records.
-<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>3. Compare the Paystub income against the extracted income.
-<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>- if the paystub income matches exactly with the extracted income, set ##decision## to "valid"
-<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>- if there is any discrepancy, set ##decision## to "invalid".
-<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>4. If the paystub or existing records data is missing, do not throw an error. Instead, set ##decision## to "invalid".
-<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>5. In the ##rationale## field, provide a brief explanation around the decision you've taken.
-<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>Maintain confidentiality and handle sensitive information with care.
-<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>##Example Scenarios
-<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>1. Valid case:
-<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>Input: Reported monthly income: $3000, Extracted income: $3000
-<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>Output:
-<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>{
-<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>"decision": "valid",
-<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>"rationale": "All sources match the reported income."
-<a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a>}
-<a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a>2. Invalid case:
-<a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a>Input: Reported monthly income: $3000, Extracted income: $3500
-<a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a>Output:
-<a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a>{
-<a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a>"decision": "invalid",
-<a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a>"rationale": "Existing records shows higher income than reported. Verification required."
-<a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a>}
-<a id="__codelineno-2-26" name="__codelineno-2-26" href="#__codelineno-2-26"></a>3. Missing/empty/zero data case:
-<a id="__codelineno-2-27" name="__codelineno-2-27" href="#__codelineno-2-27"></a>Input: Reported monthly income: $3000, Extracted income: 0
-<a id="__codelineno-2-28" name="__codelineno-2-28" href="#__codelineno-2-28"></a>Output:
-<a id="__codelineno-2-29" name="__codelineno-2-29" href="#__codelineno-2-29"></a>{
-<a id="__codelineno-2-30" name="__codelineno-2-30" href="#__codelineno-2-30"></a>"decision": "invalid",
-<a id="__codelineno-2-31" name="__codelineno-2-31" href="#__codelineno-2-31"></a>"rationale": "No income records found. Manual review required."
-<a id="__codelineno-2-32" name="__codelineno-2-32" href="#__codelineno-2-32"></a>}
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>1. Capture the applicant's monthly income, name and social security number from the input Paystub file.
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>- Social security number is found under the field names "Employee ID" inside the paystub file.
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>2. Use the ##Retrieve Income Information## tool to extract the applicant's income information from the existing records.
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>3. Compare the Paystub income against the extracted income.
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>- if the paystub income matches exactly with the extracted income, set ##decision## to "valid"
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>- if there is any discrepancy, set ##decision## to "invalid".
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>4. If the paystub or existing records data is missing, do not throw an error. Instead, set ##decision## to "invalid".
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>5. In the ##rationale## field, provide a brief explanation around the decision you've taken.
+<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>Maintain confidentiality and handle sensitive information with care.
+<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>
+<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>##Example Scenarios
+<a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a>1. Valid case:
+<a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a>Input: Reported monthly income: $3000, Extracted income: $3000
+<a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a>Output:
+<a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a>{
+<a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a>"decision": "valid",
+<a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a>"rationale": "All sources match the reported income."
+<a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a>}
+<a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a>2. Invalid case:
+<a id="__codelineno-2-26" name="__codelineno-2-26" href="#__codelineno-2-26"></a>Input: Reported monthly income: $3000, Extracted income: $3500
+<a id="__codelineno-2-27" name="__codelineno-2-27" href="#__codelineno-2-27"></a>Output:
+<a id="__codelineno-2-28" name="__codelineno-2-28" href="#__codelineno-2-28"></a>{
+<a id="__codelineno-2-29" name="__codelineno-2-29" href="#__codelineno-2-29"></a>"decision": "invalid",
+<a id="__codelineno-2-30" name="__codelineno-2-30" href="#__codelineno-2-30"></a>"rationale": "Existing records shows higher income than reported. Verification required."
+<a id="__codelineno-2-31" name="__codelineno-2-31" href="#__codelineno-2-31"></a>}
+<a id="__codelineno-2-32" name="__codelineno-2-32" href="#__codelineno-2-32"></a>3. Missing/empty/zero data case:
+<a id="__codelineno-2-33" name="__codelineno-2-33" href="#__codelineno-2-33"></a>Input: Reported monthly income: $3000, Extracted income: 0
+<a id="__codelineno-2-34" name="__codelineno-2-34" href="#__codelineno-2-34"></a>Output:
+<a id="__codelineno-2-35" name="__codelineno-2-35" href="#__codelineno-2-35"></a>{
+<a id="__codelineno-2-36" name="__codelineno-2-36" href="#__codelineno-2-36"></a>"decision": "invalid",
+<a id="__codelineno-2-37" name="__codelineno-2-37" href="#__codelineno-2-37"></a>"rationale": "No income records found. Manual review required."
+<a id="__codelineno-2-38" name="__codelineno-2-38" href="#__codelineno-2-38"></a>}
 </code></pre></div>
 <h3 id="8-write-the-user-prompt">8. Write the User Prompt<a class="headerlink" href="#8-write-the-user-prompt" title="Permanent link">&para;</a></h3>
 <p><strong>User Prompt</strong> connects it all together. In our case, the user prompt looks like this — paste it into
 your <strong>User Prompt</strong>:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>Please validate the income for an applicant with the following information:
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>Paystub: {{Paystub}}
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>Paystub: {{input.Paystub}}
 </code></pre></div>
 <h3 id="9-test-the-agent">9. Test the agent<a class="headerlink" href="#9-test-the-agent" title="Permanent link">&para;</a></h3>
 <p>Time to test it by giving it some sample inputs. Usually you will need to come back multiple times and
@@ -1322,7 +1371,7 @@ the paystub.</p>
 <div class="img-cols img-cols-50">
 <div>
 <p>Configure the <strong>Income Verification Agent</strong> task to use our freshly prepared AI Agent! This is done in
-the same way as the Robotic task: pick <strong>Start and wait for agent</strong>, then search for the agent in your
+the same way as the Robotic task: pick <strong>Agent → Start and wait for agent</strong>, then search for the agent in your
 solution.
   </p>
 </div>
@@ -1347,9 +1396,12 @@ agent.
 <div class="img-cols img-cols-50">
 <div>
 <p>Process is ready for testing — click on the <strong>Debug</strong> button! Pass the following file paths to the
-input arguments:</p>
-<p><div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>in_ExamplePaystub: Sample pay stub.png
-<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>in_Application:    Sample application.pdf
+input arguments.</p>
+<p><code>in_ExamplePaystub</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>Sample pay stub.png
+</code></pre></div>
+<p><code>in_Application</code>:</p>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>Sample application.pdf
 </code></pre></div>
   </p>
 </div>

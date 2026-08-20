@@ -860,20 +860,11 @@ connections.</p>
 specifically the
 <a href="https://docs.uipath.com/activities/other/latest/integration-service/uipath-airdk-airdk-generate-email">Generate Email</a>
 activity.</p>
-<div class="img-cols img-cols-50">
-<div>
 <ul>
-<li>Action will be <strong>Execute Connector Activity</strong></li>
-<li>Pick the UiPath GenAI Activities connector and configure the <strong>GenAI Connection</strong></li>
-<li>Select the <strong>Generate Email</strong> activity
-  </li>
+<li>Action will be <strong>Connector → Execute Connector Activity</strong></li>
+<li>Pick the <strong>Generate Email</strong> GenAI activity</li>
 </ul>
-</div>
-<div>
-<p><img alt="Properties panel with the action set to Execute Connector Activity" class="screenshot" src="../8-configure-api-integration-benefit-approval.images/2-select-connector-activity.png" />
-  </p>
-</div>
-</div>
+<p><img alt="Activity picker searching for &quot;generate email&quot; with the Generate Email UiPath GenAI Activities result highlighted, and the Action set to Execute connector activity" class="screenshot" src="../8-configure-api-integration-benefit-approval.images/2-select-connector-activity-W.png" width="900" /></p>
 <div class="img-cols img-cols-50">
 <div>
 <p><img alt="Generate Email activity properties panel" class="screenshot" src="../8-configure-api-integration-benefit-approval.images/3-generate-email-properties.png" />
@@ -933,57 +924,26 @@ activity.</p>
 <p>Email content — enter this as a <strong>JS Expression</strong>:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="s2">"Generate an email notifying the recipient that their application for benefits has been approved. Monthly ammount: "</span><span class="o">+</span><span class="nx">vars</span><span class="p">.</span><span class="nx">calculation</span><span class="o">+</span><span class="s2">" $."</span>
 </code></pre></div>
-<div class="admonition note">
-<p class="admonition-title">Model name in the dropdown</p>
-<p>The <strong>Model</strong> dropdown lists the full model id — in the screenshots it appears as
-<code>gpt-5.1-2025-11-13 (OpenAI)</code>.</p>
-</div>
 <h3 id="2-configure-the-send-approval-email-task">2. Configure the Send Approval Email task<a class="headerlink" href="#2-configure-the-send-approval-email-task" title="Permanent link">&para;</a></h3>
 <p>Once we have the generated email, we can send it to the applicant using the Gmail connector. Let's
 configure the <strong>Send Approval Email</strong> task.</p>
-<div class="img-cols img-cols-30">
-<div>
 <ul>
-<li>Action will be <strong>Execute Connector Activity</strong></li>
-<li>Pick the <strong>Gmail Connector</strong> and select the <code>uipathlabs@gmail.com</code> connection</li>
-<li>Pick the <strong>Send Email</strong> activity
-  </li>
+<li>Action will be <strong>Connector → Execute Connector Activity</strong></li>
+<li>Pick the <strong>Gmail - Send Email</strong> activity</li>
 </ul>
-</div>
-<div>
-<p><img alt="Email send task selected on the canvas with its properties panel" class="screenshot" src="../8-configure-api-integration-benefit-approval.images/4-select-gmail-activity.png" />
-  </p>
-</div>
-</div>
-<div class="img-cols img-cols-30">
-<div>
-<p>The Gmail activity with its connection configured.
-  </p>
-</div>
-<div>
-<p><img alt="Gmail email activity with the uipathlabs@gmail.com connection selected" class="screenshot" src="../8-configure-api-integration-benefit-approval.images/5-gmail-connection.png" />
-  </p>
-</div>
-</div>
+<p><img alt="Activity picker searching for &quot;send email&quot; with the Gmail Send Email result highlighted, and the Action set to Execute connector activity" class="screenshot" src="../8-configure-api-integration-benefit-approval.images/4-select-gmail-activity-W.png" width="900" /></p>
 <h3 id="3-configure-the-activity-properties">3. Configure the activity properties<a class="headerlink" href="#3-configure-the-activity-properties" title="Permanent link">&para;</a></h3>
-<div class="img-cols img-cols-50">
-<div>
 <ul>
 <li><strong>To</strong> — we are going to use the <strong>in_EmailAddress</strong> argument from the start event</li>
 <li><strong>Subject</strong>:</li>
 </ul>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Benefits Application approved
 </code></pre></div>
+<p><img alt="Gmail email activity with the uipathlabs@gmail.com connection selected" class="screenshot" src="../8-configure-api-integration-benefit-approval.images/5-gmail-connection.png" /></p>
 <ul>
-<li><strong>Body</strong> — the <strong>emailContent</strong> output variable from the <strong>Generate Approval Email</strong> task
-  </li>
+<li><strong>Body</strong> — the <strong>emailContent</strong> output variable from the <strong>Generate Approval Email</strong> task</li>
 </ul>
-</div>
-<div>
-<p><img alt="Activity configuration panel with the To and Subject fields filled in" class="screenshot" src="../8-configure-api-integration-benefit-approval.images/6-configure-email-properties.png" />
-  </p>
-</div>
-</div>
+<p><img alt="Activity configuration panel with the To and Subject fields filled in" class="screenshot" src="../8-configure-api-integration-benefit-approval.images/6-configure-email-properties.png" /></p>
 <div class="img-cols img-cols-50">
 <div>
 <p>Pick the <strong>emailContent</strong> variable for the Body field.

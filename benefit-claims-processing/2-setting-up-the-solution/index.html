@@ -850,37 +850,28 @@
 <p>Create the <strong>Benefit Claims Processing</strong> solution from a prepared template, then link the resources
 the agentic process needs later: two <strong>Integration Service</strong> connections, three <strong>Context Grounding</strong>
 indexes, and two <strong>Orchestrator</strong> storage buckets.</p>
-<h2 id="steps">Steps<a class="headerlink" href="#steps" title="Permanent link">&para;</a></h2>
-<h3 id="1-create-an-agentic-process-solution">1. Create an Agentic Process solution<a class="headerlink" href="#1-create-an-agentic-process-solution" title="Permanent link">&para;</a></h3>
-<div class="img-cols img-cols-30">
-<div>
-<p>Let's start by creating a new Agentic Process from a previously created template.</p>
-<p>In the <a href="https://cloud.uipath.com/tpenlabs/studio_/projects">Studio Web</a> home page go to
-<strong>Templates</strong> and select the <strong>Benefit Claims Processing Template</strong>. This will create a new
-solution, based on a project that was previously submitted as a template.
-  </p>
-</div>
+<div class="img-cols img-cols-70">
 <div>
 <p><img alt="UiPath Automation Cloud home page with the tenant selector set to AgenticWorkshop" class="screenshot" src="../2-setting-up-the-solution.images/1-select-tenant.png" />
   </p>
 </div>
-</div>
+<div>
 <div class="admonition warning">
 <p class="admonition-title">Check your tenant first</p>
-<p>Make sure the <strong>AgenticWorkshop</strong> tenant is selected from the top right corner.</p>
+<p>Make sure the <strong>AgenticWorkshop</strong> tenant is selected from the top right corner.
+</p>
 </div>
-<div class="img-cols img-cols-50">
-<div>
-<p><img alt="Studio Web Templates tab, filtered for &quot;Benefit Claim&quot;, showing the Benefit Claims Processing Template card by TPEN Labs" class="screenshot" src="../2-setting-up-the-solution.images/2-templates-benefit-claims.jpg" />
-  </p>
 </div>
-<div>
-<p>Creating a new project in <strong>Studio Web</strong>.</p>
+</div>
+<h2 id="steps">Steps<a class="headerlink" href="#steps" title="Permanent link">&para;</a></h2>
+<h3 id="1-create-an-agentic-process-solution">1. Create an Agentic Process solution<a class="headerlink" href="#1-create-an-agentic-process-solution" title="Permanent link">&para;</a></h3>
+<p>Let's start by creating a new Agentic Process from a previously created template.</p>
+<p>In the <a href="https://cloud.uipath.com/tpenlabs/studio_/projects">Studio Web</a> home page go to
+<strong>Templates</strong> and select the <strong>Benefit Claims Processing Template</strong>. This will create a new
+solution, based on a project that was previously submitted as a template.</p>
+<p><img alt="Studio Web Templates tab, filtered for &quot;Benefit Claim&quot;, showing the Benefit Claims Processing Template card by TPEN Labs" class="screenshot" src="../2-setting-up-the-solution.images/2-templates-benefit-claims-W.jpg" width="900" /></p>
 <p>You will notice that this will create a new
-<a href="https://docs.uipath.com/solutions-management/automation-cloud/latest/user-guide/solutions-management-overview">UiPath Solution</a>.
-  </p>
-</div>
-</div>
+<a href="https://docs.uipath.com/solutions-management/automation-cloud/latest/user-guide/solutions-management-overview">UiPath Solution</a>.</p>
 <p>A solution bundles together multiple components (processes, assets, queues, etc.) developed on the
 UiPath platform that work together to automate a business use case. In the UiPath context, a
 solution can be as simple as a Studio workflow/process, or as complex as a combination of multiple
@@ -893,11 +884,13 @@ workflows or processes, agents, apps, assets, queues, storage buckets, Data serv
 <li><strong>DownloadFileFromStorageBucket</strong> and <strong>UploadFileToStorageBucket</strong> — two RPA workflows which will help with handling files from Orchestrator Storage Buckets.</li>
 <li>A UiPath App, used to present claim details and decisions to Case Workers (Action App).</li>
 </ul>
+<details class="note">
+<summary>Learn more about the Unstructured and Complex Documents feature of IXP</summary>
 <p><a href="https://docs.uipath.com/ixp/automation-cloud/latest/user-guide/introduction">The Unstructured and complex documents</a>
-capability enhances the capability to handle complex unstructured documents, and uses generative AI
-to map fields and field groups as defined in the extraction schema and predict them with confidence
-and accuracy. This advanced feature is adept at extracting data from intricate elements like complex
-tables, charts, or graphs, and it structures the output effectively.</p>
+capability enhances the capability to handle complex unstructured documents, and uses generative
+AI to map fields and field groups as defined in the extraction schema and predict them with
+confidence and accuracy. This advanced feature is adept at extracting data from intricate
+elements like complex tables, charts, or graphs, and it structures the output effectively.</p>
 <p>The process involves:</p>
 <ul>
 <li>Reviewing initial model predictions.</li>
@@ -905,15 +898,24 @@ tables, charts, or graphs, and it structures the output effectively.</p>
 <li>Annotating documents to gather ground truth for validation and to inform refining the performance of data extraction.</li>
 </ul>
 <p>Extracting data from unstructured documents, such as contracts, long invoices, or other similar
-documents, requires a systematic and intelligent approach due to the variations in format, language,
-and layout.</p>
+documents, requires a systematic and intelligent approach due to the variations in format,
+language, and layout.</p>
+</details>
 <h3 id="2-rename-your-solution">2. Rename your solution<a class="headerlink" href="#2-rename-your-solution" title="Permanent link">&para;</a></h3>
+<div class="img-cols img-cols-30">
+<div>
+<p><img alt="Illustration of a friendly robot presenting a checklist" src="../2-setting-up-the-solution.images/3-organized-projects-illustration.png" />
+  </p>
+</div>
+<div>
 <blockquote>
 <p>The art of keeping your projects organized is rooted in habits — and habits are nurtured through
 consistent practice.</p>
-<p>— <em>Generated by a wise ancient LLM</em></p>
+<p>— <em>Generated by a wise ancient LLM</em>
+  </p>
 </blockquote>
-<p><img alt="Illustration of a friendly robot presenting a checklist" src="../2-setting-up-the-solution.images/3-organized-projects-illustration.png" width="260" /></p>
+</div>
+</div>
 <p>So, don't forget to reinforce your good habits and rename our solution:</p>
 <ul>
 <li>right-click on the solution and select <strong>Rename</strong></li>
@@ -976,11 +978,11 @@ features can reference for contextual evidence at runtime.</p>
 <a href="https://docs.uipath.com/orchestrator/automation-cloud/latest/user-guide/about-indexes">Context Grounding Indexes</a>
 to our solution, which we are going to use later for our agents.</p>
 <p>Configure the <strong>Eligibility</strong> context as in the picture below:</p>
-<p><img alt="Debug configuration panel for the Eligibility context grounding index in Studio Web" class="screenshot" src="../2-setting-up-the-solution.images/8-eligibility-context-W.jpg" width="900" /></p>
+<p><img alt="Studio Web with the Eligibility index selected in the Explorer and the context grounding index picker open, showing Eligibility under Benefit Claims in Platform resources" class="screenshot" src="../2-setting-up-the-solution.images/8-eligibility-context-W.png" width="900" /></p>
 <p>Configure the <strong>Income Verification</strong> context as in the picture below:</p>
-<p><img alt="Context resource configuration for the Income Verification context grounding index" class="screenshot" src="../2-setting-up-the-solution.images/9-income-verification-context-W.jpg" width="900" /></p>
+<p><img alt="Studio Web with the Income Verification index selected in the Explorer and the context grounding index picker open, showing Income Verification under Benefit Claims in Platform resources" class="screenshot" src="../2-setting-up-the-solution.images/9-income-verification-context-W.png" width="900" /></p>
 <p>Configure the <strong>Residency Verification</strong> context as in the picture below:</p>
-<p><img alt="Context resource configuration for the Residency Verification context grounding index" class="screenshot" src="../2-setting-up-the-solution.images/10-residency-verification-context-W.jpg" width="900" /></p>
+<p><img alt="Studio Web with the Residency Verification index selected in the Explorer and the context grounding index picker open, showing Residency Verification under Benefit Claims in Platform resources" class="screenshot" src="../2-setting-up-the-solution.images/10-residency-verification-context-W.png" width="900" /></p>
 <h3 id="5-connect-the-storage-buckets">5. Connect the Storage Buckets<a class="headerlink" href="#5-connect-the-storage-buckets" title="Permanent link">&para;</a></h3>
 <p>In our scenario, the process relies on files submitted by the applicants for benefit claims. We will
 store these files inside
