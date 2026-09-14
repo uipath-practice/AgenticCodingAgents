@@ -3,7 +3,7 @@
 !!! tip "Here is our plan for this lesson:"
 
     1. Configure an RPA workflow to download the necessary documents
-    2. Build the **Income Verification** AI Agent from scratch in **Studio Web**
+    2. Build the **Income Verification** AI Agent from scratch as a **low-code agent**, with **Claude Code** and the `uipath-agents` skill
         - Agent will use the applicant's paystub document to extract the applicant's Name, Social Security Number (SSN) and the monthly income
         - Based on that, the agent will use a tool to extract income information from internal records (a [Data Fabric entity](https://docs.uipath.com/data-service/automation-cloud/latest/user-guide/introduction))
         - The agent will compare the paystub income against the existing records
@@ -70,7 +70,9 @@ Pass the **in_ExamplePaystub** argument as input for the FilePath.
 
 ## Let's build an AI Agent!
 
-Let's use Studio to create our **Income Verification Agent**!
+Time to build the **Income Verification Agent**. You can do this either by prompting a coding agent
+— using **Claude Code** and the `uipath-agents` skill — or by building it manually in Studio Web.
+Pick whichever matches how you want to work; both produce the same kind of low-code agent.
 
 [[[
 Here is the structure of the agent's inputs and outputs.
@@ -78,7 +80,116 @@ Here is the structure of the agent's inputs and outputs.
 ![Diagram of the Income Verification Agent's expected inputs and outputs](5-income-verification-agent.images/6-agent-input-output-schema.png){ .screenshot }
 ]]]
 
-### 2. Add the agent to your solution
+### Option A — With a Coding Agent
+
+Claude Code edits the same kind of files Studio Web would generate — `agent.json`, an input/output
+schema, tools, a prompt — you just get there by prompting instead of clicking through a UI.
+
+#### Open your project in a coding agent
+
+Create an empty folder called **Income Verification Agent** and open it in your coding agent —
+for example **Claude Code** or **Codex**. Open a new terminal in the newly created folder and
+give it the `claude` or `codex` command:
+
+=== "Claude"
+
+    ```bash
+    mkdir "Income Verification Agent" && cd "Income Verification Agent"
+    claude
+    ```
+
+=== "Codex"
+
+    ```bash
+    mkdir "Income Verification Agent" && cd "Income Verification Agent"
+    codex
+    ```
+
+![Claude Code freshly opened in the Income Verification Agent folder, ready for a prompt](5-income-verification-agent.images/24-claude-code-ready-W.png){ .screenshot width="900" }
+
+#### Describe the Agent
+
+Give your coding agent a plain-English description of what to build:
+
+```text
+Build a low-code UiPath agent named "Income Verification Agent" that verifies an applicant's income for benefits eligibility. Use GPT 5.4 as the model.
+
+It takes a paystub PDF as input. First, run it through Analyze Files to extract the applicant's name, monthly income, and SSN (SSN is listed under "Employee ID"). Then call the existing "Retrieve Income Information" RPA process (already in Orchestrator — org tpenlabs, tenant AgenticWorkshop, folder Benefit Claims/Benefit Claims Processing Template) to get their income on record — just connect it as a tool, don't rebuild it.
+
+Compare the two incomes: exact match = "valid", mismatch = "invalid", and if anything's missing or zero, treat it as "invalid" instead of erroring.
+
+Output should be:
+{ "out_decision": "valid | invalid", "out_rationale": "..." }
+
+Don't expose the full SSN anywhere in the output, and don't guess at data that isn't actually in the paystub or the lookup result.
+
+Also include an eval set with 5 cases for the agent.
+
+At the end, upload the agent into the existing solution in UiPath Studio Web at the following URL: {URL of the project from Studio Web}
+```
+
+!!! note "This is just an example, to show what that URL looks like — yours will be different"
+    `https://cloud.uipath.com/tpenlabs/studio_/designer/0add336b-c1dc-4447-a2f2-b03e8169a4ef?solutionId=301d473d-e34b-47c4-90a7-08df077d13a2&fileId=6bf04f52-04f0-42db-a542-a864f88fd2d0&appItemId=ID21f9957912af47fd8469ee886fb380f5`
+
+!!! note "Give your coding agent permission"
+    Your coding agent will likely ask for permission before it downloads the solution locally, adds
+    the agent it just created, and overwrites the existing solution in Studio Web with the updated
+    version — now including the low-code agent it built. Go ahead and grant that permission.
+
+![Claude Code's summary after building the Income Verification Agent — files created, flow, eval cases, validation, and the Studio Web upload confirmation](5-income-verification-agent.images/23-agent-build-summary-W.png){ .screenshot width="900" }
+
+Once it's done, reopen the solution in **Studio Web** and open the agent to see what your coding
+agent actually built.
+
+#### Test the agent
+
+!!! note "Test files"
+    You can find the files for testing in the shared resources.
+
+    - Link: [view.highspot.com/viewer/01988c165ebd35be0b21e64eaaa149e5](https://view.highspot.com/viewer/01988c165ebd35be0b21e64eaaa149e5)
+    - Passcode: `Shs1*nb2gj3!`
+
+Let's test the following scenarios.
+
+=== "Valid — income matches"
+
+    The SSN is found in the Data Fabric Entity and the monthly income matches.
+
+    ```text
+    Paystub_income matching
+    ```
+
+    Output should be **decision: valid**
+
+=== "Invalid — income differs"
+
+    The SSN is found in the Data Fabric entity but the income from our records differs from the one in
+    the paystub.
+
+    ```text
+    Paystub_income not matching
+    ```
+
+    Output should be **decision: invalid**
+
+=== "Invalid — SSN not in records"
+
+    What if the SSN does not exist in our records?
+
+    ```text
+    Paystub_ssn not in records
+    ```
+
+    Output should be **decision: invalid** — because the SSN is not found in the Data Fabric entity
+
+!!! note "Want more practice with coding agents?"
+    Head over to [Getting Started with Coding Agents](../getting-started-with-coding-agents/1-practice-the-cli.md) for more background and hands-on practice with the CLI and skills.
+
+### Option B — Manually, from Scratch
+
+Let's use Studio to create our **Income Verification Agent** by hand.
+
+#### Add the agent to your solution
 
 [[[
 First, **add new agent** to your solution.
@@ -97,7 +208,7 @@ autopilot later, but we will manually add prompts and settings, so click **Start
 
 ![Agent creation screen with the Autonomous tile selected and the agent named Income Verification Agent](5-income-verification-agent.images/8-start-fresh-agent-type-W.png){ .screenshot width="900" }
 
-### 3. Choose the model
+#### Choose the model
 
 [[[
 When it comes to LLMs there is no vendor lock for UiPath Agents, so you can experiment with different
@@ -109,7 +220,7 @@ different models later. Let's choose the model from the agent settings (right si
 ![Agent settings with the model selector open for the Income Verification Agent](5-income-verification-agent.images/9-select-model.png){ .screenshot }
 ]]]
 
-## Configuring the input/output schemas
+#### Configuring the input/output schemas
 
 Next we are going to create the **input and output arguments** of the Agent. Let's understand what we
 are going to use the arguments for:
@@ -118,7 +229,7 @@ are going to use the arguments for:
 as you might have activities or processes do. This can allow you to pass information from a trigger in
 Orchestrator or use the output of an agent to launch another automation.
 
-### 4. Create the arguments
+#### Create the arguments
 
 [[[
 Let's go to **Data Manager** and create our arguments.
@@ -143,7 +254,7 @@ Let's go to **Data Manager** and create our arguments.
 | `decision` | String | Decision on whether the income validation is valid or invalid |
 | `rationale` | String | Brief explanation for the decision |
 
-## Tools
+#### Tools
 
 Agent by itself is good at making decisions and analyzing data. But LLMs naturally can't go and
 interact with databases and applications... yet. We are going to use
@@ -165,7 +276,7 @@ Entity, so we are going to use the following tools:
 - The **Analyze Files** tool to extract the relevant information from the paystub
 - **Retrieve Income Information** tool — an RPA workflow, which receives the applicant's SSN as an input and searches for income records in a Data Fabric entity.
 
-### 5. Add the Analyze Files tool
+#### Add the Analyze Files tool
 
 Let's add the two tools to our agent, starting with the **Analyze Files** tool.
 
@@ -181,7 +292,7 @@ Search for the **Analyze Files** tool and select it.
 ![Tool picker showing the Analyze Files built-in tool result](5-income-verification-agent.images/15-select-analyze-files.png){ .screenshot }
 ]]]
 
-### 6. Add the Retrieve Income Information tool
+#### Add the Retrieve Income Information tool
 
 [[[
 Next, let's add the **Retrieve Income Information** RPA tool.
@@ -209,7 +320,7 @@ Use this tool to retrieve the income information of the applicant from the recor
 
 This helps the agent understand what value to pass to the input arguments and when to use the tool.
 
-## Configuring Agent's Prompts
+#### Configuring Agent's Prompts
 
 [[[
 ![Illustration accompanying the prompt-writing advice](5-income-verification-agent.images/18-prompt-precision-illustration.png)
@@ -230,7 +341,7 @@ maintaining appropriate operational boundaries.
 - **System prompt** — allows you to describe in natural language the agent's role, goal and constraints. You specify any rules for it to follow, and information about when it might want to use certain tools, escalations, or context – all of which we'll cover later in this guide.
 - **User prompt** — User prompts allow you to structure how the inputs/arguments are passed to the agent, and you can also show in the user prompt how we'll refer to certain inputs in the system prompt.
 
-### 7. Write the System Prompt
+#### Write the System Prompt
 
 Let's start with the **System Prompt**. Copy the following and paste it into your **System Prompt**:
 
@@ -275,7 +386,7 @@ Output:
 }
 ```
 
-### 8. Write the User Prompt
+#### Write the User Prompt
 
 **User Prompt** connects it all together. In our case, the user prompt looks like this — paste it into
 your **User Prompt**:
@@ -285,7 +396,7 @@ Please validate the income for an applicant with the following information:
 Paystub: {{input.Paystub}}
 ```
 
-### 9. Test the agent
+#### Test the agent
 
 Time to test it by giving it some sample inputs. Usually you will need to come back multiple times and
 improve the prompt in order for it to be more flexible — this way users need to perform less manual
@@ -334,7 +445,7 @@ Let's test the following scenarios.
 
 Let's get back to Studio and continue editing our Agentic Process.
 
-### 10. Point the task at your agent
+### 2. Point the task at your agent
 
 [[[
 Configure the **Income Verification Agent** task to use our freshly prepared AI Agent! This is done in
@@ -344,7 +455,7 @@ solution.
 ![Agent dropdown with Income Verification Agent listed under Defined resources](5-income-verification-agent.images/19-select-agent-in-task.png){ .screenshot }
 ]]]
 
-### 11. Map the input
+### 3. Map the input
 
 [[[
 Now we need to pass the **StorageBucketFile** output of the previous RPA workflow as input to our
@@ -353,7 +464,7 @@ agent.
 ![Dropdown mapping StorageBucketFile to the agent's Paystub input](5-income-verification-agent.images/20-map-storage-bucket-file.png){ .screenshot }
 ]]]
 
-### 12. Run it
+### 4. Run it
 
 [[[
 Process is ready for testing — click on the **Debug** button! Pass the following file paths to the

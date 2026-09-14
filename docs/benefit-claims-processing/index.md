@@ -19,7 +19,7 @@ pensions, social assistance, or unemployment benefits.
 | [**Setting up the Solution**](2-setting-up-the-solution.md) | Create the agentic automation solution that implements the process |
 | [**Configure a Robot**](3-configure-a-robot.md) | Add an RPA automation that uses IXP to read the application PDF |
 | [**Residency Verification Agent**](4-residency-verification-agent.md) | Build an agent that checks the declared residency against known records |
-| [**Income Verification Agent**](5-income-verification-agent.md) | Build an agent that checks the declared income against known records |
+| [**Income Verification Agent**](5-income-verification-agent.md) | Build an agent that checks the declared income against known records — generated using a coding agent and UiPath skills |
 | [**Eligibility Determination Agent**](6-eligibility-determination-agent.md) | Build an agent that decides eligibility using internal guidelines |
 | [**Configure human validation**](7-configure-human-validation.md) | Present the agents' conclusions for a case worker to approve or deny |
 | [**Configure API integration — Benefit Approval**](8-configure-api-integration-benefit-approval.md) | Notify the applicant when the claim is approved |
