@@ -85,6 +85,11 @@ Here is the structure of the agent's inputs and outputs.
 Claude Code edits the same kind of files Studio Web would generate — `agent.json`, an input/output
 schema, tools, a prompt — you just get there by prompting instead of clicking through a UI.
 
+!!! note "No coding agent subscription?"
+    If you don't have access to a coding agent subscription, you can use **UiPath Autopilot** from
+    **Studio Desktop** STS (Short Term Support) to conduct the exercises of this workshop. Download it
+    from [UiPathPlatformSTS.msi](https://download.uipath.com/connected-installer/latest/sts/UiPathPlatformSTS.msi).
+
 #### Open your project in a coding agent
 
 Create an empty folder called **Income Verification Agent** and open it in your coding agent —
@@ -112,18 +117,15 @@ give it the `claude` or `codex` command:
 Give your coding agent a plain-English description of what to build:
 
 ```text
-Build a low-code UiPath agent named "Income Verification Agent" that verifies an applicant's income for benefits eligibility. Use GPT 5.4 as the model.
+Build a low-code UiPath agent named "Income Verification Agent" that verifies an applicant's income for benefits eligibility.
 
-It takes a paystub PDF as input. First, run it through Analyze Files to extract the applicant's name, monthly income, and SSN (SSN is listed under "Employee ID"). Then call the existing "Retrieve Income Information" RPA process (already in Orchestrator — org tpenlabs, tenant AgenticWorkshop, folder Benefit Claims/Benefit Claims Processing Template) to get their income on record — just connect it as a tool, don't rebuild it.
+It takes a paystub PDF as input. First, runs it through Analyze Files to extract the applicant's name, monthly income, and SSN (SSN is listed under "Employee ID"). Then call the existing "Retrieve Income Information" RPA process (already existent in the studio web solution) to get their income on record — just connect it as a tool, don't rebuild it.
 
 Compare the two incomes: exact match = "valid", mismatch = "invalid", and if anything's missing or zero, treat it as "invalid" instead of erroring.
 
-Output should be:
-{ "out_decision": "valid | invalid", "out_rationale": "..." }
+Output should be: { "out_decision": "valid | invalid", "out_rationale": "..." }
 
 Don't expose the full SSN anywhere in the output, and don't guess at data that isn't actually in the paystub or the lookup result.
-
-Also include an eval set with 5 cases for the agent.
 
 At the end, upload the agent into the existing solution in UiPath Studio Web at the following URL: {URL of the project from Studio Web}
 ```

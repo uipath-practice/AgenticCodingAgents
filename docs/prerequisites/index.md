@@ -86,3 +86,29 @@ The plugin provides skills across the UiPath platform, including:
 | `uipath-maestro-flow` | Create, validate, and debug UiPath Flow projects using the `.flow` JSON format |
 | `uipath-platform` | Auth, Orchestrator management, solution lifecycle, Integration Service, CLI tools |
 | `uipath-test` | Generate, run, and maintain automated test suites for UiPath projects |
+
+### The `uip` CLI
+
+Skills tell your agent *how* to do a piece of UiPath work. The
+[`uip` CLI](https://docs.uipath.com/coding-agents/standalone/latest/user-guide/cli-overview) is how that work
+actually reaches the platform — think of the CLI as the hands and the skills as the know-how.
+
+It's the bridge between your machine and your UiPath organization: authenticating, scaffolding projects,
+running and publishing automations, and reaching **Orchestrator** and the other platform services. The same
+CLI also installs the skills themselves, with `uip skills install`, and refreshes them with
+`uip skills update`.
+
+**Authentication.** The CLI signs in to a UiPath environment and selects a tenant. By default it connects to
+`cloud.uipath.com`; you can point it at another environment with an authority, and pick a tenant either
+interactively or by name. Once you're signed in, both the CLI and your agent act inside that organization and
+tenant.
+
+To check that you're signed in:
+
+```bash
+uip login status
+```
+
+**Who runs what.** In normal use your coding agent runs most CLI commands for you as it works through a task.
+You only run the CLI yourself for setup and housekeeping — signing in, installing or refreshing skills, and
+checking status.

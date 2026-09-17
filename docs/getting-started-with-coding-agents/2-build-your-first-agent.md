@@ -14,6 +14,11 @@ workflow** you'll use for every agent after this. You'll generate a small, low-c
 Claude Code, see how it scaffolds a solution, and get it ready to run. The agent itself is
 deliberately simple so the focus stays on the loop: describe → generate → validate → publish → run.
 
+!!! note "No coding agent subscription?"
+    If you don't have access to a coding agent subscription, you can use **UiPath Autopilot** from
+    **Studio Desktop** STS (Short Term Support) to conduct the exercises of this workshop. Download it
+    from [UiPathPlatformSTS.msi](https://download.uipath.com/connected-installer/latest/sts/UiPathPlatformSTS.msi).
+
 ## What you'll build
 
 A **Claims Eligibility** check. Given a claim (FNOL) PDF and the policy it refers to, the agent

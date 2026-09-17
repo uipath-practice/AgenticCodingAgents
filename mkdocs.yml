@@ -64,6 +64,10 @@ nav:
   - Prerequisites:
     - Overview: prerequisites/index.md
     - Installation Guides: prerequisites/installation-guides.md
+  - Getting Started with Coding Agents:
+    - 1. Practicing the CLI: getting-started-with-coding-agents/1-practice-the-cli.md
+    - 2. Build Your First Agent: getting-started-with-coding-agents/2-build-your-first-agent.md
+    - You did it!: getting-started-with-coding-agents/you-did-it.md
   # Exercise sections are inserted here by /publish-exercise.
   # `- Next Steps: next-steps.md` MUST remain the last entry: publish-exercise
   # inserts each new exercise block immediately before it, and
@@ -79,10 +83,6 @@ nav:
     - 7. Add an Action App for human validation: benefit-claims-processing/7-configure-human-validation.md
     - 8. Update external systems using API — Benefit Approval Case: benefit-claims-processing/8-configure-api-integration-benefit-approval.md
     - 9. Update external systems using API — Benefit Rejection Case: benefit-claims-processing/9-configure-api-integration-benefit-rejection.md
-  - Getting Started with Coding Agents:
-    - 1. Practicing the CLI: getting-started-with-coding-agents/1-practice-the-cli.md
-    - 2. Build Your First Agent: getting-started-with-coding-agents/2-build-your-first-agent.md
-    - You did it!: getting-started-with-coding-agents/you-did-it.md
   - Next Steps: next-steps.md
 
 extra_css:
