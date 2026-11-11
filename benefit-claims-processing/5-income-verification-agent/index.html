@@ -25,7 +25,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
     
     
       
@@ -33,10 +33,10 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.57a0d79d.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.fb2fffe2.min.css">
       
       
 
@@ -214,26 +214,6 @@
   
   
   Prerequisites
-
-        </a>
-      </li>
-    
-  
-
-      
-        
-  
-  
-  
-  
-    
-    
-      <li class="md-tabs__item">
-        <a href="../../getting-started-with-coding-agents/1-practice-the-cli/" class="md-tabs__link">
-          
-  
-  
-  Getting Started with Coding Agents
 
         </a>
       </li>
@@ -462,149 +442,6 @@
       
   
   
-  
-  
-    
-    
-    
-    
-      
-      
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
-        
-          
-          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Getting Started with Coding Agents
-  
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    Getting Started with Coding Agents
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../getting-started-with-coding-agents/1-practice-the-cli/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    1. Practicing the CLI
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../getting-started-with-coding-agents/2-build-your-first-agent/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    2. Build Your First Agent
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../getting-started-with-coding-agents/you-did-it/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    You did it!
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-    
-      
-      
-  
-  
     
   
   
@@ -626,10 +463,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
         
           
-          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
             
   
   
@@ -647,8 +484,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_4">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1468,13 +1305,13 @@ give it the <code>claude</code> or <code>codex</code> command:</p>
 <p>Give your coding agent a plain-English description of what to build:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>Build a low-code UiPath agent named "Income Verification Agent" that verifies an applicant's income for benefits eligibility.
 <a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>It takes a paystub PDF as input. First, runs it through Analyze Files to extract the applicant's name, monthly income, and SSN (SSN is listed under "Employee ID"). Then call the existing "Retrieve Income Information" RPA process (already existent in the studio web solution) to get their income on record — just connect it as a tool, don't rebuild it.
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>It takes a paystub PDF as input. First, runs it through Analyze Files to extract the applicant's name, monthly income, and SSN (SSN is listed under "Employee ID"). If the paystub doesn't state a monthly income directly, deduce it from what it does show: gross pay for the pay period times the number of pay periods per year, divided by 12 (weekly = 52, bi-weekly = 26, semi-monthly = 24, monthly = 12), an annual salary divided by 12, or an hourly rate times the hours worked, scaled to a month. Use the pay frequency or the pay period dates on the paystub to tell which applies, and round the result to 2 decimals. Then call the existing "Retrieve Income Information" RPA process (already existent in the studio web solution) to get their income on record — just connect it as a tool, don't rebuild it.
 <a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
-<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>Compare the two incomes: exact match = "valid", mismatch = "invalid", and if anything's missing or zero, treat it as "invalid" instead of erroring.
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>Compare the two incomes: exact match = "valid", mismatch = "invalid". If the monthly income can't be determined from the paystub, or anything else is missing or zero, treat it as "invalid" instead of erroring. When the monthly income was deduced, explain in the rationale how it was calculated.
 <a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>
 <a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>Output should be: { "out_decision": "valid | invalid", "out_rationale": "..." }
 <a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>
-<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>Don't expose the full SSN anywhere in the output, and don't guess at data that isn't actually in the paystub or the lookup result.
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>Don't expose the full SSN anywhere in the output, and don't guess at data that isn't actually in the paystub or the lookup result. Calculating the monthly income from figures on the paystub is fine; making up figures isn't.
 <a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>
 <a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>At the end, upload the agent into the existing solution in UiPath Studio Web at the following URL: {URL of the project from Studio Web}
 </code></pre></div>
@@ -1523,10 +1360,6 @@ the paystub.</p>
 <p>Output should be <strong>decision: invalid</strong> — because the SSN is not found in the Data Fabric entity</p>
 </div>
 </div>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Want more practice with coding agents?</p>
-<p>Head over to <a href="../../getting-started-with-coding-agents/1-practice-the-cli/">Getting Started with Coding Agents</a> for more background and hands-on practice with the CLI and skills.</p>
 </div>
 <h3 id="option-b-manually-from-scratch">Option B — Manually, from Scratch<a class="headerlink" href="#option-b-manually-from-scratch" title="Permanent link">&para;</a></h3>
 <p>Let's use Studio to create our <strong>Income Verification Agent</strong> by hand.</p>
@@ -1947,10 +1780,10 @@ input arguments.</p>
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.footer", "toc.integrate", "search.highlight", "search.suggest", "content.code.copy", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.footer", "toc.integrate", "search.highlight", "search.suggest", "content.code.copy", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      <script src="../../assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
         <script src="../../javascripts/extra.js"></script>
       
